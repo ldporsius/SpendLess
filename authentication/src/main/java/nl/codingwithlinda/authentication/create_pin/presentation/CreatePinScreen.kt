@@ -20,10 +20,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.PINKeyboard
+import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.core.presentation.components.WalletButton
 
 @Composable
 fun CreatePinScreen(
+    pinUiState: PINUiState,
+    onAction: (PINKeyboardAction) -> Unit,
     onNavigate: () -> Unit
 ) {
     Box(modifier = Modifier.navigationBarsPadding()) {
@@ -67,12 +71,12 @@ fun CreatePinScreen(
                 )
 
             ) {
-                for (i in 0..4) {
+                for (i in 0 until pinUiState.pinLength) {
                     Spacer(
                         modifier = Modifier
                             .size(16.dp)
                             .background(
-                                color = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
+                                color = pinUiState.pinInputColor(i),
                                 shape = CircleShape
                             )
                     )
@@ -86,7 +90,7 @@ fun CreatePinScreen(
                 PINKeyboard(
                     modifier = Modifier,
                     onPINKeyboardAction = {
-
+                        onAction(it)
                     }
 
                 )
