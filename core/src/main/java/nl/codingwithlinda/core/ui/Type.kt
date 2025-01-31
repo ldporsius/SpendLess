@@ -1,4 +1,4 @@
-package nl.codingwithlinda.spendless.ui.theme
+package nl.codingwithlinda.core.ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
