@@ -1,4 +1,4 @@
-package nl.codingwithlinda.spendless.navigation.graph
+package nl.codingwithlinda.authentication.core.presentation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import nl.codingwithlinda.spendless.navigation.AuthenticationNavRoute
-import nl.codingwithlinda.spendless.navigation.authenticationNavGraph
+import nl.codingwithlinda.authentication.navigation.authenticationNavGraph
+import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 
 @Composable
 fun AuthenticationRootScreen() {
@@ -17,7 +17,8 @@ fun AuthenticationRootScreen() {
     Scaffold {paddingValues ->
 
         Box(modifier = Modifier.padding(paddingValues)) {
-            NavHost(navController = navController, startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
+            NavHost(navController = navController,
+                startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
                 authenticationNavGraph()
             }
         }

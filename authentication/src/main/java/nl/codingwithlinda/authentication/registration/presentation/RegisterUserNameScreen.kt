@@ -3,21 +3,24 @@ package nl.codingwithlinda.authentication.registration.presentation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.authentication.registration.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.R
 import nl.codingwithlinda.core.presentation.components.WalletButton
 
 @Composable
 fun RegisterUserNameScreen(
-
+    uistate: RegisterUserViewState,
 ) {
     Column(
         modifier = Modifier
@@ -45,6 +48,14 @@ fun RegisterUserNameScreen(
         )
         Text("Create unique username",
             style = MaterialTheme.typography.bodySmall
+        )
+
+        TextField(
+            value = uistate.userNameInput,
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 10.dp)
         )
     }
 }

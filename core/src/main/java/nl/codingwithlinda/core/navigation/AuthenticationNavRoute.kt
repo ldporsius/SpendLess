@@ -1,9 +1,6 @@
-package nl.codingwithlinda.spendless.navigation
+package nl.codingwithlinda.core.navigation
 
 import kotlinx.serialization.Serializable
-
-
-interface NavRoute
 
 
 sealed interface AuthenticationNavRoute : NavRoute {
