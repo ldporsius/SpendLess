@@ -50,7 +50,7 @@ fun RegisterUserNameScreen(
 
         WalletButton(
             modifier = Modifier
-                .size(64.dp),
+               ,
             icon = R.drawable.account_balance_wallet,
             onClick = { }
         )

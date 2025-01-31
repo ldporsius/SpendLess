@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
+import nl.codingwithlinda.authentication.create_pin.presentation.CreatePinScreen
 import nl.codingwithlinda.authentication.registration.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.presentation.RegisterUserViewModel
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
@@ -31,7 +32,11 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
     composable<AuthenticationNavRoute.CreatePinRoute> {
-        Text("Create Pin")
+       CreatePinScreen(
+           onNavigate = {
+               navController.popBackStack()
+           }
+       )
     }
 
 }
