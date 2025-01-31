@@ -18,7 +18,8 @@ class RegisterUserViewModel: ViewModel() {
         when(action) {
             is RegisterAction.NameInput -> {
                 _uiState.value = _uiState.value.copy(
-                    userNameInput = action.name
+                    userNameInput = action.name,
+                    noDataError = null
                 )
 
                 val inputResult = UserNameValidator.isUserNameInputValid(action.name)
