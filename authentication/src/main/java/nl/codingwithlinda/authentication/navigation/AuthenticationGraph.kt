@@ -17,7 +17,8 @@ fun NavGraphBuilder.authenticationNavGraph() {
         val viewModel = viewModel<RegisterUserViewModel>()
 
         RegisterUserNameScreen(
-            uistate = viewModel.uiState.collectAsStateWithLifecycle().value
+            uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onAction = viewModel::handleAction
         )
     }
 

@@ -13,6 +13,7 @@ import nl.codingwithlinda.core.ui.primary
 import nl.codingwithlinda.core.ui.primaryContainer
 import nl.codingwithlinda.core.ui.secondary
 import nl.codingwithlinda.core.ui.surface
+import nl.codingwithlinda.core.ui.surfaceContainerHighest
 import nl.codingwithlinda.core.ui.tertiaryContainer
 
 private val LightColorScheme = lightColorScheme(
@@ -26,7 +27,8 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = onSurface,
     onBackground = onBackground,
     onSurface = onSurface,
-    primaryContainer = primaryContainer
+    primaryContainer = primaryContainer,
+    surfaceContainerHighest = surfaceContainerHighest
 
 )
 

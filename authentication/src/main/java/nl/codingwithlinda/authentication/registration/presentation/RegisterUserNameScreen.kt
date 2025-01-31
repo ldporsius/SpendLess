@@ -6,14 +6,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.authentication.registration.presentation.state.RegisterAction
 import nl.codingwithlinda.authentication.registration.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.R
 import nl.codingwithlinda.core.presentation.components.WalletButton
@@ -21,6 +33,7 @@ import nl.codingwithlinda.core.presentation.components.WalletButton
 @Composable
 fun RegisterUserNameScreen(
     uistate: RegisterUserViewState,
+    onAction: (RegisterAction) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -50,12 +63,62 @@ fun RegisterUserNameScreen(
             style = MaterialTheme.typography.bodySmall
         )
 
-        TextField(
+        OutlinedTextField(
             value = uistate.userNameInput,
-            onValueChange = {},
+            onValueChange = {
+                onAction(RegisterAction.NameInput(it))
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 10.dp)
+                .padding(top = 10.dp, bottom = 10.dp),
+            shape = RoundedCornerShape(16.dp),
+            textStyle = LocalTextStyle.current.merge(
+                MaterialTheme.typography.displaySmall.copy(
+                    textAlign = TextAlign.Center
+                )
+            ),
+            placeholder = {
+                Text(text = "username",
+                    style = MaterialTheme.typography.displaySmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f)
+
+                )
+            },
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent
+
+            )
+
         )
+
+        Button(onClick = { /*TODO*/ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 24.dp),
+            shape = RoundedCornerShape(16.dp),
+            enabled = uistate.isUserNameValid,
+            colors = ButtonDefaults.buttonColors(
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Text("Next",
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+            Icon(Icons.Default.ArrowForward,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = 1.dp)
+
+            )
+        }
     }
 }
