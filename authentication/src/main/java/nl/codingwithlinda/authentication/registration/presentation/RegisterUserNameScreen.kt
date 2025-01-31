@@ -28,12 +28,15 @@ import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.registration.presentation.state.RegisterAction
 import nl.codingwithlinda.authentication.registration.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.R
+import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core.presentation.components.WalletButton
 
 @Composable
 fun RegisterUserNameScreen(
     uistate: RegisterUserViewState,
-    onAction: (RegisterAction) -> Unit
+    onAction: (RegisterAction) -> Unit,
+    onNavigate: (NavigationEvent) -> Unit
+
 ) {
     Column(
         modifier = Modifier
@@ -44,7 +47,6 @@ fun RegisterUserNameScreen(
         verticalArrangement = Arrangement.Top
 
     ) {
-
 
         WalletButton(
             modifier = Modifier
@@ -96,7 +98,7 @@ fun RegisterUserNameScreen(
 
         )
 
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = { onNavigate(NavigationEvent.NavToRegisterPin) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 24.dp),
