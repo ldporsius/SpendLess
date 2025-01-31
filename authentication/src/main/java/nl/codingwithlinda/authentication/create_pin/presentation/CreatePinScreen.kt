@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.PINKeyboard
 import nl.codingwithlinda.core.presentation.components.WalletButton
 
 @Composable
@@ -45,11 +46,13 @@ fun CreatePinScreen(
                 modifier = Modifier.padding(top = 16.dp),
                 icon = nl.codingwithlinda.core.R.drawable.account_balance_wallet
             ) { }
-            Text("Create PIN",
+            Text(
+                "Create PIN",
                 style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(top = 16.dp)
             )
-            Text("Use PIN to login to your account",
+            Text(
+                "Use PIN to login to your account",
                 style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 12.dp)
             )
@@ -58,18 +61,35 @@ fun CreatePinScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 48.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = androidx.compose.ui.Alignment.CenterHorizontally)
+                horizontalArrangement = Arrangement.spacedBy(
+                    12.dp,
+                    alignment = androidx.compose.ui.Alignment.CenterHorizontally
+                )
 
             ) {
                 for (i in 0..4) {
-                   Spacer(
-                       modifier = Modifier
-                           .size(16.dp)
-                           .background(color = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
-                               shape = CircleShape
-                           )
-                   )
+                    Spacer(
+                        modifier = Modifier
+                            .size(16.dp)
+                            .background(
+                                color = androidx.compose.material3.MaterialTheme.colorScheme.primaryContainer,
+                                shape = CircleShape
+                            )
+                    )
                 }
+            }
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+                contentAlignment = androidx.compose.ui.Alignment.Center) {
+                PINKeyboard(
+                    modifier = Modifier,
+                    onPINKeyboardAction = {
+
+                    }
+
+                )
             }
         }
     }
