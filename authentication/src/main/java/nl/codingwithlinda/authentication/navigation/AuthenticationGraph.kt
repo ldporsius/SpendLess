@@ -72,7 +72,10 @@ fun NavGraphBuilder.authenticationNavGraph(
             initializer {
                 RepeatPinViewModel(
                     userName = userName,
-                    pin = pin
+                    pin = pin,
+                    navToOnboarding = {
+                        navController.navigate(AuthenticationNavRoute.OnboardingPreferencesRoute)
+                    }
                 )
             }
         }
