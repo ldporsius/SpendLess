@@ -3,14 +3,15 @@ package nl.codingwithlinda.core.presentation.util
 import android.content.Context
 import nl.codingwithlinda.core.data.currency_format.decimalSeparatorMap
 import nl.codingwithlinda.core.data.currency_format.thousandsSeparatorMap
+import nl.codingwithlinda.core.domain.CurrencyFormatter
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 
-class CurrencyFormatter(
+class CurrencyFormatterImpl(
     private val context: Context
-) {
+): CurrencyFormatter {
 
-    fun formatCurrencyString(currency:String, preferences: Preferences): String {
+    override fun formatCurrencyString(currency:String, preferences: Preferences): String {
 
         val currencySymbol = currencyMap[preferences.currency] ?: return currency
         val currencyString = context.getString(currencySymbol)

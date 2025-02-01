@@ -19,6 +19,7 @@ import nl.codingwithlinda.authentication.registration.create_pin.presentation.Cr
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
+import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
@@ -113,6 +114,17 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
 
     composable<AuthenticationNavRoute.OnboardingPreferencesRoute>(){
+
+        val factory = viewModelFactory {
+            initializer {
+                OnboardingViewModel(
+                    currencyFormatter = nl.codingwithlinda.core.presentation.util.CurrencyFormatterImpl(
+                        context = it.applicationContext
+                    )
+                )
+            }
+
+        }
         OnboardingScreen()
     }
 

@@ -16,11 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
 
 @Composable
 fun OnboardingScreen(
     modifier: Modifier = Modifier,
-
+    uiState: OnboardingUiState,
     onNavigate: () -> Unit
 ) {
     Box(modifier = Modifier
@@ -52,7 +53,7 @@ fun OnboardingScreen(
                 style = MaterialTheme.typography.bodySmall
             )
             ElevatedCard {
-                Text(text = "Next")
+                Text(text = uiState.exampleFormattedText)
             }
         }
     }
