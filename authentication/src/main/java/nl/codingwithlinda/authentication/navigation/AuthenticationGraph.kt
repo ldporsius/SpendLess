@@ -1,6 +1,9 @@
 package nl.codingwithlinda.authentication.navigation
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -12,6 +15,8 @@ import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScr
 import nl.codingwithlinda.authentication.registration.create_pin.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
+import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
+import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserViewModel
@@ -57,6 +62,7 @@ fun NavGraphBuilder.authenticationNavGraph(
            header = {
                CreatePinHeader()
            },
+           errorBanner = {},
            onAction = viewModel::handleAction,
            onNavigate = {
                navController.popBackStack()
@@ -71,6 +77,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 RepeatPinViewModel(
+                    accountFactory = nl.codingwithlinda.core.data.AccountFactory(),
                     userName = userName,
                     pin = pin,
                     navToOnboarding = {
@@ -85,7 +92,15 @@ fun NavGraphBuilder.authenticationNavGraph(
         CreatePinScreen(
             pinUiState = viewModel.uiState.collectAsStateWithLifecycle().value ,
             header = {
-                CreatePinHeader()
+                RepeatPinHeader()
+            },
+            errorBanner = {
+                viewModel.errorChannel.collectAsStateWithLifecycle(null).value?.let {
+                    error ->
+                    ErrorBanner(
+                        modifier = it,
+                        error = error)
+                }
             },
             onAction = viewModel::handleAction,
             onNavigate = {

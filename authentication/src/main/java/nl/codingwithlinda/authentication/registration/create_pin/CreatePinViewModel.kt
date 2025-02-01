@@ -35,10 +35,8 @@ class CreatePinViewModel(
             .debounce(1000)
             .onEach{
                 if(it.size == NUMBER_PIN_LENGTH){
-                    _pinEntered.update {
-                        emptyList()
-                    }
                     navToRepeat(it.joinToString(""))
+
                 }
             }.launchIn(viewModelScope)
     }
@@ -46,7 +44,7 @@ class CreatePinViewModel(
         when(action){
             is PINKeyboardAction.OnNumberClick -> {
                 _pinEntered.update {
-                    it + action.number
+                    (it + action.number).take(NUMBER_PIN_LENGTH)
                 }
             }
             PINKeyboardAction.OnUndoClick -> {
