@@ -28,7 +28,8 @@ private val LightColorScheme = lightColorScheme(
     onBackground = onBackground,
     onSurface = onSurface,
     primaryContainer = primaryContainer,
-    surfaceContainerHighest = surfaceContainerHighest
+    surfaceContainerHighest = surfaceContainerHighest,
+
 
 )
 
