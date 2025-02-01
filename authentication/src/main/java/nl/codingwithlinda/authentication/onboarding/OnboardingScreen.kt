@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,11 +16,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.onboarding.components.ExpensesFormatComponent
+import nl.codingwithlinda.authentication.onboarding.components.SelectCurrencyComponent
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
 
@@ -84,7 +90,7 @@ fun OnboardingScreen(
                         style = MaterialTheme.typography.headlineLarge
                     )
                     Text(
-                        text = "spend this month",
+                        text = "spent this month",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -96,6 +102,37 @@ fun OnboardingScreen(
                     onAction(OnboardingAction.OnSelectExpensesFormat(it))
                 }
             )
+
+            var shouldShowCurrencyPicker by remember { mutableStateOf(false) }
+            Box(
+                Modifier.fillMaxWidth()
+            ) {
+                Column {
+                    Text(
+                        text = "Currency",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier
+                    )
+                    Button(
+                        onClick = { shouldShowCurrencyPicker = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(text = uiState.preferences.currency.name)
+                    }
+                    SelectCurrencyComponent(
+                        currencies = uiState.CurrencyUi(),
+                        selectedCurrency = uiState.preferences.currency.ordinal,
+                        expanded = shouldShowCurrencyPicker,
+                        onDismissRequest = {shouldShowCurrencyPicker = false},
+                        onCurrencySelected = {
+                            onAction(OnboardingAction.OnSelectCurrency(it))
+                            shouldShowCurrencyPicker = false
+
+                        }
+                    )
+                }
+            }
 
         }
     }

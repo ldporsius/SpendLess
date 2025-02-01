@@ -52,6 +52,12 @@ class OnboardingViewModel(
                     it.copy(expensesFormat = action.expensesFormat)
                 }
             }
+
+            is OnboardingAction.OnSelectCurrency -> {
+                _preferences.update {
+                    it.copy(currency = action.currency)
+                }
+            }
         }
     }
 

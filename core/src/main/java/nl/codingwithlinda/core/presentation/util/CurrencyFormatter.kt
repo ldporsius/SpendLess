@@ -13,7 +13,7 @@ class CurrencyFormatterImpl(
 
     override fun formatCurrencyString(currency:String, preferences: Preferences): String {
 
-        val currencySymbol = currencyMap[preferences.currency] ?: return currency
+        val currencySymbol = currencySymbolMap[preferences.currency] ?: return currency
         val currencyString = context.getString(currencySymbol)
 
         val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: return currency

@@ -21,7 +21,7 @@ class CurrencyFormatterTest{
         decimalPlaces = 2
     )
 
-    val currencySymbol = currencyMap.get(preferences.currency)
+    val currencySymbol = currencySymbolMap.get(preferences.currency)
 
     @Test
     fun test_currency_format(){
