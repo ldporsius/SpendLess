@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
@@ -20,8 +21,11 @@ import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewMo
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserViewModel
 import nl.codingwithlinda.core.di.AppModule
+import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
+import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.navigateToEvent
+import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
     navController: NavController,
@@ -71,9 +75,9 @@ fun NavGraphBuilder.authenticationNavGraph(
        )
     }
 
-    composable<AuthenticationNavRoute.RepeatPinRoute> {
-       val pin = it.arguments?.getString("pin")?: ""
-        val userName = it.arguments?.getString("userName")?: ""
+    composable<AuthenticationNavRoute.RepeatPinRoute> { navBackStackEntry ->
+        val pin = navBackStackEntry.arguments?.getString("pin")?: ""
+        val userName = navBackStackEntry.arguments?.getString("userName")?: ""
 
         val factory = viewModelFactory {
             initializer {
@@ -82,7 +86,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                     userName = userName,
                     pin = pin,
                     navToOnboarding = {
-                        navController.navigate(AuthenticationNavRoute.OnboardingPreferencesRoute)
+                        navController.navigate(AuthenticationNavRoute.OnboardingPreferencesRoute(it))
                     }
                 )
             }
@@ -110,7 +114,14 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
 
-    composable<AuthenticationNavRoute.OnboardingPreferencesRoute>(){
+    composable<AuthenticationNavRoute.OnboardingPreferencesRoute>(
+        typeMap = mapOf(
+            typeOf<Account>() to CustomNavType.AccountType
+        )
+    ){
+
+
+        val args = it.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
 
         val factory = viewModelFactory {
             initializer {
@@ -127,7 +138,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-
+                navController.navigate(AuthenticationNavRoute.CreatePinRoute(args.account.userName))
             }
         )
     }

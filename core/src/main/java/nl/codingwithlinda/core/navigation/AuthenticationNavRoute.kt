@@ -1,6 +1,7 @@
 package nl.codingwithlinda.core.navigation
 
 import kotlinx.serialization.Serializable
+import nl.codingwithlinda.core.domain.model.Account
 
 
 sealed interface AuthenticationNavRoute : NavRoute {
@@ -22,7 +23,9 @@ sealed interface AuthenticationNavRoute : NavRoute {
     ) : AuthenticationNavRoute
 
     @Serializable
-    data object OnboardingPreferencesRoute: AuthenticationNavRoute
+    data class OnboardingPreferencesRoute(
+        val account: Account
+    ): AuthenticationNavRoute
 
     @Serializable
     data object LoginRoute : AuthenticationNavRoute
