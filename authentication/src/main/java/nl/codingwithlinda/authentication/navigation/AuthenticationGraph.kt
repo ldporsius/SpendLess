@@ -125,6 +125,7 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         OnboardingScreen(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onAction = viewModel::handleAction,
             onNavigate = {
 
             }
