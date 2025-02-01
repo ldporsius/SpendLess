@@ -32,7 +32,7 @@ class CurrencyFormatterTest{
 
         val result = currencyFormatter.formatCurrencyString(currency, preferences)
 
-        assertEquals("-${currencyString}1.038.2,45", result)
+        assertEquals("-${currencyString}10.382,45", result)
 
     }
 }
