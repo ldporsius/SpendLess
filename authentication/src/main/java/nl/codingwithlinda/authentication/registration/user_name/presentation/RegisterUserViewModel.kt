@@ -1,11 +1,11 @@
-package nl.codingwithlinda.authentication.registration.presentation
+package nl.codingwithlinda.authentication.registration.user_name.presentation
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
-import nl.codingwithlinda.authentication.registration.presentation.state.RegisterAction
-import nl.codingwithlinda.authentication.registration.presentation.state.RegisterUserViewState
+import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterAction
+import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.domain.validation.UserNameValidator
 

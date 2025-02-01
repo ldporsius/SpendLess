@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin
+package nl.codingwithlinda.authentication.registration.create_pin
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,8 +13,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINKeyboardAction
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINUiState
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
+import nl.codingwithlinda.core.domain.NUMBER_PIN_LENGTH
 
 class CreatePinViewModel(
     private val navToRepeat: (pin: String) -> Unit
@@ -33,7 +34,10 @@ class CreatePinViewModel(
         _pinEntered
             .debounce(1000)
             .onEach{
-                if(it.size == 5){
+                if(it.size == NUMBER_PIN_LENGTH){
+                    _pinEntered.update {
+                        emptyList()
+                    }
                     navToRepeat(it.joinToString(""))
                 }
             }.launchIn(viewModelScope)

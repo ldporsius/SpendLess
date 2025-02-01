@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin.presentation
+package nl.codingwithlinda.authentication.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,18 +15,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.PINKeyboard
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINKeyboardAction
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINUiState
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.PINKeyboard
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.core.presentation.components.WalletButton
 
 @Composable
 fun CreatePinScreen(
     pinUiState: PINUiState,
+    header: @Composable () -> Unit,
     onAction: (PINKeyboardAction) -> Unit,
     onNavigate: () -> Unit
 ) {
@@ -50,16 +50,8 @@ fun CreatePinScreen(
                 modifier = Modifier.padding(top = 16.dp),
                 icon = nl.codingwithlinda.core.R.drawable.account_balance_wallet
             ) { }
-            Text(
-                "Create PIN",
-                style = androidx.compose.material3.MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(top = 16.dp)
-            )
-            Text(
-                "Use PIN to login to your account",
-                style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(top = 12.dp)
-            )
+
+            header()
 
             Row(
                 modifier = Modifier

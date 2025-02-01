@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.registration.presentation
+package nl.codingwithlinda.authentication.registration.user_name.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.registration.presentation.state.RegisterAction
-import nl.codingwithlinda.authentication.registration.presentation.state.RegisterUserViewState
+import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterAction
+import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.R
 import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core.presentation.components.WalletButton
@@ -98,7 +98,8 @@ fun RegisterUserNameScreen(
 
         )
 
-        Button(onClick = { onNavigate(NavigationEvent.NavToRegisterPin) },
+        Button(onClick = {
+            onNavigate(NavigationEvent.NavToCreatePin(uistate.userNameInput)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, bottom = 24.dp),

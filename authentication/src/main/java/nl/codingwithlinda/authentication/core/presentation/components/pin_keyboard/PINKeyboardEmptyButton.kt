@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard
+package nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard
+package nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.core.R
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -64,7 +65,7 @@ fun PINKeyboard(
                     PINKeyboardUndoButton (
                         text = {
                             Icon(
-                                painter = painterResource(nl.codingwithlinda.core.R.drawable.backspace),
+                                painter = painterResource(R.drawable.backspace),
                                 contentDescription = null,
                                 modifier = Modifier.size(40.dp)
                             )

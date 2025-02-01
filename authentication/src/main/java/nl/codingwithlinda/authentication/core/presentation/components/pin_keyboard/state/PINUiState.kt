@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard.state
+package nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state
 
 import androidx.compose.ui.graphics.Color
 

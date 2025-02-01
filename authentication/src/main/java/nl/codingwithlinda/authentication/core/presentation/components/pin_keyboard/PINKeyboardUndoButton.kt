@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.create_pin.presentation.pin_keyboard
+package nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core.ui.primaryFixed
 
 @Composable
-fun PINKeyboardButton(
+fun PINKeyboardUndoButton(
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -17,7 +17,7 @@ fun PINKeyboardButton(
     Box(modifier = modifier
         .size(108.dp)
         .background(
-            color = primaryFixed,
+            color = primaryFixed.copy(.3f),
             shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
         )
         ,
