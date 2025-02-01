@@ -8,10 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import nl.codingwithlinda.authentication.navigation.authenticationNavGraph
+import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 
 @Composable
-fun AuthenticationRootScreen() {
+fun AuthenticationRootScreen(
+    appModule: AppModule
+) {
 
     val navController = rememberNavController()
     Scaffold {paddingValues ->
@@ -19,7 +22,10 @@ fun AuthenticationRootScreen() {
         Box(modifier = Modifier.padding(paddingValues)) {
             NavHost(navController = navController,
                 startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
-                authenticationNavGraph(navController)
+                authenticationNavGraph(
+                    navController = navController,
+                    appModule = appModule
+                )
             }
         }
     }

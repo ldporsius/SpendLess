@@ -1,6 +1,7 @@
 package nl.codingwithlinda.spendless.di
 
 import android.app.Application
+import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.CurrencyFormatter
 import nl.codingwithlinda.core.presentation.util.CurrencyFormatterImpl
 

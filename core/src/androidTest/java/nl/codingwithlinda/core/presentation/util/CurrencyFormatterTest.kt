@@ -6,13 +6,13 @@ import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CurrencyFormatterTest{
 
     val context = ApplicationProvider.getApplicationContext<Application>()
-    private val currencyFormatter = CurrencyFormatter(context)
+    private val currencyFormatter = CurrencyFormatterImpl(context)
     val preferences = Preferences(
         expensesFormat = ExpensesFormat.MINUS,
         currency = Currency.EURO,

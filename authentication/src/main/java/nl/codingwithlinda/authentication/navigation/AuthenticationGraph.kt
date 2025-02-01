@@ -1,10 +1,6 @@
 package nl.codingwithlinda.authentication.navigation
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -12,27 +8,28 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import kotlinx.coroutines.flow.collectLatest
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
-import nl.codingwithlinda.authentication.registration.create_pin.CreatePinViewModel
-import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
 import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
+import nl.codingwithlinda.authentication.registration.create_pin.CreatePinViewModel
+import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserViewModel
+import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.navigateToEvent
 
 fun NavGraphBuilder.authenticationNavGraph(
-    navController: NavController
+    navController: NavController,
+    appModule: AppModule
 ) {
 
     composable<AuthenticationNavRoute.AuthenticationRoot> {
-        AuthenticationRootScreen()
+        AuthenticationRootScreen(appModule)
     }
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
         val viewModel = viewModel<RegisterUserViewModel>()
@@ -118,14 +115,20 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 OnboardingViewModel(
-                    currencyFormatter = nl.codingwithlinda.core.presentation.util.CurrencyFormatterImpl(
-                        context = it.applicationContext
-                    )
+                    currencyFormatter = appModule.currencyFormatter
                 )
             }
-
         }
-        OnboardingScreen()
+        val viewModel = viewModel<OnboardingViewModel>(
+            factory = factory
+        )
+
+        OnboardingScreen(
+            uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onNavigate = {
+
+            }
+        )
     }
 
     composable<AuthenticationNavRoute.LoginRoute> {
