@@ -2,6 +2,7 @@ package nl.codingwithlinda.authentication.navigation
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.flow.collectLatest
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
 import nl.codingwithlinda.authentication.registration.create_pin.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
@@ -95,8 +97,8 @@ fun NavGraphBuilder.authenticationNavGraph(
                 RepeatPinHeader()
             },
             errorBanner = {
-                viewModel.errorChannel.collectAsStateWithLifecycle(null).value?.let {
-                    error ->
+
+                viewModel.errorChannel.collectAsStateWithLifecycle(null).value?.let { error ->
                     ErrorBanner(
                         modifier = it,
                         error = error)

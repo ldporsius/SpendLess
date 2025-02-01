@@ -93,7 +93,8 @@ fun CreatePinScreen(
 
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp),
+                .padding(top = 16.dp)
+                .weight(1f),
                 contentAlignment = androidx.compose.ui.Alignment.Center) {
                 PINKeyboard(
                     modifier = Modifier,

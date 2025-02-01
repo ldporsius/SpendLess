@@ -3,6 +3,7 @@ package nl.codingwithlinda.authentication.registration.repeat_pin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.time.delay
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
@@ -37,7 +39,7 @@ class RepeatPinViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _uiState.value)
 
-    private val _errorChannel = Channel<UiText>()
+    private val _errorChannel = Channel<UiText?>()
     val errorChannel = _errorChannel.receiveAsFlow()
 
     init {
@@ -52,6 +54,9 @@ class RepeatPinViewModel(
                     }
                     if(validRes is SpendResult.Failure){
                         _errorChannel.send(validRes.error.toUiText())
+                        _pinEntered.update { emptyList() }
+                        delay(2000L)
+                        _errorChannel.send(null)
                     }
                 }
             }.launchIn(viewModelScope)
