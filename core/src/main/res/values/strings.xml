@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="euro_symbol">"\u20AC"</string>
+    <string name="dollar_symbol">"$"</string>
+    <string name="gbpound_symbol">"£"</string>
+    <string name="yen_symbol">"¥"</string>
+    <string name="swissfranc_symbol">"CHF"</string>
 </resources>
