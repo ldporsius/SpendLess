@@ -39,7 +39,6 @@ fun CreatePinScreen(
 ) {
     Box(modifier = Modifier
         .fillMaxSize()
-
         ,
         contentAlignment = Alignment.TopCenter
     ) {
