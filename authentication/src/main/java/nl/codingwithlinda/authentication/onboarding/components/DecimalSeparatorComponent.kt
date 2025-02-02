@@ -13,9 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Separator
-import nl.codingwithlinda.core_ui.SegmentedButtonColorProvider
+import nl.codingwithlinda.core_ui.LocalSegmentedButtonColorProvider
 import nl.codingwithlinda.core_ui.segmentedButtonColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,7 +23,7 @@ fun DecimalSeparatorComponent(
     selectedSeparator: Int,
     onSelected: (Separator) -> Unit
 ) {
-    CompositionLocalProvider(SegmentedButtonColorProvider provides segmentedButtonColors()) {
+    CompositionLocalProvider(LocalSegmentedButtonColorProvider provides segmentedButtonColors()) {
 
         Text(
             text = "Decimal separator",
@@ -48,7 +47,7 @@ fun DecimalSeparatorComponent(
                 selected = selectedSeparator == 0,
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.padding(end = 8.dp),
-                colors = SegmentedButtonColorProvider.current
+                colors = LocalSegmentedButtonColorProvider.current
             ) {
                 Text(text = "1.00")
             }
@@ -58,7 +57,7 @@ fun DecimalSeparatorComponent(
                 },
                 selected = selectedSeparator == 1,
                 shape = RoundedCornerShape(16.dp),
-                colors = SegmentedButtonColorProvider.current
+                colors = LocalSegmentedButtonColorProvider.current
             ) {
                 Text(text = "1,00")
             }

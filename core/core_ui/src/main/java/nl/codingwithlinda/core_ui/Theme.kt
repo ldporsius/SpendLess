@@ -3,10 +3,8 @@ package nl.codingwithlinda.core_ui
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButtonColors
-import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -55,7 +53,6 @@ val unspecified_scheme = ColorFamily(
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-
 fun segmentedButtonColors() = SegmentedButtonColors(
     activeContainerColor = surfaceContainerLowest,
     activeContentColor = onSurface,
@@ -72,8 +69,7 @@ fun segmentedButtonColors() = SegmentedButtonColors(
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
-
-val SegmentedButtonColorProvider = compositionLocalOf {
+val LocalSegmentedButtonColorProvider = compositionLocalOf {
    segmentedButtonColors()
 }
 

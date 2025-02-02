@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +14,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
-import nl.codingwithlinda.core_ui.SegmentedButtonColorProvider
+import nl.codingwithlinda.core_ui.LocalSegmentedButtonColorProvider
 import nl.codingwithlinda.core_ui.segmentedButtonColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +24,7 @@ fun ExpensesFormatComponent(
     onExpensesFormatSelected: (ExpensesFormat) -> Unit
 ) {
 
-    CompositionLocalProvider(SegmentedButtonColorProvider provides segmentedButtonColors()) {
+    CompositionLocalProvider(LocalSegmentedButtonColorProvider provides segmentedButtonColors()) {
         Text(
             text = "Expenses format",
             style = MaterialTheme.typography.bodySmall
@@ -48,7 +47,7 @@ fun ExpensesFormatComponent(
                 selected = selectedExpensesFormat == 0,
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.padding(end = 8.dp),
-                colors = SegmentedButtonColorProvider.current
+                colors = LocalSegmentedButtonColorProvider.current
             ) {
                 Text(text = "-$10")
             }
@@ -58,7 +57,7 @@ fun ExpensesFormatComponent(
                 },
                 selected = selectedExpensesFormat == 1,
                 shape = RoundedCornerShape(16.dp),
-                colors = SegmentedButtonColorProvider.current
+                colors = LocalSegmentedButtonColorProvider.current
             ) {
                 Text(text = "($10)")
             }

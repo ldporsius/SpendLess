@@ -5,4 +5,9 @@
     <string name="gbpound_symbol">"£"</string>
     <string name="yen_symbol">"¥"</string>
     <string name="swissfranc_symbol">"CHF"</string>
+
+    <string name="category_home">🏠</string>
+    <string name="category_clothing">💰</string>
+    <string name="category_food">🍕</string>
+
 </resources>

@@ -12,9 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Separator
-import nl.codingwithlinda.core_ui.SegmentedButtonColorProvider
+import nl.codingwithlinda.core_ui.LocalSegmentedButtonColorProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +43,7 @@ fun ThousandsSeparatorComponent(
             selected = selectedSeparator == 0,
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.padding(end = 8.dp),
-            colors = SegmentedButtonColorProvider.current
+            colors = LocalSegmentedButtonColorProvider.current
         ) {
             Text(text = "1.000")
         }
@@ -55,7 +54,7 @@ fun ThousandsSeparatorComponent(
             selected = selectedSeparator == 1,
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.padding(end = 8.dp),
-            colors = SegmentedButtonColorProvider.current
+            colors = LocalSegmentedButtonColorProvider.current
         ) {
             Text(text = "1,000")
         }
@@ -65,7 +64,7 @@ fun ThousandsSeparatorComponent(
             },
             selected = selectedSeparator == 2,
             shape = RoundedCornerShape(16.dp),
-            colors = SegmentedButtonColorProvider.current
+            colors = LocalSegmentedButtonColorProvider.current
         ) {
             Text(text = "1 000")
         }

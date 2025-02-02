@@ -1,6 +1,9 @@
 package nl.codingwithlinda.core_ui
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 
 val primary = Color(0xFF5A00C8)
 val onPrimary = Color(0xFFFFFFFF)
@@ -38,6 +41,30 @@ val onPrimaryFixedVariant = Color(0xFF5900c7)
 val secondaryFixed = Color(0xFFe5ea58)
 val secondaryFixedDim = Color(0xFFc9ce3e)
 val success = Color(0xFF29ac08)
+
+
+//val dashboardBackground = Brush.radialGradient(
+//    colors = listOf(
+//        onPrimaryFixedVariant,
+//        onPrimaryFixed
+//    ),
+//    center = androidx.compose.ui.geometry.Offset(50f, 150f),
+//    radius = Float.POSITIVE_INFINITY,
+//    tileMode = TileMode.Clamp
+//)
+
+val dashboardBackground = Brush.linearGradient(
+    colors = listOf(
+        onPrimaryFixed.copy(.75f),
+        onPrimaryFixed.copy(.85f),
+        onPrimaryFixed
+    ),
+    start= androidx.compose.ui.geometry.Offset(0f, 0f),
+    end = androidx.compose.ui.geometry.Offset(400f,800f),
+    tileMode = TileMode.Clamp
+)
+
+
 
 
 

@@ -1,7 +1,6 @@
 package nl.codingwithlinda.authentication.onboarding.preview
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
