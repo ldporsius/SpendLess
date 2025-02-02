@@ -3,6 +3,7 @@ package nl.codingwithlinda.spendless.navigation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -10,12 +11,14 @@ import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScr
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
+import nl.codingwithlinda.dashboard.presentation.DashboardRoot
 
 @Composable
 fun SpendLessApp(
-    appModule: AppModule
+    appModule: AppModule,
+    navHostController: NavHostController
 ) {
-   val navHostController = rememberNavController()
+
 
     NavHost(navController = navHostController, startDestination = AuthenticationNavRoute.AuthenticationRoot) {
 
@@ -27,8 +30,7 @@ fun SpendLessApp(
         }
 
         composable<DashboardNavRoute.DashboardRoot>{
-
-            Text("Dashboard")
+           DashboardRoot()
         }
     }
 }
