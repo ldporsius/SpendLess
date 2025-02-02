@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.presentation.util.CurrencyUi
+import nl.codingwithlinda.core.presentation.util.UiText
 import nl.codingwithlinda.core.presentation.util.currencySymbolMap
 import nl.codingwithlinda.core.presentation.util.currencyToUiText
 
@@ -13,19 +14,24 @@ data class OnboardingUiState(
     val preferences: Preferences
 ){
     @Composable
-    fun CurrencyUi(): List<CurrencyUi> {
-        val context = LocalContext.current
-        val texts = Currency.values().map {
-            val symbol = currencySymbolMap[it]?.let {
-                context.getString(it)
-            } ?: ""
-            val text = currencyToUiText[it]?.asString() ?: ""
-            CurrencyUi(
-                text = symbol + " " + text
-            )
+    fun currencyUiList(): List<CurrencyUi> {
+        val texts = Currency.entries.map {
+           getCurrencyUi(it)
         }
-
         return texts
+    }
+
+    @Composable
+    fun getCurrencyUi(currency: Currency): CurrencyUi{
+        val context = LocalContext.current
+
+        val symbol = currencySymbolMap[currency]?.let {
+            context.getString(it)
+        } ?: ""
+        val text = currencyToUiText[currency]?.asString() ?: ""
+        return CurrencyUi(
+            text = symbol + " " + text
+        )
     }
 }
 

@@ -118,10 +118,10 @@ fun OnboardingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text(text = uiState.preferences.currency.name)
+                        Text(text = uiState.getCurrencyUi(uiState.preferences.currency).text)
                     }
                     SelectCurrencyComponent(
-                        currencies = uiState.CurrencyUi(),
+                        currencies = uiState.currencyUiList(),
                         selectedCurrency = uiState.preferences.currency.ordinal,
                         expanded = shouldShowCurrencyPicker,
                         onDismissRequest = {shouldShowCurrencyPicker = false},
