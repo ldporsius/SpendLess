@@ -58,6 +58,17 @@ class OnboardingViewModel(
                     it.copy(currency = action.currency)
                 }
             }
+
+            is OnboardingAction.OnSelectDecimalSeparator -> {
+                _preferences.update {
+                    it.copy(decimalSeparator = action.separator)
+                }
+            }
+            is OnboardingAction.OnSelectThousandsSeparator -> {
+                _preferences.update {
+                    it.copy(thousandsSeparator = action.separator)
+                }
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
+import nl.codingwithlinda.core_ui.SpendLessTheme
 
 @Preview
 @Composable
@@ -20,13 +21,15 @@ private fun OnboardingScreenPreview() {
         decimalSeparator = Separator.COMMA,
         decimalPlaces = 2
     )
-    OnboardingScreen(
-        uiState = OnboardingUiState(
-            exampleFormattedText = "10.382,45",
-            preferences = preferences
-        ),
-        modifier = Modifier,
-        onAction = {},
-        onNavigate = {}
-    )
+    SpendLessTheme {
+        OnboardingScreen(
+            uiState = OnboardingUiState(
+                exampleFormattedText = "10.382,45",
+                preferences = preferences
+            ),
+            modifier = Modifier,
+            onAction = {},
+            onNavigate = {}
+        )
+    }
 }

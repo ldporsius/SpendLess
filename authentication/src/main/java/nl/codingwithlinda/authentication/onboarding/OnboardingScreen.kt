@@ -29,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.LocalPinnableContainer
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.authentication.onboarding.components.DecimalSeparatorComponent
 import nl.codingwithlinda.authentication.onboarding.components.ExpensesFormatComponent
 import nl.codingwithlinda.authentication.onboarding.components.SelectCurrencyComponent
+import nl.codingwithlinda.authentication.onboarding.components.ThousandsSeparatorComponent
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
 
@@ -153,6 +155,19 @@ fun OnboardingScreen(
 
                 }
             }
+
+            DecimalSeparatorComponent(
+                selectedSeparator = uiState.preferences.decimalSeparator.order,
+                onSelected = {
+                   onAction(OnboardingAction.OnSelectDecimalSeparator(it))
+                }
+            )
+            ThousandsSeparatorComponent(
+                selectedSeparator = uiState.preferences.thousandsSeparator.order,
+                onSelected = {
+                   onAction(OnboardingAction.OnSelectThousandsSeparator(it))
+                }
+            )
 
         }
     }

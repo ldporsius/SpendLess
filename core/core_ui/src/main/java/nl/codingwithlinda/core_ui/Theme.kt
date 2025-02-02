@@ -1,41 +1,81 @@
 package nl.codingwithlinda.core_ui
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButtonColors
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColorScheme(
-    primary = nl.codingwithlinda.core_ui.primary,
-    secondary = nl.codingwithlinda.core_ui.secondary,
-    tertiary = nl.codingwithlinda.core_ui.tertiaryContainer,
-    background = nl.codingwithlinda.core_ui.background,
-    surface = nl.codingwithlinda.core_ui.surface,
-    onPrimary = nl.codingwithlinda.core_ui.onPrimary,
-    onSecondary = nl.codingwithlinda.core_ui.onSecondaryContainer,
-    onTertiary = nl.codingwithlinda.core_ui.onSurface,
-    onBackground = nl.codingwithlinda.core_ui.onBackground,
-    onSurface = nl.codingwithlinda.core_ui.onSurface,
-    primaryContainer = nl.codingwithlinda.core_ui.primaryContainer,
+    primary = primary,
+    secondary = secondary,
+    tertiary = tertiaryContainer,
+    background = background,
+    surface = surface,
+    onPrimary = onPrimary,
+    onSecondary = onSecondaryContainer,
+    onTertiary = onSurface,
+    onBackground = onBackground,
+    onSurface = onSurface,
+    primaryContainer = primaryContainer,
 
-    surfaceContainer = nl.codingwithlinda.core_ui.surfaceContainer,
-    surfaceContainerLowest = nl.codingwithlinda.core_ui.surfaceContainerLowest,
-    surfaceContainerLow = nl.codingwithlinda.core_ui.surfaceContainerLow,
-    surfaceContainerHighest = nl.codingwithlinda.core_ui.surfaceContainerHighest,
-    onSurfaceVariant = nl.codingwithlinda.core_ui.onSurfaceVariant,
-    inverseSurface = nl.codingwithlinda.core_ui.inverseSurface,
-    inverseOnSurface = nl.codingwithlinda.core_ui.inverseOnSurface,
+    surfaceContainer = surfaceContainer,
+    surfaceContainerLowest = surfaceContainerLowest,
+    surfaceContainerLow = surfaceContainerLow,
+    surfaceContainerHighest = surfaceContainerHighest,
+    onSurfaceVariant = onSurfaceVariant,
+    inverseSurface = inverseSurface,
+    inverseOnSurface = inverseOnSurface,
 
-    inversePrimary = nl.codingwithlinda.core_ui.inversePrimary,
+    inversePrimary = inversePrimary,
 
-    outline = nl.codingwithlinda.core_ui.outline,
+    outline = outline,
 
-    error = nl.codingwithlinda.core_ui.error,
-    onError = nl.codingwithlinda.core_ui.onError,
+    error = error,
+    onError = onError,
 
-    secondaryContainer = nl.codingwithlinda.core_ui.secondaryContainer,
-
-
+    secondaryContainer = secondaryContainer,
 )
+@Immutable
+data class ColorFamily(
+    val color: Color,
+    val onColor: Color,
+    val colorContainer: Color,
+    val onColorContainer: Color
+)
+
+val unspecified_scheme = ColorFamily(
+    Color.Unspecified, Color.Unspecified, Color.Unspecified, Color.Unspecified
+)
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+
+fun segmentedButtonColors() = SegmentedButtonColors(
+    activeContainerColor = surfaceContainerLowest,
+    activeContentColor = onSurface,
+    activeBorderColor = Color.Transparent,
+    inactiveContainerColor = Color.Transparent,
+    inactiveContentColor = onPrimaryFixed,
+    inactiveBorderColor = Color.Transparent,
+    disabledActiveContainerColor = surfaceContainer,
+    disabledActiveContentColor = onSurface,
+    disabledActiveBorderColor = Color.Transparent,
+    disabledInactiveContainerColor = surfaceContainer,
+    disabledInactiveContentColor = onPrimaryFixed,
+    disabledInactiveBorderColor = Color.Transparent,
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+
+val SegmentedButtonColorProvider = compositionLocalOf {
+   segmentedButtonColors()
+}
 
 @Composable
 fun SpendLessTheme(
@@ -48,7 +88,7 @@ fun SpendLessTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = nl.codingwithlinda.core_ui.AppTypography,
+        typography = AppTypography,
         content = content
     )
 }
