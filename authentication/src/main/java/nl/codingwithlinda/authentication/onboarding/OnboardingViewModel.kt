@@ -11,13 +11,15 @@ import kotlinx.coroutines.flow.update
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
 import nl.codingwithlinda.core.domain.CurrencyFormatter
+import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
 
 class OnboardingViewModel(
-    private val currencyFormatter: CurrencyFormatter
+    private val currencyFormatter: CurrencyFormatter,
+    private val account: Account
 ): ViewModel() {
 
     private val exampleText = "1038245"
@@ -35,7 +37,8 @@ class OnboardingViewModel(
     private val _uiState = MutableStateFlow(
         OnboardingUiState(
             exampleFormattedText,
-            _preferences.value
+            _preferences.value,
+            account
         )
     )
     val uiState = _uiState.combine(_preferences){state, preferences ->

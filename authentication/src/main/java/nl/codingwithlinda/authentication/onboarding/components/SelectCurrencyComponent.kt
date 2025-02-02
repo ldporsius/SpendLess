@@ -1,5 +1,6 @@
 package nl.codingwithlinda.authentication.onboarding.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import nl.codingwithlinda.core.domain.model.Currency
@@ -32,7 +34,12 @@ fun SelectCurrencyComponent(
     Column (
         modifier = modifier
             .fillMaxWidth()
+            .shadow(elevation = 8.dp)
             .height(200.dp)
+            .background(color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                shape = MaterialTheme.shapes.medium
+            )
+
             .verticalScroll(
             state = scr
         ).verticalScrollBar(

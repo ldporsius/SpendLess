@@ -47,7 +47,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
     composable<AuthenticationNavRoute.CreatePinRoute> {
-        val userName = it.arguments?.getString("userName") ?: ""
+        val userName = it.toRoute<AuthenticationNavRoute.CreatePinRoute>().userName
         val factory = viewModelFactory {
             initializer {
                 CreatePinViewModel { pin ->
@@ -126,7 +126,8 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 OnboardingViewModel(
-                    currencyFormatter = appModule.currencyFormatter
+                    currencyFormatter = appModule.currencyFormatter,
+                    account = args.account
                 )
             }
         }
@@ -138,7 +139,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                navController.navigate(AuthenticationNavRoute.CreatePinRoute(args.account.userName))
+                navController.navigateToEvent(it)
             }
         )
     }
