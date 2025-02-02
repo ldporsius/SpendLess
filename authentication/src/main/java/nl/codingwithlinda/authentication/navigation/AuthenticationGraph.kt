@@ -14,7 +14,7 @@ import nl.codingwithlinda.authentication.core.presentation.components.CreatePinS
 import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
 import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
-import nl.codingwithlinda.authentication.registration.create_pin.CreatePinViewModel
+import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel

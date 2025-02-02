@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.core.R
+import nl.codingwithlinda.core.ui.onPrimaryFixed
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -36,7 +37,8 @@ fun PINKeyboard(
                         text = {
                             Text(
                                 i.toString(),
-                                style = MaterialTheme.typography.headlineMedium
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = onPrimaryFixed
                             )
                         },
                         modifier = Modifier.clickable {
@@ -53,7 +55,8 @@ fun PINKeyboard(
                         text = {
                             Text(
                                 "0",
-                                style = MaterialTheme.typography.headlineMedium
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = onPrimaryFixed
                             )
                         },
                         modifier = Modifier.clickable {
@@ -67,7 +70,8 @@ fun PINKeyboard(
                             Icon(
                                 painter = painterResource(R.drawable.backspace),
                                 contentDescription = null,
-                                modifier = Modifier.size(40.dp)
+                                modifier = Modifier.size(40.dp),
+                                tint = onPrimaryFixed
                             )
                         },
                         modifier = Modifier.clickable {
