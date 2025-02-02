@@ -1,14 +1,18 @@
 package nl.codingwithlinda.authentication.onboarding
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LocalPinnableContainer
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.onboarding.components.ExpensesFormatComponent
 import nl.codingwithlinda.authentication.onboarding.components.SelectCurrencyComponent
@@ -113,24 +118,39 @@ fun OnboardingScreen(
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier
                     )
-                    Button(
-                        onClick = { shouldShowCurrencyPicker = true },
+
+                    ElevatedAssistChip(
+                        onClick = { shouldShowCurrencyPicker = !shouldShowCurrencyPicker },
+                        label = {
+                            Text(text = uiState.getCurrencyUi(uiState.preferences.currency).text)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
-                    ) {
-                        Text(text = uiState.getCurrencyUi(uiState.preferences.currency).text)
-                    }
-                    SelectCurrencyComponent(
-                        currencies = uiState.currencyUiList(),
-                        selectedCurrency = uiState.preferences.currency.ordinal,
-                        expanded = shouldShowCurrencyPicker,
-                        onDismissRequest = {shouldShowCurrencyPicker = false},
-                        onCurrencySelected = {
-                            onAction(OnboardingAction.OnSelectCurrency(it))
-                            shouldShowCurrencyPicker = false
+                            .padding(bottom = 8.dp)
 
+                        ,
+                        trailingIcon = {
+                            Icon(
+                                Icons.Default.ArrowDropDown,
+                                contentDescription = null,
+                                tint = Color.Black
+                            )
                         }
                     )
+                    AnimatedVisibility(shouldShowCurrencyPicker){
+                        SelectCurrencyComponent(
+                            currencies = uiState.currencyUiList(),
+                            selectedCurrency = uiState.preferences.currency.ordinal,
+                            expanded = shouldShowCurrencyPicker,
+                            onDismissRequest = {shouldShowCurrencyPicker = false},
+                            onCurrencySelected = {
+                                onAction(OnboardingAction.OnSelectCurrency(it))
+                                shouldShowCurrencyPicker = false
+
+                            }
+                        )
+                    }
+
                 }
             }
 
