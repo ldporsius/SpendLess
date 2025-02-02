@@ -196,10 +196,11 @@ fun OnboardingScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-
+                        onNavigate(NavigationEvent.RedirectToDashboard)
                     },
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    enabled = uiState.isStartTrackingEnabled()
                 ) {
                     Text("Start Tracking!")
                 }

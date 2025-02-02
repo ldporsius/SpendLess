@@ -6,7 +6,6 @@ import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.presentation.util.CurrencyUi
-import nl.codingwithlinda.core.presentation.util.UiText
 import nl.codingwithlinda.core.presentation.util.currencySymbolMap
 import nl.codingwithlinda.core.presentation.util.currencyToUiText
 
@@ -34,6 +33,10 @@ data class OnboardingUiState(
         return CurrencyUi(
             text = symbol + " " + text
         )
+    }
+
+    fun isStartTrackingEnabled(): Boolean{
+        return preferences.thousandsSeparator != preferences.decimalSeparator
     }
 }
 

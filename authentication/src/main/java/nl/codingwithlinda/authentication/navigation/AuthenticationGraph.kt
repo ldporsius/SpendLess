@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
@@ -24,16 +25,22 @@ import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
+import nl.codingwithlinda.core.navigation.DashboardNavRoute
+import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core.navigation.navigateToEvent
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
+    navHostController: NavHostController,
     navController: NavController,
     appModule: AppModule
 ) {
 
     composable<AuthenticationNavRoute.AuthenticationRoot> {
-        AuthenticationRootScreen(appModule)
+        AuthenticationRootScreen(
+            appModule = appModule,
+            navHostController = navHostController
+        )
     }
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
         val viewModel = viewModel<RegisterUserViewModel>()
@@ -46,7 +53,11 @@ fun NavGraphBuilder.authenticationNavGraph(
             }
         )
     }
-    composable<AuthenticationNavRoute.CreatePinRoute> {
+    composable<AuthenticationNavRoute.CreatePinRoute>(
+        typeMap = mapOf(
+            typeOf<Account>() to CustomNavType.AccountType
+        )
+    ) {
         val userName = it.toRoute<AuthenticationNavRoute.CreatePinRoute>().userName
         val factory = viewModelFactory {
             initializer {
@@ -139,7 +150,16 @@ fun NavGraphBuilder.authenticationNavGraph(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                navController.navigateToEvent(it)
+                if (it is NavigationEvent.RedirectToDashboard){
+                    navHostController.navigate(DashboardNavRoute.DashboardRoot){
+                        popUpTo(AuthenticationNavRoute.AuthenticationRoot){
+                            inclusive = true
+                        }
+                    }
+                }
+                else {
+                    navController.navigateToEvent(it)
+                }
             }
         )
     }

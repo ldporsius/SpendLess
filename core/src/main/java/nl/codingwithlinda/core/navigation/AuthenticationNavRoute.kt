@@ -28,5 +28,8 @@ sealed interface AuthenticationNavRoute : NavRoute {
     ): AuthenticationNavRoute
 
     @Serializable
+    data object RedirectToDashboardRoute : AuthenticationNavRoute
+
+    @Serializable
     data object LoginRoute : AuthenticationNavRoute
 }
