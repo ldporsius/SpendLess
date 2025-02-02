@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.ui
+package nl.codingwithlinda.core_ui
 
 import androidx.compose.ui.graphics.Color
 

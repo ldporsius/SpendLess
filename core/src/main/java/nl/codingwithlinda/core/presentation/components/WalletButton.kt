@@ -12,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.core.R
 
 @Composable
 fun WalletButton(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
     onClick: () -> Unit
 ) {
 
@@ -31,7 +31,7 @@ fun WalletButton(
     ){
 
         Icon(
-          painter = painterResource(id = icon),
+          painter = painterResource(id = nl.codingwithlinda.core_ui.R.drawable.account_balance_wallet),
             contentDescription = null,
             modifier = Modifier
                 .padding(10.dp)

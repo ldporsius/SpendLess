@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.ui.primaryFixed
+import nl.codingwithlinda.core_ui.primaryFixed
 
 @Composable
 fun PINKeyboardUndoButton(
@@ -17,7 +17,7 @@ fun PINKeyboardUndoButton(
     Box(modifier = modifier
         .size(108.dp)
         .background(
-            color = primaryFixed.copy(.3f),
+            color = nl.codingwithlinda.core_ui.primaryFixed.copy(.3f),
             shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
         )
         ,

@@ -49,9 +49,7 @@ fun RegisterUserNameScreen(
     ) {
 
         WalletButton(
-            modifier = Modifier
-               ,
-            icon = R.drawable.account_balance_wallet,
+            modifier = Modifier,
             onClick = { }
         )
         Text(text = "Welcome to SpendLess!\n" +

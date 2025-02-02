@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.ui.primaryFixed
+import nl.codingwithlinda.core_ui.primaryFixed
 
 @Composable
 fun PINKeyboardButton(
@@ -17,7 +17,7 @@ fun PINKeyboardButton(
     Box(modifier = modifier
         .size(108.dp)
         .background(
-            color = primaryFixed,
+            color = nl.codingwithlinda.core_ui.primaryFixed,
             shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
         )
         ,

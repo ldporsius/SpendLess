@@ -63,7 +63,6 @@ fun CreatePinScreen(
 
             WalletButton(
                 modifier = Modifier.padding(top = 16.dp),
-                icon = nl.codingwithlinda.core.R.drawable.account_balance_wallet
             ) { }
 
             header()

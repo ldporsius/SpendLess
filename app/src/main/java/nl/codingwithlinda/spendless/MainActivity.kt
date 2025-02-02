@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import nl.codingwithlinda.spendless.application.SpendLessApplication
-import nl.codingwithlinda.spendless.ui.theme.SpendLessTheme
+import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.spendless.navigation.SpendLessApp
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
 
         val appModule = SpendLessApplication.appModule
         setContent {
-            SpendLessTheme {
-               SpendLessApp(appModule)
+            nl.codingwithlinda.core_ui.SpendLessTheme {
+                SpendLessApp(appModule)
             }
         }
     }
