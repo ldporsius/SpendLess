@@ -10,8 +10,10 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ChipColors
 import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -84,7 +86,7 @@ fun OnboardingScreen(
                     defaultElevation = 8.dp
                 ),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.background
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLowest
                 )
             ) {
                 Column(modifier = Modifier
@@ -124,7 +126,9 @@ fun OnboardingScreen(
                     ElevatedAssistChip(
                         onClick = { shouldShowCurrencyPicker = !shouldShowCurrencyPicker },
                         label = {
-                            Text(text = uiState.getCurrencyUi(uiState.preferences.currency).text)
+                            Text(text = uiState.getCurrencyUi(uiState.preferences.currency).text,
+                                modifier = Modifier.padding(vertical = 16.dp)
+                            )
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -137,7 +141,10 @@ fun OnboardingScreen(
                                 contentDescription = null,
                                 tint = Color.Black
                             )
-                        }
+                        },
+                        colors = AssistChipDefaults.elevatedAssistChipColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                        )
                     )
                     AnimatedVisibility(shouldShowCurrencyPicker){
                         SelectCurrencyComponent(
