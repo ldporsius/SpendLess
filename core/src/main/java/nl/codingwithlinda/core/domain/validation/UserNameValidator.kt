@@ -1,13 +1,20 @@
 package nl.codingwithlinda.core.domain.validation
 
+import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.domain.error.authentication.AuthenticationError
 import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
+import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
+import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
 
-object UserNameValidator {
+class UserNameValidator(
+    private val accountAccess: DataSourceAccess<Account, Pair<String, String>>
+) {
 
-    val MIN_LENGTH = 3
-    val MAX_LENGTH = 14
+    companion object {
+        val MIN_LENGTH = 3
+        val MAX_LENGTH = 14
+    }
 
     fun isUserNameInputValid(userName: String): SpendResult<Boolean, AuthenticationError> {
 
@@ -20,7 +27,16 @@ object UserNameValidator {
 
     }
 
-    fun isUserNameUnique(userName: String): SpendResult<Boolean, UserNameDuplicateError> {
-        return SpendResult.Success(true)
+    suspend fun isUserNameUnique(userName: String): SpendResult<Boolean, UserNameDuplicateError> {
+       val isUnique = accountAccess.readAll().firstOrNull {
+            it.any {
+                it.userName == userName
+            }
+        }?.isEmpty() ?: true
+
+        return when(isUnique){
+            true ->  SpendResult.Success(true)
+            false -> SpendResult.Failure(UserNameDuplicateError)
+        }
     }
 }

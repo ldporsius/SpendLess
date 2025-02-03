@@ -1,6 +1,5 @@
 package nl.codingwithlinda.authentication.navigation
 
-import androidx.compose.material3.Text
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -13,10 +12,11 @@ import androidx.navigation.toRoute
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
+import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
 import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
-import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
+import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
@@ -24,6 +24,7 @@ import nl.codingwithlinda.authentication.registration.user_name.presentation.Reg
 import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
+import nl.codingwithlinda.core.domain.validation.UserNameValidator
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
@@ -44,7 +45,16 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
-        val viewModel = viewModel<RegisterUserViewModel>()
+        val factory = viewModelFactory {
+            initializer {
+                RegisterUserViewModel(
+                    userNameValidator = UserNameValidator(accountAccess = appModule.accountAccess)
+                )
+            }
+        }
+        val viewModel = viewModel<RegisterUserViewModel>(
+            factory = factory
+        )
 
         RegisterUserNameScreen(
             uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
@@ -143,7 +153,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                     accountAccess = appModule.accountAccess,
                     preferencesAccess = appModule.preferencesAccess,
                     navToDashboard = {
-                        navController.navigate(DashboardNavRoute.DashboardRoot){
+                        navHostController.navigate(DashboardNavRoute.DashboardRoot){
                             popUpTo(AuthenticationNavRoute.AuthenticationRoot){
                                 inclusive = true
                             }
@@ -175,6 +185,10 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
 
     composable<AuthenticationNavRoute.LoginRoute> {
-        Text(text = "Login")
+        LoginScreen(
+            onNavigate = {
+                navController.navigateToEvent(it)
+            }
+        )
     }
 }

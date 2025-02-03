@@ -25,7 +25,7 @@ fun AuthenticationRootScreen(
 
         Box(modifier = Modifier.padding(paddingValues)) {
             NavHost(navController = navController,
-                startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
+                startDestination = AuthenticationNavRoute.LoginRoute){
                 authenticationNavGraph(
                     navHostController = navHostController,
                     navController = navController,

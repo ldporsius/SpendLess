@@ -25,7 +25,7 @@ fun WalletButton(
         modifier = modifier .size(64.dp),
         shape = RoundedCornerShape(16.dp),
         colors = IconButtonDefaults.filledIconButtonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
         )
     ){
