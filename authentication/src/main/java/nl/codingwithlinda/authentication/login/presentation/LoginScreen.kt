@@ -98,7 +98,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 32.dp),
-                    enabled = uistate.isLoginButtonEnabled()
+                    enabled = uistate.isLoginValid
                 ) {
                     Text(text = "Login")
                 }

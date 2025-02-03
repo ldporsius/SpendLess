@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
+import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
@@ -190,7 +191,9 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         val factory = viewModelFactory {
             initializer {
-                LoginViewModel()
+                LoginViewModel(
+                    loginValidator = LoginValidator(accountAccess = appModule.accountAccess)
+                )
             }
         }
         val viewModel = viewModel<LoginViewModel>(

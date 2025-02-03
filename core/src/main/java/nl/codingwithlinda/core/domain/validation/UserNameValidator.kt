@@ -1,6 +1,5 @@
 package nl.codingwithlinda.core.domain.validation
 
-import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.domain.error.authentication.AuthenticationError
 import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
@@ -35,4 +34,6 @@ class UserNameValidator(
             false -> SpendResult.Failure(UserNameDuplicateError)
         }
     }
+
+
 }
