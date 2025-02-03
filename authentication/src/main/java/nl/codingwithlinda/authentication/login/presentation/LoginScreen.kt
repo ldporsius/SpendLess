@@ -13,18 +13,32 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.core.presentation.components.CustomTextField
+import nl.codingwithlinda.core_ui.shared_components.CustomTextField
+import nl.codingwithlinda.authentication.login.presentation.state.LoginAction
+import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
 import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 
 @Composable
 fun LoginScreen(
+    uistate: LoginViewState,
+    onAction: (LoginAction) -> Unit,
     onNavigate: (NavigationEvent) -> Unit
 ) {
+    val focusRequester = FocusRequester()
+
+    LaunchedEffect(true){
+        focusRequester.requestFocus()
+    }
     Scaffold {paddingValues ->
         Surface(
             modifier = Modifier
@@ -52,29 +66,39 @@ fun LoginScreen(
                     modifier = Modifier
                         .padding(top = 32.dp)
                         .fillMaxWidth()
-                    ,
-                    text = "",
-                    onValueChange = {},
+                        .focusRequester(focusRequester),
+                    text = uistate.userNameInput,
+                    onValueChange = {
+                        onAction(LoginAction.UserNameInputAction(it))
+                    },
                     placeholder = {
                         Text(text = "Username")
-                    }
+                    },
+                    isSingleLine = true,
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next,
                 )
                 CustomTextField(
                     modifier = Modifier
                         .padding(top = 32.dp)
-                        .fillMaxWidth()
-                    ,
-                    text = "",
-                    onValueChange = {},
+                        .fillMaxWidth(),
+                    text = uistate.pinInput,
+                    onValueChange = {
+                        onAction(LoginAction.PINInputAction(it))
+                    },
                     placeholder = {
                         Text(text = "PIN")
-                    }
+                    },
+                    isSingleLine = true,
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
                 )
 
                 Button(onClick = { /*TODO*/ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 32.dp)
+                        .padding(top = 32.dp),
+                    enabled = uistate.isLoginButtonEnabled()
                 ) {
                     Text(text = "Login")
                 }

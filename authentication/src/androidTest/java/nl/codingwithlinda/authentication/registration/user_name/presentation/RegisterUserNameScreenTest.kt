@@ -8,8 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
-import nl.codingwithlinda.core.presentation.util.UiText
-import org.junit.Assert.*
+import nl.codingwithlinda.core_ui.util.UiText
 import org.junit.Rule
 import org.junit.Test
 

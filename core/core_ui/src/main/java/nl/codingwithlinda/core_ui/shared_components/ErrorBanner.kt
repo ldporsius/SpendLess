@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.core.presentation.components
+package nl.codingwithlinda.core_ui.shared_components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.presentation.util.UiText
+import nl.codingwithlinda.core_ui.util.UiText
 
 @Composable
 fun ErrorBanner(

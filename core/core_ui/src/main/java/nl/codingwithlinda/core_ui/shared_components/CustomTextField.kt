@@ -1,19 +1,24 @@
-package nl.codingwithlinda.authentication.core.presentation.components
+package nl.codingwithlinda.core_ui.shared_components
 
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun CustomTextField(
     modifier: Modifier = Modifier,
     text: String,
     onValueChange: (String) -> Unit,
-    placeholder: @Composable (() -> Unit)? = null
+    placeholder: @Composable (() -> Unit)? = null,
+    isSingleLine: Boolean = true,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done
 ) {
 
     OutlinedTextField(
@@ -21,6 +26,11 @@ fun CustomTextField(
         value = text,
         onValueChange = onValueChange,
         placeholder = placeholder,
+        singleLine = isSingleLine,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        ),
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
             unfocusedBorderColor = Color.Transparent,

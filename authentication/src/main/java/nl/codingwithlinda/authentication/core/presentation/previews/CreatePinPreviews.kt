@@ -4,7 +4,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
-import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
+import nl.codingwithlinda.core_ui.util.UiText
+import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 
 @Preview
 @Composable
@@ -15,7 +16,7 @@ private fun CreatePinScreenPreview() {
         errorBanner = {
             ErrorBanner(
                 modifier = it.fillMaxWidth(),
-                error = nl.codingwithlinda.core.presentation.util.UiText.DynamicText("Error")
+                error = UiText.DynamicText("Error")
             )
         },
         onAction = {},

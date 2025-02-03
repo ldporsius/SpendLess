@@ -5,7 +5,7 @@ import nl.codingwithlinda.core.domain.error.authentication.PINDiffersError
 import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
 import nl.codingwithlinda.core.domain.validation.UserNameValidator.Companion.MAX_LENGTH
 import nl.codingwithlinda.core.domain.validation.UserNameValidator.Companion.MIN_LENGTH
-import nl.codingwithlinda.core.presentation.util.UiText
+import nl.codingwithlinda.core_ui.util.UiText
 
 fun AuthenticationError.toUiText(): UiText = when(this) {
     AuthenticationError.UserNameInvalidCharactersError -> UiText.DynamicText("Username can only contain letters and numbers")

@@ -11,8 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
-import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
+import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.login.presentation.LoginScreen
+import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
+import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
 import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
 import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
@@ -185,7 +187,18 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
 
     composable<AuthenticationNavRoute.LoginRoute> {
+
+        val factory = viewModelFactory {
+            initializer {
+                LoginViewModel()
+            }
+        }
+        val viewModel = viewModel<LoginViewModel>(
+            factory = factory
+        )
         LoginScreen(
+            uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onAction = viewModel::handleAction,
             onNavigate = {
                 navController.navigateToEvent(it)
             }

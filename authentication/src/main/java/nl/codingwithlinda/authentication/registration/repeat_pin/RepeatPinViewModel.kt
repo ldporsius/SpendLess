@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.time.delay
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
@@ -22,7 +21,7 @@ import nl.codingwithlinda.core.domain.NUMBER_PIN_LENGTH
 import nl.codingwithlinda.core.domain.error.authentication.PINDiffersError
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core.presentation.util.UiText
+import nl.codingwithlinda.core_ui.util.UiText
 
 class RepeatPinViewModel(
     private val accountFactory: AccountFactory,

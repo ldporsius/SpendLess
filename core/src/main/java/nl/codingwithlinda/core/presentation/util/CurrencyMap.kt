@@ -1,6 +1,7 @@
 package nl.codingwithlinda.core.presentation.util
 
 import nl.codingwithlinda.core.domain.model.Currency
+import nl.codingwithlinda.core_ui.util.UiText
 import nl.codingwithlinda.core_ui.R as uiR
 
 val currencySymbolMap = mapOf(

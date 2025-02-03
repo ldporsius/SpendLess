@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.core.presentation.components.ErrorBanner
+import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterAction
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.navigation.NavigationEvent

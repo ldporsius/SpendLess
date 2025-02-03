@@ -1,7 +1,7 @@
 package nl.codingwithlinda.authentication.registration.user_name.presentation.state
 
 import nl.codingwithlinda.core.domain.error.NoDataError
-import nl.codingwithlinda.core.presentation.util.UiText
+import nl.codingwithlinda.core_ui.util.UiText
 
 data class RegisterUserViewState(
     val userNameInput: String = "",

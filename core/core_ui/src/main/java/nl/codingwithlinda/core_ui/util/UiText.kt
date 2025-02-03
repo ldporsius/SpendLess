@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.presentation.util
+package nl.codingwithlinda.core_ui.util
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
