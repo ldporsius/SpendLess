@@ -196,7 +196,8 @@ fun OnboardingScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-                        onNavigate(NavigationEvent.RedirectToDashboard)
+                        onAction(OnboardingAction.SaveOnboarding)
+                        //onNavigate(NavigationEvent.RedirectToDashboard)
                     },
                     modifier = Modifier
                         .fillMaxWidth(),

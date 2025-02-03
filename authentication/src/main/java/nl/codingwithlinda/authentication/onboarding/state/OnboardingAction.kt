@@ -9,4 +9,6 @@ sealed interface OnboardingAction {
     data class OnSelectCurrency(val currency: Currency): OnboardingAction
     data class OnSelectDecimalSeparator(val separator: Separator) : OnboardingAction
     data class OnSelectThousandsSeparator(val separator: Separator) : OnboardingAction
+
+    data object SaveOnboarding: OnboardingAction
 }

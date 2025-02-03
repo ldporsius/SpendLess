@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(project(":core:core_ui"))
     implementation(project(":dashboard"))
+    implementation(project(":persistence"))
 
 
     testImplementation(libs.junit)

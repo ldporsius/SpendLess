@@ -1,4 +1,4 @@
-package nl.codingwithlinda.persistence.domain
+package nl.codingwithlinda.core.domain.local_cache
 
 import kotlinx.coroutines.flow.Flow
 

@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
 import nl.codingwithlinda.core.domain.CurrencyFormatter
+import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
@@ -19,7 +20,10 @@ import nl.codingwithlinda.core.domain.model.Separator
 
 class OnboardingViewModel(
     private val currencyFormatter: CurrencyFormatter,
-    private val account: Account
+    private val account: Account,
+    private val accountAccess: DataSourceAccess<Account, Pair<String, String>>,
+    private val preferencesAccess: DataSourceAccess<Preferences, Long>,
+    private val navToDashboard: () -> Unit
 ): ViewModel() {
 
     private val exampleText = "1038245"
@@ -70,6 +74,14 @@ class OnboardingViewModel(
             is OnboardingAction.OnSelectThousandsSeparator -> {
                 _preferences.update {
                     it.copy(thousandsSeparator = action.separator)
+                }
+            }
+
+            OnboardingAction.SaveOnboarding -> {
+                viewModelScope.launch {
+                    preferencesAccess.create(_preferences.value)
+                    accountAccess.create(account)
+                    navToDashboard()
                 }
             }
         }

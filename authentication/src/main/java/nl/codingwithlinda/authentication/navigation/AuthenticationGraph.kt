@@ -21,6 +21,7 @@ import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserViewModel
+import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
@@ -93,7 +94,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 RepeatPinViewModel(
-                    accountFactory = nl.codingwithlinda.core.data.AccountFactory(),
+                    accountFactory = AccountFactory(),
                     userName = userName,
                     pin = pin,
                     navToOnboarding = {
@@ -138,7 +139,16 @@ fun NavGraphBuilder.authenticationNavGraph(
             initializer {
                 OnboardingViewModel(
                     currencyFormatter = appModule.currencyFormatter,
-                    account = args.account
+                    account = args.account,
+                    accountAccess = appModule.accountAccess,
+                    preferencesAccess = appModule.preferencesAccess,
+                    navToDashboard = {
+                        navController.navigate(DashboardNavRoute.DashboardRoot){
+                            popUpTo(AuthenticationNavRoute.AuthenticationRoot){
+                                inclusive = true
+                            }
+                        }
+                    }
                 )
             }
         }

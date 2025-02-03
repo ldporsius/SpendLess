@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4bea8c25d3805a45c42c967e0802fb55",
+    "identityHash": "164f1ca5ff1254ccc5cf431714238250",
     "entities": [
       {
-        "tableName": "AccountEntity",
+        "tableName": "accounts",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userName` TEXT NOT NULL, `pin` TEXT NOT NULL, PRIMARY KEY(`userName`))",
         "fields": [
           {
@@ -29,12 +29,38 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "preferences",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `preferencesJson` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preferencesJson",
+            "columnName": "preferencesJson",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4bea8c25d3805a45c42c967e0802fb55')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '164f1ca5ff1254ccc5cf431714238250')"
     ]
   }
 }
