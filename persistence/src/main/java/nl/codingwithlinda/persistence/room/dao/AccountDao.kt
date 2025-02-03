@@ -18,8 +18,8 @@ interface AccountDao {
     fun readAccounts(): Flow<List<AccountEntity>>
 
     @Query("SELECT * FROM accounts WHERE userName = :userName")
-    fun getAccountForUser(userName: String): AccountEntity?
+    suspend fun getAccountForUser(userName: String): AccountEntity?
 
     @Query("SELECT * FROM accounts WHERE userName = :userName AND pin = :pin")
-    fun getAccountForUserAndPIN(userName: String, pin: String): AccountEntity?
+    suspend fun getAccountForUserAndPIN(userName: String, pin: String): AccountEntity?
 }

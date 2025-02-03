@@ -28,11 +28,7 @@ class UserNameValidator(
     }
 
     suspend fun isUserNameUnique(userName: String): SpendResult<Boolean, UserNameDuplicateError> {
-       val isUnique = accountAccess.readAll().firstOrNull {
-            it.any {
-                it.userName == userName
-            }
-        }?.isEmpty() ?: true
+       val isUnique = accountAccess.read(Pair(userName, "")) == null
 
         return when(isUnique){
             true ->  SpendResult.Success(true)

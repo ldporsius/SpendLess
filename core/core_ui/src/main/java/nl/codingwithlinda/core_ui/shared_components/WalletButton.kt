@@ -1,6 +1,5 @@
-package nl.codingwithlinda.core.presentation.components
+package nl.codingwithlinda.core_ui.shared_components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.R
 
 @Composable
 fun WalletButton(

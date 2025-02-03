@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.core.presentation.components.CustomTextField
 import nl.codingwithlinda.core.navigation.NavigationEvent
-import nl.codingwithlinda.core.presentation.components.WalletButton
+import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 
 @Composable

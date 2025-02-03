@@ -8,12 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -27,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.PINKeyboard
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
-import nl.codingwithlinda.core.presentation.components.WalletButton
+import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 @Composable
 fun CreatePinScreen(

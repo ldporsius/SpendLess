@@ -1,7 +1,6 @@
-package nl.codingwithlinda.core.presentation.components
+package nl.codingwithlinda.core_ui.shared_components
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset

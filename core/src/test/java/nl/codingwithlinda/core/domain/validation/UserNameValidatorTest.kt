@@ -1,6 +1,8 @@
 package nl.codingwithlinda.core.domain.validation
 
+import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.core.domain.error.authentication.AuthenticationError
+import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.fake_data.FakeAccountAccess
 import org.junit.Assert.*
@@ -24,6 +26,30 @@ class UserNameValidatorTest{
                 assertTrue(result.data)
             }
         }
+    }
+
+    @Test
+    fun `test user name duplicate`(): Unit = runBlocking{
+
+        val result = userNameValidator.isUserNameUnique("lin")
+        println("Result $result")
+        assertTrue(result is SpendResult.Failure)
+
+        when(result){
+            is SpendResult.Failure -> {
+                println("Error ${result.error}")
+
+            }
+            is SpendResult.Success -> {
+                println("Success ${result.data}")
+                assertTrue(result.data)
+            }
+        }
+
+        accountAccess.delete("lin" to "12345")
+        val result2 = userNameValidator.isUserNameUnique("lin")
+        println("Result2 $result2")
+        assertTrue(result2 is SpendResult.Success)
 
     }
 }

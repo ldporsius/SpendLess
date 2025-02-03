@@ -17,7 +17,10 @@ class AccountAccess(
     }
 
     override suspend fun read(id:Pair<String,String>): Account? {
-        return accountDao.getAccountForUserAndPIN(id.first, id.second)?.toDomain()
+        if (id.second.isBlank()) return accountDao.getAccountForUser(id.first)?.toDomain()
+        id.second.let {pin ->
+            return accountDao.getAccountForUserAndPIN(id.first, pin)?.toDomain()
+        }
     }
 
     override suspend fun update(item: Account): Account {
