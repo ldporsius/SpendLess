@@ -5,7 +5,7 @@ import org.junit.Test
 
 class EncryptorTest{
 
-    val encyptor = Encryptor()
+    private val encyptor = Encryptor()
 
     @Test
     fun `encrypt and decrypt`(){

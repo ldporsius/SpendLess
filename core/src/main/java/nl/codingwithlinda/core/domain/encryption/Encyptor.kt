@@ -3,6 +3,7 @@ package nl.codingwithlinda.core.domain.encryption
 import javax.crypto.*
 import javax.crypto.spec.IvParameterSpec
 
+/* Baeldung*/
 class Encryptor {
 
     fun generateAESKey(keySize: Int = 256): SecretKey {
