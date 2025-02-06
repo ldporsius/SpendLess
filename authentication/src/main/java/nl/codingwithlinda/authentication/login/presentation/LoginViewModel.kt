@@ -52,6 +52,11 @@ class LoginViewModel(
             when(res){
                 is SpendResult.Failure -> {
                     _errorChannel.send(res.error.toUiText())
+                    _uiState.update {
+                        it.copy(
+                            isLoginValid = false
+                        )
+                    }
                 }
                 is SpendResult.Success -> {
                     _errorChannel.send(null)
