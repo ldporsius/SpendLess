@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core_ui.shared_components.verticalScrollBar
-import nl.codingwithlinda.core.presentation.util.CurrencyUi
+import nl.codingwithlinda.core_ui.currency.CurrencyUi
 
 @Composable
 fun SelectCurrencyComponent(

@@ -7,11 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.U
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import nl.codingwithlinda.core_ui.R
 import nl.codingwithlinda.dashboard.categories.domain.model.ExpenseCategoryUi
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
 
@@ -20,7 +17,7 @@ fun CategoriesComponent(
     modifier: Modifier = Modifier,
     categories: List<ExpenseCategoryUi>
 ) {
-    val context = LocalContext.current
+
     Box(modifier = modifier,
         contentAlignment = Alignment.Center
 
@@ -30,7 +27,6 @@ fun CategoriesComponent(
                 Text(it.imageText,
                     fontSize = 50.sp)
             }
-
         }
 
 
@@ -40,7 +36,7 @@ fun CategoriesComponent(
 
 @androidx.compose.ui.tooling.preview.Preview
 @Composable
-private fun PreviewCatImages() {
+private fun PreviewCatComp() {
 
     val images = expenseCategoriesToUi(
         LocalContext.current

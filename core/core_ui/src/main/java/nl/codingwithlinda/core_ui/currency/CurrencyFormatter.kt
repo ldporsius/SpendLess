@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.presentation.util
+package nl.codingwithlinda.core_ui.currency
 
 import android.content.Context
 import nl.codingwithlinda.core.data.currency_format.decimalSeparatorMap

@@ -45,7 +45,6 @@ dependencies {
 
     api(libs.kotlinx.serialization.json)
     api(libs.androidx.navigation.compose)
-    implementation(project(":core:core_ui"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

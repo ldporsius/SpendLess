@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.presentation.util
+package nl.codingwithlinda.core_ui.currency
 
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core_ui.util.UiText

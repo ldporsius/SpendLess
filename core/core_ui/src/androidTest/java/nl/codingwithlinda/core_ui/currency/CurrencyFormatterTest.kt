@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.presentation.util
+package nl.codingwithlinda.core_ui.currency
 
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
