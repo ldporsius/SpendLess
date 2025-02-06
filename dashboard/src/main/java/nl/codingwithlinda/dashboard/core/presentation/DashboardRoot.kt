@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.presentation
+package nl.codingwithlinda.dashboard.core.presentation
 
 import androidx.compose.runtime.Composable
 

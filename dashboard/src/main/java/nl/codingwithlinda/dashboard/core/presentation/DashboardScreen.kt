@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.presentation
+package nl.codingwithlinda.dashboard.core.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import nl.codingwithlinda.core_ui.dashboardBackground
 
 @Composable
-fun DashboardScreen(modifier: Modifier = Modifier) {
+fun DashboardScreen(
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()

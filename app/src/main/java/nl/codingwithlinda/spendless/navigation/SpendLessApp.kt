@@ -9,7 +9,7 @@ import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
-import nl.codingwithlinda.dashboard.presentation.DashboardRoot
+import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 
 @Composable
 fun SpendLessApp(

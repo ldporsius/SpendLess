@@ -43,6 +43,9 @@ android {
 dependencies {
     implementation(project(":authentication"))
     implementation(project(":core"))
+    implementation(project(":core:core_ui"))
+    implementation(project(":dashboard"))
+    implementation(project(":persistence"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -55,9 +58,6 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
-    implementation(project(":core:core_ui"))
-    implementation(project(":dashboard"))
-    implementation(project(":persistence"))
 
 
     testImplementation(libs.junit)

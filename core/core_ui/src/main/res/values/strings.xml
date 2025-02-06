@@ -6,8 +6,14 @@
     <string name="yen_symbol">"¥"</string>
     <string name="swissfranc_symbol">"CHF"</string>
 
-    <string name="category_home">🏠</string>
-    <string name="category_clothing">💰</string>
-    <string name="category_food">🍕</string>
+    <string name="house">🏠</string>
+    <string name="money_bag">💰</string>
+    <string name="pizza">🍕</string>
+    <string name="necktie">👔</string>
+
+    <string name="graduation_cap">🎓</string>
+    <string name="laptop">💻</string>
+    <string name="red_heart">❤️</string>
+    <string name="money_with_wings"></string>
 
 </resources>
