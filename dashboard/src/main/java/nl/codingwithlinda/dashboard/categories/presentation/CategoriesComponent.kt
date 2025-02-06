@@ -30,9 +30,7 @@ fun CategoriesComponent(
                 Text(it.imageText,
                     fontSize = 50.sp)
             }
-            Text(String(Character.toChars(0x1f4b8)),
-                fontSize = 100.sp
-            )
+
         }
 
 
