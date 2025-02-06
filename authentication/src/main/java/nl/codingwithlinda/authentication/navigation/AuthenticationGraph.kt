@@ -198,7 +198,10 @@ fun NavGraphBuilder.authenticationNavGraph(
                     loginValidator = LoginValidator(
                         accountAccess = appModule.accountAccess,
                         accountFactory = AccountFactory()
-                    )
+                    ),
+                    navToDashboard = {
+                        navHostController.navigate(DashboardNavRoute.DashboardRoot)
+                    }
                 )
             }
         }

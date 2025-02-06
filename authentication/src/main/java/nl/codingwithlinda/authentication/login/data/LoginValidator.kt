@@ -12,6 +12,8 @@ class LoginValidator(
 ) {
 
     suspend fun validateCredentials(userName: String, pin: String): SpendResult<Boolean, LoginError> {
+        if (userName.isEmpty())  return SpendResult.Success(false)
+
         val account = accountAccess.read(Pair(userName,""))
             ?: return SpendResult.Failure(LoginError.UserNameUnknownError)
 

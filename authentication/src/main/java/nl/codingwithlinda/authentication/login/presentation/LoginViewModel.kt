@@ -22,7 +22,8 @@ import nl.codingwithlinda.core_ui.util.UiText
 
 
 class LoginViewModel(
-    private val loginValidator: LoginValidator
+    private val loginValidator: LoginValidator,
+    private val navToDashboard: () -> Unit
 ): ViewModel() {
 
 
@@ -43,7 +44,7 @@ class LoginViewModel(
         loginValidator.validateCredentials(name, pin)
     }
 
-    private val _errorChannel = Channel<UiText>()
+    private val _errorChannel = Channel<UiText?>()
     val errorChannel = _errorChannel.receiveAsFlow()
 
     init {
@@ -53,6 +54,7 @@ class LoginViewModel(
                     _errorChannel.send(res.error.toUiText())
                 }
                 is SpendResult.Success -> {
+                    _errorChannel.send(null)
                     _uiState.update {
                         it.copy(
                             isLoginValid = res.data
@@ -88,11 +90,7 @@ class LoginViewModel(
                                 }
                             }
                             is SpendResult.Success -> {
-                                _uiState.update {
-                                    it.copy(
-                                        isLoginValid = res.data
-                                    )
-                                }
+                                navToDashboard()
                             }
                         }
 
