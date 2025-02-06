@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="euro_symbol">"\u20AC"</string>
-    <string name="dollar_symbol">"$"</string>
-    <string name="gbpound_symbol">"£"</string>
-    <string name="yen_symbol">"¥"</string>
-    <string name="swissfranc_symbol">"CHF"</string>
+    <string name="euro_symbol" translatable="false">"\u20AC"</string>
+    <string name="dollar_symbol" translatable="false">"$"</string>
+    <string name="gbpound_symbol" translatable="false">"£"</string>
+    <string name="yen_symbol" translatable="false">"¥"</string>
+    <string name="swissfranc_symbol" translatable="false">"CHF"</string>
 
-    <string name="house">🏠</string>
-    <string name="money_bag">💰</string>
-    <string name="pizza">🍕</string>
-    <string name="necktie">👔</string>
+    <string name="house" translatable="false">🏠</string>
+    <string name="money_bag" translatable="false">💰</string>
+    <string name="pizza" translatable="false">🍕</string>
+    <string name="necktie" translatable="false">👔</string>
 
-    <string name="graduation_cap">🎓</string>
-    <string name="laptop">💻</string>
-    <string name="red_heart">❤️</string>
-
+    <string name="graduation_cap" translatable="false">🎓</string>
+    <string name="laptop" translatable="false">💻</string>
+    <string name="red_heart" translatable="false">❤️</string>
 
 </resources>
