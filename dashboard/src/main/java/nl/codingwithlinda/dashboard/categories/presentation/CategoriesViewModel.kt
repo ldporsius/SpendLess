@@ -1,10 +1,11 @@
 package nl.codingwithlinda.dashboard.categories.presentation
 
 import androidx.lifecycle.ViewModel
+import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
 
 class CategoriesViewModel(
-    private val categoryImageProvider: CategoryImageProvider
+    private val categoryFactory: CategoryFactory
 ): ViewModel() {
 
-    val categoryImages = categoryImageProvider.categoryImages()
+    val categoryImages = categoryFactory.expenseCategoriesUi()
 }
