@@ -9,7 +9,7 @@ import nl.codingwithlinda.authentication.core.presentation.util.toUiText
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterAction
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core.domain.validation.UserNameValidator
+import nl.codingwithlinda.authentication.validation.UserNameValidator
 
 class RegisterUserViewModel(
     private val userNameValidator: UserNameValidator

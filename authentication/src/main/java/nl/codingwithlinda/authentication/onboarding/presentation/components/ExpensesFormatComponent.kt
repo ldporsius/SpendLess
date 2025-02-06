@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding.components
+package nl.codingwithlinda.authentication.onboarding.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,20 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.domain.model.Separator
+import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core_ui.LocalSegmentedButtonColorProvider
 import nl.codingwithlinda.core_ui.segmentedButtonColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DecimalSeparatorComponent(
-    selectedSeparator: Int,
-    onSelected: (Separator) -> Unit
+fun ExpensesFormatComponent(
+    selectedExpensesFormat: Int,
+    onExpensesFormatSelected: (ExpensesFormat) -> Unit
 ) {
-    CompositionLocalProvider(LocalSegmentedButtonColorProvider provides segmentedButtonColors()) {
 
+    CompositionLocalProvider(LocalSegmentedButtonColorProvider provides segmentedButtonColors()) {
         Text(
-            text = "Decimal separator",
+            text = "Expenses format",
             style = MaterialTheme.typography.bodySmall
         )
 
@@ -42,26 +42,25 @@ fun DecimalSeparatorComponent(
             ) {
             SegmentedButton(
                 onClick = {
-                    onSelected(Separator.PERIOD)
+                    onExpensesFormatSelected(ExpensesFormat.MINUS)
                 },
-                selected = selectedSeparator == 0,
+                selected = selectedExpensesFormat == 0,
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.padding(end = 8.dp),
                 colors = LocalSegmentedButtonColorProvider.current
             ) {
-                Text(text = "1.00")
+                Text(text = "-$10")
             }
             SegmentedButton(
                 onClick = {
-                    onSelected(Separator.COMMA)
+                    onExpensesFormatSelected(ExpensesFormat.BRACKETS)
                 },
-                selected = selectedSeparator == 1,
+                selected = selectedExpensesFormat == 1,
                 shape = RoundedCornerShape(16.dp),
                 colors = LocalSegmentedButtonColorProvider.current
             ) {
-                Text(text = "1,00")
+                Text(text = "($10)")
             }
-
         }
     }
 }

@@ -18,7 +18,7 @@ import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboa
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
 import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.domain.NUMBER_PIN_LENGTH
-import nl.codingwithlinda.core.domain.error.authentication.PINDiffersError
+import nl.codingwithlinda.authentication.core.domain.error.PINDiffersError
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.util.UiText
@@ -43,7 +43,7 @@ class RepeatPinViewModel(
 
     init {
         _pinEntered
-            .debounce(1000)
+            .debounce(100)
             .onEach{
                 if(it.size == NUMBER_PIN_LENGTH){
                    val validRes = isPinValid(it.joinToString(""))

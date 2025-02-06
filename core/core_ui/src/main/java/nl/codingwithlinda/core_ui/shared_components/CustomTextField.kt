@@ -1,5 +1,6 @@
 package nl.codingwithlinda.core_ui.shared_components
 
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -18,6 +19,7 @@ fun CustomTextField(
     placeholder: @Composable (() -> Unit)? = null,
     isSingleLine: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardActions: KeyboardActions,
     imeAction: ImeAction = ImeAction.Done
 ) {
 
@@ -31,6 +33,7 @@ fun CustomTextField(
             keyboardType = keyboardType,
             imeAction = imeAction
         ),
+        keyboardActions = keyboardActions,
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
             unfocusedBorderColor = Color.Transparent,

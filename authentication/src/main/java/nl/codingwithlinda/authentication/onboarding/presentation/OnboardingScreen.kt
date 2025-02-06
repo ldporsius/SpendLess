@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding
+package nl.codingwithlinda.authentication.onboarding.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
@@ -34,12 +34,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.authentication.onboarding.components.DecimalSeparatorComponent
-import nl.codingwithlinda.authentication.onboarding.components.ExpensesFormatComponent
-import nl.codingwithlinda.authentication.onboarding.components.SelectCurrencyComponent
-import nl.codingwithlinda.authentication.onboarding.components.ThousandsSeparatorComponent
-import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
-import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
+import nl.codingwithlinda.authentication.onboarding.presentation.components.DecimalSeparatorComponent
+import nl.codingwithlinda.authentication.onboarding.presentation.components.ExpensesFormatComponent
+import nl.codingwithlinda.authentication.onboarding.presentation.components.SelectCurrencyComponent
+import nl.codingwithlinda.authentication.onboarding.presentation.components.ThousandsSeparatorComponent
+import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingAction
+import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingUiState
 import nl.codingwithlinda.core.navigation.NavigationEvent
 
 @OptIn(ExperimentalMaterial3Api::class)

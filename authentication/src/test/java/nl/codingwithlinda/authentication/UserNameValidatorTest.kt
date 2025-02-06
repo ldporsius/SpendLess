@@ -1,17 +1,18 @@
-package nl.codingwithlinda.core.domain.validation
+package nl.codingwithlinda.authentication
 
 import kotlinx.coroutines.runBlocking
-import nl.codingwithlinda.core.domain.error.authentication.AuthenticationError
-import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
+import nl.codingwithlinda.authentication.core.domain.error.AuthenticationError
+import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core.fake_data.FakeAccountAccess
+import nl.codingwithlinda.core.test_data.FakeAccountAccess
 import org.junit.Assert.*
 import org.junit.Test
 
 class UserNameValidatorTest{
 
     private val accountAccess = FakeAccountAccess()
-    private val userNameValidator = UserNameValidator(accountAccess)
+    private val userNameValidator =
+        UserNameValidator(accountAccess)
 
     @Test
     fun `test user input is valid`(){

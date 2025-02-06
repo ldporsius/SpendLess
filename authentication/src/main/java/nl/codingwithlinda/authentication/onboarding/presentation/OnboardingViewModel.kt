@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding
+package nl.codingwithlinda.authentication.onboarding.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import nl.codingwithlinda.authentication.onboarding.state.OnboardingAction
-import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
+import nl.codingwithlinda.authentication.onboarding.domain.SaveAccountAndPreferencesUseCase
+import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingAction
+import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingUiState
 import nl.codingwithlinda.core.domain.CurrencyFormatter
-import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
@@ -20,9 +20,8 @@ import nl.codingwithlinda.core.domain.model.Separator
 
 class OnboardingViewModel(
     private val currencyFormatter: CurrencyFormatter,
+    private val saveAccountAndPreferencesUseCase: SaveAccountAndPreferencesUseCase,
     private val account: Account,
-    private val accountAccess: DataSourceAccess<Account, Pair<String, String>>,
-    private val preferencesAccess: DataSourceAccess<Preferences, Long>,
     private val navToDashboard: () -> Unit
 ): ViewModel() {
 
@@ -79,8 +78,7 @@ class OnboardingViewModel(
 
             OnboardingAction.SaveOnboarding -> {
                 viewModelScope.launch {
-                    preferencesAccess.create(_preferences.value)
-                    accountAccess.create(account)
+                    saveAccountAndPreferencesUseCase.save(account, preferences)
                     navToDashboard()
                 }
             }

@@ -1,9 +1,9 @@
-package nl.codingwithlinda.authentication.onboarding.preview
+package nl.codingwithlinda.authentication.onboarding.presentation.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
-import nl.codingwithlinda.authentication.onboarding.state.OnboardingUiState
+import nl.codingwithlinda.authentication.onboarding.presentation.OnboardingScreen
+import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingUiState
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat

@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding.components
+package nl.codingwithlinda.authentication.onboarding.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

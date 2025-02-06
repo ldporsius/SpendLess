@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding.state
+package nl.codingwithlinda.authentication.onboarding.presentation.state
 
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat

@@ -1,7 +1,6 @@
-package nl.codingwithlinda.core.domain.validation
+package nl.codingwithlinda.authentication.validation
 
-import nl.codingwithlinda.core.domain.error.authentication.AuthenticationError
-import nl.codingwithlinda.core.domain.error.authentication.UserNameDuplicateError
+import nl.codingwithlinda.authentication.core.domain.error.AuthenticationError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
@@ -26,12 +25,12 @@ class UserNameValidator(
 
     }
 
-    suspend fun isUserNameUnique(userName: String): SpendResult<Boolean, UserNameDuplicateError> {
+    suspend fun isUserNameUnique(userName: String): SpendResult<Boolean, nl.codingwithlinda.authentication.core.domain.error.UserNameDuplicateError> {
        val isUnique = accountAccess.read(Pair(userName, "")) == null
 
         return when(isUnique){
             true ->  SpendResult.Success(true)
-            false -> SpendResult.Failure(UserNameDuplicateError)
+            false -> SpendResult.Failure(nl.codingwithlinda.authentication.core.domain.error.UserNameDuplicateError)
         }
     }
 

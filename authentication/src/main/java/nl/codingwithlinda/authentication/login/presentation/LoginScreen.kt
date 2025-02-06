@@ -1,11 +1,14 @@
 package nl.codingwithlinda.authentication.login.presentation
 
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -25,16 +28,20 @@ import nl.codingwithlinda.core_ui.shared_components.CustomTextField
 import nl.codingwithlinda.authentication.login.presentation.state.LoginAction
 import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
 import nl.codingwithlinda.core.navigation.NavigationEvent
+import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
+import nl.codingwithlinda.core_ui.util.UiText
 
 
 @Composable
 fun LoginScreen(
     uistate: LoginViewState,
+    error: UiText? = null,
     onAction: (LoginAction) -> Unit,
     onNavigate: (NavigationEvent) -> Unit
 ) {
     val focusRequester = FocusRequester()
+    val focusRequesterLoginButton = FocusRequester()
 
     LaunchedEffect(true){
         focusRequester.requestFocus()
@@ -45,72 +52,98 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 48.dp, horizontal = 16.dp)
-                ,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                WalletButton {  }
-
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Welcome back!",
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(text = "Enter your login details",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-                CustomTextField(
-                    modifier = Modifier
-                        .padding(top = 32.dp)
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    text = uistate.userNameInput,
-                    onValueChange = {
-                        onAction(LoginAction.UserNameInputAction(it))
-                    },
-                    placeholder = {
-                        Text(text = "Username")
-                    },
-                    isSingleLine = true,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                )
-                CustomTextField(
-                    modifier = Modifier
-                        .padding(top = 32.dp)
-                        .fillMaxWidth(),
-                    text = uistate.pinInput,
-                    onValueChange = {
-                        onAction(LoginAction.PINInputAction(it))
-                    },
-                    placeholder = {
-                        Text(text = "PIN")
-                    },
-                    isSingleLine = true,
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done,
-                )
-
-                Button(onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 32.dp),
-                    enabled = uistate.isLoginValid
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 48.dp, horizontal = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Login")
+                    WalletButton { }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Welcome back!",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        text = "Enter your login details",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                    CustomTextField(
+                        modifier = Modifier
+                            .padding(top = 32.dp)
+                            .fillMaxWidth()
+                            .focusRequester(focusRequester),
+                        text = uistate.userNameInput,
+                        onValueChange = {
+                            onAction(LoginAction.UserNameInputAction(it))
+                        },
+                        placeholder = {
+                            Text(text = "Username")
+                        },
+                        isSingleLine = true,
+                        keyboardType = KeyboardType.Text,
+                        keyboardActions = KeyboardActions(),
+                        imeAction = ImeAction.Next,
+                    )
+                    CustomTextField(
+                        modifier = Modifier
+                            .padding(top = 32.dp)
+                            .fillMaxWidth(),
+                        text = uistate.pinInput,
+                        onValueChange = {
+                            onAction(LoginAction.PINInputAction(it))
+                        },
+                        placeholder = {
+                            Text(text = "PIN")
+                        },
+                        isSingleLine = true,
+                        keyboardType = KeyboardType.Number,
+                        keyboardActions = KeyboardActions(
+                            onNext = {
+                                focusRequesterLoginButton.requestFocus()
+                            }
+                        ),
+                        imeAction = ImeAction.Next,
+                    )
+
+                    Button(
+                        onClick = {
+                            onAction(LoginAction.LoginAttempt)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 32.dp)
+                            .focusable(true)
+                            .focusRequester(focusRequesterLoginButton),
+                        enabled = uistate.isLoginValid
+                    ) {
+                        Text(text = "Login")
+                    }
+                    TextButton(
+                        onClick = { onNavigate(NavigationEvent.NavToRegisterUserName) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 32.dp)
+                    ) {
+                        Text(text = "New to SpendLess?")
+                    }
                 }
-                TextButton(onClick = { onNavigate(NavigationEvent.NavToRegisterUserName) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 32.dp)
-                ) {
-                    Text(text = "New to SpendLess?")
+
+
+
+                error?.let {
+                    ErrorBanner(
+                        modifier = Modifier.fillMaxWidth()
+                            .align(Alignment.BottomCenter),
+                        error = it)
                 }
             }
+
         }
+
 
     }
 

@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.onboarding.state
+package nl.codingwithlinda.authentication.onboarding.presentation.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

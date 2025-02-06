@@ -15,9 +15,9 @@ import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
-import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
-import nl.codingwithlinda.authentication.onboarding.OnboardingScreen
-import nl.codingwithlinda.authentication.onboarding.OnboardingViewModel
+import nl.codingwithlinda.authentication.onboarding.domain.SaveAccountAndPreferencesUseCase
+import nl.codingwithlinda.authentication.onboarding.presentation.OnboardingScreen
+import nl.codingwithlinda.authentication.onboarding.presentation.OnboardingViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
@@ -27,7 +27,7 @@ import nl.codingwithlinda.authentication.registration.user_name.presentation.Reg
 import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.core.domain.validation.UserNameValidator
+import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
@@ -145,16 +145,19 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     ){
 
-
         val args = it.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
 
+        val saveAccountAndPreferencesUseCase = SaveAccountAndPreferencesUseCase(
+            accountFactory = AccountFactory(),
+            accountAccess = appModule.accountAccess,
+            preferencesAccess = appModule.preferencesAccess,
+        )
         val factory = viewModelFactory {
             initializer {
                 OnboardingViewModel(
                     currencyFormatter = appModule.currencyFormatter,
                     account = args.account,
-                    accountAccess = appModule.accountAccess,
-                    preferencesAccess = appModule.preferencesAccess,
+                    saveAccountAndPreferencesUseCase = saveAccountAndPreferencesUseCase,
                     navToDashboard = {
                         navHostController.navigate(DashboardNavRoute.DashboardRoot){
                             popUpTo(AuthenticationNavRoute.AuthenticationRoot){
@@ -192,7 +195,10 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 LoginViewModel(
-                    loginValidator = LoginValidator(accountAccess = appModule.accountAccess)
+                    loginValidator = LoginValidator(
+                        accountAccess = appModule.accountAccess,
+                        accountFactory = AccountFactory()
+                    )
                 )
             }
         }
@@ -201,6 +207,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
         LoginScreen(
             uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
+            error = viewModel.errorChannel.collectAsStateWithLifecycle(null).value,
             onAction = viewModel::handleAction,
             onNavigate = {
                 navController.navigateToEvent(it)

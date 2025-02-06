@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.domain.error.authentication
+package nl.codingwithlinda.authentication.core.domain.error
 
 import nl.codingwithlinda.core.domain.error.RootError
 
