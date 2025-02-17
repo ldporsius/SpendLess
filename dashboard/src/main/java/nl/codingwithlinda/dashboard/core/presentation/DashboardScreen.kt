@@ -190,7 +190,7 @@ fun DashboardScreen(
                                         horizontalArrangement = Arrangement.SpaceBetween,
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        Text(it.description,
+                                        Text(it.title,
                                             style = MaterialTheme.typography.titleLarge
                                         )
                                         Text(
