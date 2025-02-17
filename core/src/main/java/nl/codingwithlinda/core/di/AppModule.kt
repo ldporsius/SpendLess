@@ -1,6 +1,6 @@
 package nl.codingwithlinda.core.di
 
-import nl.codingwithlinda.core.domain.CurrencyFormatter
+import nl.codingwithlinda.core.domain.currency_format.CurrencyFormatter
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Preferences

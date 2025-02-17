@@ -3,7 +3,7 @@ package nl.codingwithlinda.core_ui.currency
 import android.content.Context
 import nl.codingwithlinda.core.data.currency_format.decimalSeparatorMap
 import nl.codingwithlinda.core.data.currency_format.thousandsSeparatorMap
-import nl.codingwithlinda.core.domain.CurrencyFormatter
+import nl.codingwithlinda.core.domain.currency_format.CurrencyFormatter
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 
