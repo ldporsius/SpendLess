@@ -136,11 +136,11 @@ fun DashboardScreen(
                                         color = primaryFixed,
                                         shape = MaterialTheme.shapes.medium
                                     )
-                                    .padding(8.dp)
+                                    .padding(12.dp)
                             ) {
                                 Text(
                                     it.imageText,
-                                    fontSize = 50.sp
+                                    fontSize = 30.sp
                                 )
                             }
                             Column(
