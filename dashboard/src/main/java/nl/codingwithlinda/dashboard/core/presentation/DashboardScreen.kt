@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,15 +30,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.currentCompositionLocalContext
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.dashboardBackground
+import nl.codingwithlinda.core_ui.primary
 import nl.codingwithlinda.core_ui.primaryFixed
+import nl.codingwithlinda.core_ui.purplish
 import nl.codingwithlinda.core_ui.secondaryFixed
+import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,6 +109,57 @@ fun DashboardScreen(
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
+
+                val context = LocalContext.current
+                val expenseCategories = remember {
+                    expenseCategoriesToUi(context)
+                }
+                val mostPopularCategoryUi = expenseCategories.find {
+                    it.expenseCategory == ExpenseCategory.FOOD_GROCERIES
+                }
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = purplish,
+                        shape = MaterialTheme.shapes.medium
+                    )
+                    .padding(16.dp)
+                ) {
+                    mostPopularCategoryUi?.let {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+
+                            Box(
+                                modifier = Modifier
+                                    .background(
+                                        color = primaryFixed,
+                                        shape = MaterialTheme.shapes.medium
+                                    )
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    it.imageText,
+                                    fontSize = 50.sp
+                                )
+                            }
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    it.expenseLabel.asString(),
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                                Text(
+                                    "Most popular category",
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     Row(
