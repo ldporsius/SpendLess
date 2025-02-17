@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
-import nl.codingwithlinda.dashboard.categories.domain.model.ExpenseCategoryUi
+import nl.codingwithlinda.dashboard.categories.presentation.model.ExpenseCategoryUi
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
 
 @Composable

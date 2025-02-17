@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import nl.codingwithlinda.core.di.AppModule
+import nl.codingwithlinda.dashboard.transactions.presentation.TransactionsComponent
 
 @Composable
 fun DashboardRoot(
@@ -17,11 +18,16 @@ fun DashboardRoot(
             DashboardViewModel(appModule)
         }
     }
-    val viewModel = viewModel< DashboardViewModel>(
+    val viewModel = viewModel<DashboardViewModel>(
         factory = factory
     )
 
     DashboardScreen(
-        accountUiState = viewModel.accountUiState.collectAsStateWithLifecycle().value
+        accountUiState = viewModel.accountUiState.collectAsStateWithLifecycle().value,
+        transactionsComponent = {
+            TransactionsComponent(
+                transactions = viewModel.transactions.collectAsStateWithLifecycle().value
+            )
+        }
     )
 }

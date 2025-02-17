@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.categories.domain.model
+package nl.codingwithlinda.dashboard.categories.presentation.model
 
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core_ui.util.UiText

@@ -1,7 +1,7 @@
 package nl.codingwithlinda.dashboard.core.presentation.state
 
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
-import nl.codingwithlinda.dashboard.core.presentation.ui_model.TransactionUi
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionUi
 
 data class AccountUiState(
     val userName: String = "rockefeller74",

@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
+import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.dashboardBackground
 import nl.codingwithlinda.core_ui.primary
@@ -47,11 +48,14 @@ import nl.codingwithlinda.core_ui.purplish
 import nl.codingwithlinda.core_ui.secondaryFixed
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
+import nl.codingwithlinda.dashboard.transactions.presentation.TransactionsComponent
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-   accountUiState: AccountUiState
+   accountUiState: AccountUiState,
+   transactionsComponent: @Composable () -> Unit
 ) {
     Scaffold(
         modifier = Modifier
@@ -123,7 +127,7 @@ fun DashboardScreen(
                         color = purplish,
                         shape = MaterialTheme.shapes.medium
                     )
-                    .padding(16.dp)
+                    .padding(8.dp)
                 ) {
                     mostPopularCategoryUi?.let {
                         Row(
@@ -246,7 +250,14 @@ private fun DashboardScreenPreview() {
     SpendLessTheme {
         DashboardScreen(
             accountUiState = AccountUiState(
-            )
+            ),
+            transactionsComponent = {
+                TransactionsComponent(
+                    transactions = fakeTransactions().map {
+                        it.toUi()
+                    }
+                )
+            }
         )
     }
 

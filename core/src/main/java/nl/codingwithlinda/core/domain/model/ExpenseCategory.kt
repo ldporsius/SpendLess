@@ -1,6 +1,6 @@
 package nl.codingwithlinda.core.domain.model
 
-enum class ExpenseCategory(identifier: Int) {
+enum class ExpenseCategory(val identifier: Int) {
     CLOTHING_ACCESSORIES(0),
     EDUCATION(1),
     ENTERTAINMENT(2),
