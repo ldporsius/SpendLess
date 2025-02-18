@@ -11,12 +11,23 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-fun dayToUiText(dayDiff: Int): UiText{
+enum class DayDiff{
+    TODAY, YESTERDAY, OLDER
+}
+fun dayToUiText(dayDiff: DayDiff): UiText{
    return when (dayDiff) {
-       0 -> UiText.DynamicText("Today")
-       1 -> UiText.DynamicText("Yesterday")
+       DayDiff.TODAY -> UiText.DynamicText("Today")
+       DayDiff.YESTERDAY -> UiText.DynamicText("Yesterday")
        else -> UiText.DynamicText("Older")
    }
+}
+
+fun dayToDayDiff(day: Int): DayDiff{
+    return when(day){
+        0 -> DayDiff.TODAY
+        1 -> DayDiff.YESTERDAY
+        else -> DayDiff.OLDER
+    }
 }
 @SuppressLint("NewApi")
 fun getDayFromTimestamp(timestamp: Long): Int {
@@ -34,7 +45,7 @@ fun List<Transaction>.groupByDate(): List<TransactionGroup>{
     }
    .map{
         TransactionGroup(
-            date = it.key,
+            date = dayToDayDiff(it.key),
             transactions = it.value
         )
     }
@@ -48,6 +59,7 @@ fun List<TransactionGroup>.toUi(
 ): List<TransactionGroupUi> {
 
    return this.map { transactionGroup ->
+
         TransactionGroupUi(
             header = dayToUiText(transactionGroup.date),
             transactions = transactionGroup.transactions.map { transaction ->

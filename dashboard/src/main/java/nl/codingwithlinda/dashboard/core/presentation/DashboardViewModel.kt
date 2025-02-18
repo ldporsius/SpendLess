@@ -18,6 +18,7 @@ import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.DayDiff
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
 
@@ -76,7 +77,11 @@ class DashboardViewModel(
 
 
     val transactions = _transactions.combine(preferencesAccess.readAll()) { transactions, preferences ->
-        transactions.groupByDate().toUi(
+        transactions.groupByDate()
+            .filter {
+                it.date != DayDiff.OLDER
+            }
+            .toUi(
             currencyFormatterFactory = currencyFormatterFactory,
             preferences = preferences.firstOrNull() ?: fakePreferences()
         )
@@ -85,12 +90,15 @@ class DashboardViewModel(
 
     init {
         viewModelScope.launch {
+            //TESTING DELETE LATER
             transactionsAccess.delete(-1)
             runBlocking {
                 fakeTransactions().onEach {
                     transactionsAccess.create(it)
                 }
             }
+            //END TESTING DELETE LATER
+
             mostPopularCategory().collect{mostPopularCategory ->
                 _accountUiState.update {
                     it.copy(
