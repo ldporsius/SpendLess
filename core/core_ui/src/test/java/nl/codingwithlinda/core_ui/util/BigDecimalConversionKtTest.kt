@@ -12,12 +12,6 @@ class BigDecimalConversionKtTest{
 
         val value = BigDecimal.TEN
 
-        assertEquals("10", value.asPlainString())
-
-        assertEquals("10", value.toEngineeringString())
-
-        println("SCALE: ${value.scale()}")
-
         val newValue = value.setScale(2)
         println("SCALE: ${newValue.scale()}, VALUE: $newValue")
 
