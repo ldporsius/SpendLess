@@ -2,6 +2,8 @@ package nl.codingwithlinda.dashboard.transactions.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,26 +54,45 @@ fun TransactionsComponent(
         )
         .padding(16.dp)
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
+        Column(
+            Modifier.fillMaxWidth()
         ) {
-            items(transactions) { transaction ->
-                if (transaction.id == expandedId) {
-                    TransactionItemExpanded(
-                        context = context,
-                        transaction = transaction
-                    )
-                }else {
-                    TransactionItem(
-                        context = context,
-                        transaction = transaction,
-                        onClick = {
-                            expandedId = it
-                        }
-                    )
-                }
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
+            ) {
+                Text("Latest transactions",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text("See all",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(end = 8.dp))
+            }
 
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
+            ) {
+
+                items(transactions) { transaction ->
+                    if (transaction.id == expandedId) {
+                        TransactionItemExpanded(
+                            context = context,
+                            transaction = transaction
+                        )
+                    } else {
+                        TransactionItem(
+                            context = context,
+                            transaction = transaction,
+                            onClick = {
+                                expandedId = it
+                            }
+                        )
+                    }
+
+                }
             }
         }
     }

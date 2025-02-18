@@ -14,7 +14,7 @@ fun Transaction.toUi(
     val amountAsDouble = this.amount.scaleToTwoDecimalPlaces()
     val currencyFormatter = currencyFormatterFactory.getFormatter(this.amount)
     return TransactionUi(
-        amount = currencyFormatter.formatCurrencyString(amountAsDouble.toString(), preferences),
+        amount = currencyFormatter.formatCurrencyString(amountAsDouble, preferences),
         timestamp = timestamp.toString(),
         title = title,
         description = description,
