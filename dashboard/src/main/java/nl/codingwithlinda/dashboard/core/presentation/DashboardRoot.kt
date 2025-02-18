@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
 import nl.codingwithlinda.dashboard.transactions.presentation.TransactionsComponent
 
 @Composable
@@ -15,13 +16,17 @@ fun DashboardRoot(
     appModule: AppModule
 ) {
 
+    val context = LocalContext.current
+    val categoryFactory = CategoryFactory(context)
+
     val currencyFormatterFactory = CurrencyFormatterFactory(
-        context = LocalContext.current
+        context = context
     )
     val factory = viewModelFactory {
         initializer {
             DashboardViewModel(
                 appModule = appModule,
+                categoryFactory = categoryFactory,
                 currencyFormatterFactory = currencyFormatterFactory
             )
         }

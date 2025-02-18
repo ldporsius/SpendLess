@@ -31,7 +31,9 @@ class TransactionAccess(
     }
 
     override suspend fun delete(id: Long): Boolean {
-        return false
+        if(id == -1L) transactionDao.deleteAllTransactions()
+        transactionDao.deleteTransaction(id)
+        return true
     }
 
     override suspend fun read(id: Long): Transaction? {

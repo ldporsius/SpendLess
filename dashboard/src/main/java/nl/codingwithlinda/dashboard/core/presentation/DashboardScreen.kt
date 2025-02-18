@@ -112,13 +112,9 @@ fun DashboardScreen(
                     )
                 }
 
-                val context = LocalContext.current
-                val expenseCategories = remember {
-                    expenseCategoriesToUi(context)
-                }
-                val mostPopularCategoryUi = expenseCategories.find {
-                    it.expenseCategory == ExpenseCategory.FOOD_GROCERIES
-                }
+                val mostPopularCategoryUi = accountUiState.mostPopularCategory
+
+                mostPopularCategoryUi?.let {
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .background(
@@ -127,7 +123,7 @@ fun DashboardScreen(
                     )
                     .padding(8.dp)
                 ) {
-                    mostPopularCategoryUi?.let {
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
