@@ -1,5 +1,6 @@
 package nl.codingwithlinda.authentication.navigation
 
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -33,6 +34,7 @@ import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core.navigation.navigateToEvent
+import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
@@ -152,10 +154,12 @@ fun NavGraphBuilder.authenticationNavGraph(
             accountAccess = appModule.accountAccess,
             preferencesAccess = appModule.preferencesAccess,
         )
+        val currencyFormatter = CurrencyFormatterExpense(LocalContext.current)
+
         val factory = viewModelFactory {
             initializer {
                 OnboardingViewModel(
-                    currencyFormatter = appModule.currencyFormatter,
+                    currencyFormatter = currencyFormatter,
                     account = args.account,
                     saveAccountAndPreferencesUseCase = saveAccountAndPreferencesUseCase,
                     navToDashboard = {

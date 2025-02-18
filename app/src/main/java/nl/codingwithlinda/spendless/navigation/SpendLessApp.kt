@@ -29,7 +29,7 @@ fun SpendLessApp(
         }
 
         composable<DashboardNavRoute.DashboardRoot>{
-           DashboardRoot()
+           DashboardRoot(appModule)
         }
     }
 }

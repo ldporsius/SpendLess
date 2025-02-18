@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.onboarding.domain.SaveAccountAndPreferencesUseCase
 import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingUiState
-import nl.codingwithlinda.core.domain.currency_format.CurrencyFormatter
+import nl.codingwithlinda.core_ui.currency.CurrencyFormatter
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat

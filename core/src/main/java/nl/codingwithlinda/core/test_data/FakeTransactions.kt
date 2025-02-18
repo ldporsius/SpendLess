@@ -8,8 +8,8 @@ fun fakeTransactions()= List(100) {
     Transaction(
         amount = BigDecimal.TEN,
         timestamp = System.currentTimeMillis(),
-        title = "title",
-        description = "description",
+        title = "Adobe yearly",
+        description = "Enjoyed a coffee at Starbucks with Jem and Jim",
         category = ExpenseCategory.FOOD_GROCERIES.identifier,
     )
 }

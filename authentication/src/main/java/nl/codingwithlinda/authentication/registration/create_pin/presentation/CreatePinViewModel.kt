@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
-import nl.codingwithlinda.core.domain.NUMBER_PIN_LENGTH
+import nl.codingwithlinda.authentication.login.data.LoginValidator.Companion.NUMBER_PIN_LENGTH
 
 class CreatePinViewModel(
     private val navToRepeat: (pin: String) -> Unit

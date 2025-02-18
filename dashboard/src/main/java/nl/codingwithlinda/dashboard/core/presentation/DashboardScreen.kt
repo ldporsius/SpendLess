@@ -17,19 +17,14 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
+import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
+import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
+import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.dashboardBackground
-import nl.codingwithlinda.core_ui.primary
 import nl.codingwithlinda.core_ui.primaryFixed
 import nl.codingwithlinda.core_ui.purplish
 import nl.codingwithlinda.core_ui.secondaryFixed
@@ -238,6 +235,7 @@ fun DashboardScreen(
                     }
                 }
 
+                transactionsComponent()
             }
 
         }
@@ -247,6 +245,10 @@ fun DashboardScreen(
 @Preview
 @Composable
 private fun DashboardScreenPreview() {
+    val currencyFormatter = CurrencyFormatterFactory(
+        context = LocalContext.current
+    )
+    val preferences = fakePreferences()
     SpendLessTheme {
         DashboardScreen(
             accountUiState = AccountUiState(
@@ -254,7 +256,9 @@ private fun DashboardScreenPreview() {
             transactionsComponent = {
                 TransactionsComponent(
                     transactions = fakeTransactions().map {
-                        it.toUi()
+                        it.toUi(
+                            currencyFormatter, preferences
+                        )
                     }
                 )
             }

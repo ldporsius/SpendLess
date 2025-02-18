@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.data.currency_format
+package nl.codingwithlinda.core_ui.currency
 
 import nl.codingwithlinda.core.domain.model.Separator
 

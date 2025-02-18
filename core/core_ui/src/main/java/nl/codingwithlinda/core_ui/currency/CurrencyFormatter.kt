@@ -1,23 +1,23 @@
 package nl.codingwithlinda.core_ui.currency
 
 import android.content.Context
-import nl.codingwithlinda.core.data.currency_format.decimalSeparatorMap
-import nl.codingwithlinda.core.data.currency_format.thousandsSeparatorMap
-import nl.codingwithlinda.core.domain.currency_format.CurrencyFormatter
-import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 
-class CurrencyFormatterImpl(
-    private val context: Context
-): CurrencyFormatter {
+abstract class CurrencyFormatter(
+    open val context: Context
+) {
+    abstract fun cleanInput(input: String): String
+    abstract fun formatCurrencyString(currency:String, preferences: Preferences): String
 
-    override fun formatCurrencyString(currency:String, preferences: Preferences): String {
-
+    fun applySymbol(currency: String, preferences: Preferences): String {
         val currencySymbol = currencySymbolMap[preferences.currency] ?: return currency
         val currencyString = context.getString(currencySymbol)
 
+        return currencyString
+    }
+
+    fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
         val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: return currency
-        val decimalSeparator = decimalSeparatorMap[preferences.decimalSeparator] ?: return currency
 
         val arrayWholeNumber = currency.dropLast(2).map { it.toString() }.toMutableList()
         for (i in arrayWholeNumber.size  downTo 1 step 3){
@@ -27,17 +27,10 @@ class CurrencyFormatterImpl(
         val appliedThousandsSeparator = arrayWholeNumber.joinToString("").dropLast(1)
 
 
-        return when(
-            preferences.expensesFormat
-        ) {
-            ExpensesFormat.MINUS -> {
-                "-$currencyString$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}"
-            }
-
-            ExpensesFormat.BRACKETS -> {
-                "($currencyString$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)})"
-            }
-        }
-
+        return appliedThousandsSeparator
+    }
+    fun applyDecimalSeparators(currency: String, preferences: Preferences): String {
+        val decimalSeparator = decimalSeparatorMap[preferences.decimalSeparator] ?: return currency
+        return decimalSeparator
     }
 }
