@@ -8,9 +8,6 @@
       <SelectionState runConfigName="testAccountFactory_encryptedIsDecrypted()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AccountFactoryTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="testAccountFactory_noCrashInvalidPin()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

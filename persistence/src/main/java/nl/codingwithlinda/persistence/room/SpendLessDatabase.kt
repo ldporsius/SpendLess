@@ -6,17 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import nl.codingwithlinda.persistence.model.AccountEntity
 import nl.codingwithlinda.persistence.model.PreferencesEntity
+import nl.codingwithlinda.persistence.model.TransactionEntity
 import nl.codingwithlinda.persistence.room.dao.AccountDao
 import nl.codingwithlinda.persistence.room.dao.PreferencesDao
+import nl.codingwithlinda.persistence.room.dao.TransactionDao
 
 @Database(
-    version = 1,
-    entities = [AccountEntity::class, PreferencesEntity::class]
+    version = 2,
+    entities = [AccountEntity::class, PreferencesEntity::class, TransactionEntity::class]
 )
 abstract class SpendLessDatabase: RoomDatabase(){
 
     abstract val accountDao: AccountDao
     abstract val preferencesDao: PreferencesDao
+    abstract val transactionDao: TransactionDao
 
     companion object {
         @Volatile

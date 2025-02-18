@@ -161,7 +161,7 @@ fun DashboardScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     Row(
@@ -235,6 +235,8 @@ fun DashboardScreen(
                         }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
 
                 transactionsComponent()
             }
