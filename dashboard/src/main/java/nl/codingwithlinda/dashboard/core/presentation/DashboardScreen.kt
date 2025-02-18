@@ -46,6 +46,7 @@ import nl.codingwithlinda.core_ui.secondaryFixed
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.transactions.presentation.TransactionsComponent
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -251,15 +252,10 @@ private fun DashboardScreenPreview() {
     val preferences = fakePreferences()
     SpendLessTheme {
         DashboardScreen(
-            accountUiState = AccountUiState(
-            ),
+            accountUiState = AccountUiState(),
             transactionsComponent = {
                 TransactionsComponent(
-                    transactions = fakeTransactions().map {
-                        it.toUi(
-                            currencyFormatter, preferences
-                        )
-                    }
+                    transactions = fakeTransactions().groupByDate().toUi(currencyFormatter, preferences)
                 )
             }
         )

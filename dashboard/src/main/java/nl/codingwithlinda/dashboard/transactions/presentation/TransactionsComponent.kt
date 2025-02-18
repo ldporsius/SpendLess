@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,73 +27,87 @@ import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.transactions.presentation.components.TransactionItem
 import nl.codingwithlinda.dashboard.transactions.presentation.components.TransactionItemExpanded
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionUi
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionGroupUi
+import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
 
 @Composable
 fun TransactionsComponent(
     modifier: Modifier = Modifier,
-    transactions: List<TransactionUi>
+    transactions: List<TransactionGroupUi>
 ) {
 
     var expandedId by remember {
         mutableStateOf("")
     }
     val context = LocalContext.current
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .height(480.dp)
-        .background(
-            color = MaterialTheme.colorScheme.surface,
-            shape = RoundedCornerShape(
-                topStart = 32.dp,
-                topEnd = 32.dp
-            )
-        )
-        .padding(16.dp)
-    ) {
-        Column(
-            Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
-            ) {
-                Text("Latest transactions",
-                    style = MaterialTheme.typography.titleMedium
+    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(480.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = RoundedCornerShape(
+                        topStart = 32.dp,
+                        topEnd = 32.dp
+                    )
                 )
-                Text("See all",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(end = 8.dp))
-            }
-
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
+                .padding(16.dp)
+        ) {
+            Column(
+                Modifier.fillMaxWidth()
             ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "Latest transactions",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Text(
+                        "See all",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                }
 
-                items(transactions) { transaction ->
-                    if (transaction.id == expandedId) {
-                        TransactionItemExpanded(
-                            context = context,
-                            transaction = transaction
-                        )
-                    } else {
-                        TransactionItem(
-                            context = context,
-                            transaction = transaction,
-                            onClick = {
-                                expandedId = it
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
+                ) {
+
+                    items(transactions) { transactionGroup ->
+
+                        Column {
+                            Text(
+                                transactionGroup.header.asString().uppercase(),
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                            transactionGroup.transactions.onEach { transaction ->
+                                if (transaction.id == expandedId) {
+                                    TransactionItemExpanded(
+                                        context = context,
+                                        transaction = transaction
+                                    )
+                                } else {
+                                    TransactionItem(
+                                        context = context,
+                                        transaction = transaction,
+                                        onClick = {
+                                            expandedId = it
+                                        }
+                                    )
+                                }
                             }
-                        )
+                        }
                     }
-
                 }
             }
         }
@@ -108,11 +124,10 @@ private fun TransactionsComponentPreview() {
     SpendLessTheme {
         TransactionsComponent(
             modifier = Modifier.fillMaxWidth(),
-            transactions = fakeTransactions().map {
-                it.toUi(
-                    currencyFormatter, preferences
-                )
-            }
+            transactions = fakeTransactions().groupByDate().toUi(
+                currencyFormatterFactory = currencyFormatter,
+                preferences = preferences
+            )
         )
     }
 }
