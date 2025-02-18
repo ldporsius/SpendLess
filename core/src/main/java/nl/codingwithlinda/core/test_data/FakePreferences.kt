@@ -7,7 +7,7 @@ import nl.codingwithlinda.core.domain.model.Separator
 
 fun fakePreferences() = Preferences(
     expensesFormat = ExpensesFormat.MINUS,
-    currency = Currency.EURO,
+    currency = Currency.YEN,
     thousandsSeparator = Separator.PERIOD,
     decimalSeparator = Separator.COMMA,
     decimalPlaces = 2

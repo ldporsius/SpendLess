@@ -42,6 +42,7 @@ val secondaryFixedDim = Color(0xFFc9ce3e)
 val success = Color(0xFF29ac08)
 
 val purplish = Color(0xFF50337B)
+val bluish = Color(0xFF25005d)
 //val dashboardBackground = Brush.radialGradient(
 //    colors = listOf(
 //        onPrimaryFixedVariant,
@@ -54,9 +55,9 @@ val purplish = Color(0xFF50337B)
 
 val dashboardBackground = Brush.linearGradient(
     colors = listOf(
-        onPrimaryFixed.copy(.75f),
-        onPrimaryFixed.copy(.85f),
-        onPrimaryFixed
+        bluish.copy(.45f),
+        bluish.copy(.85f),
+        bluish
     ),
     start= androidx.compose.ui.geometry.Offset(0f, 0f),
     end = androidx.compose.ui.geometry.Offset(400f,800f),

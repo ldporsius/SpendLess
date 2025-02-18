@@ -167,6 +167,9 @@ fun DashboardScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+
+                        //largest transaction
+                        accountUiState.largestTransaction?.let {
                         Box(
                             modifier = Modifier.background(
                                 color = primaryFixed,
@@ -175,7 +178,7 @@ fun DashboardScreen(
                                 .fillMaxHeight()
                                 .weight(1f)
                         ) {
-                            accountUiState.largestTransaction.let {
+
                                 Column(
                                     modifier = Modifier.padding(16.dp)
                                 ) {
@@ -208,6 +211,7 @@ fun DashboardScreen(
                                 }
                             }
                         }
+                        //previous week
                         Box(
                             modifier = Modifier.background(
                                 color = secondaryFixed,

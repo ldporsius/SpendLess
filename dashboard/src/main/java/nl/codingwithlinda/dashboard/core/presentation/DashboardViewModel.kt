@@ -5,25 +5,24 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
-import nl.codingwithlinda.dashboard.categories.presentation.mapping.mapExpenseCategoryIdentifierToDomain
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
 
 class DashboardViewModel(
-    currencyFormatterFactory: CurrencyFormatterFactory,
+    private val currencyFormatterFactory: CurrencyFormatterFactory,
     private val categoryFactory: CategoryFactory,
     appModule: AppModule
 ): ViewModel() {
@@ -31,6 +30,9 @@ class DashboardViewModel(
     private val accountAccess = appModule.accountAccess
     private val preferencesAccess = appModule.preferencesAccess
     private val transactionsAccess = appModule.transactionsAccess
+    private val _transactions = transactionsAccess.readAll()
+
+    private suspend fun preferencesFirstOrNull() = preferencesAccess.readAll().firstOrNull()?.firstOrNull()
 
     private fun mostPopularCategory() = _transactions.mapNotNull {
         it.map {
@@ -45,26 +47,33 @@ class DashboardViewModel(
         }?.key
     }.mapNotNull {
         try {
-            println("Most popular category identifier: $it")
             it ?: return@mapNotNull null
-
-            println("Most popular category ${mapExpenseCategoryIdentifierToDomain(it)}")
             categoryFactory.getCategoryUi(it)
         }catch (e: Exception){
             return@mapNotNull null
         }
-
     }
 
+    private fun largestTransaction() = _transactions.combine(preferencesAccess.readAll()){ transactions, preferences ->
+        transactions.maxByOrNull {
+            it.amount.abs()
+        }?.toUi(currencyFormatterFactory, preferencesFirstOrNull() ?: fakePreferences())
+    }
     private val _accountUiState = MutableStateFlow(AccountUiState())
-    val accountUiState = combine(accountAccess.readAll(), _accountUiState){ accounts, accountUiState ->
+
+    val accountUiState = combine(
+        preferencesAccess.readAll(),
+        accountAccess.readAll(),
+        largestTransaction(),
+
+        _accountUiState){ prefs, accounts, largestTransaction, accountUiState ->
         accountUiState.copy(
             userName = accounts.firstOrNull()?.userName ?: "",
+            largestTransaction = largestTransaction,
         )
 
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _accountUiState.value)
 
-    private val _transactions = transactionsAccess.readAll()
 
     val transactions = _transactions.combine(preferencesAccess.readAll()) { transactions, preferences ->
         transactions.groupByDate().toUi(
@@ -77,10 +86,11 @@ class DashboardViewModel(
     init {
         viewModelScope.launch {
             transactionsAccess.delete(-1)
-            fakeTransactions().onEach {
-                transactionsAccess.create(it)
+            runBlocking {
+                fakeTransactions().onEach {
+                    transactionsAccess.create(it)
+                }
             }
-
             mostPopularCategory().collect{mostPopularCategory ->
                 _accountUiState.update {
                     it.copy(

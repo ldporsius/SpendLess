@@ -27,22 +27,19 @@ fun getDayFromTimestamp(timestamp: Long): Int {
     return diff
 }
 fun List<Transaction>.groupByDate(): List<TransactionGroup>{
+    println("MAP TRANSACTIONS TO GROUP: ORIGINAL = $this")
 
-    val dayValueMap = this.associateBy {
+    val dayValueMap = this.groupBy {
         getDayFromTimestamp(it.timestamp)
     }
-    val result = dayValueMap.entries.groupBy{(day, transaction) ->
-        day
-    }.map{
+   .map{
         TransactionGroup(
             date = it.key,
-            transactions = it.value.map {
-                it.value
-            }
+            transactions = it.value
         )
     }
 
-    return result
+    return dayValueMap
 }
 
 fun List<TransactionGroup>.toUi(

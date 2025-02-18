@@ -13,7 +13,7 @@ fun fakeTransactions()= List(100) {
     val category = Random.nextInt(0, 5)
     Transaction(
         amount = BigDecimal(amount.toString()),
-        timestamp = ZonedDateTime.now().minusDays(it.toLong()).toEpochSecond() *1000,
+        timestamp = ZonedDateTime.now().minusHours(it.toLong()).toEpochSecond() * 1000,
         title = "Adobe yearly",
         description = "Enjoyed a coffee at Starbucks with Jem and Jim",
         category = category,

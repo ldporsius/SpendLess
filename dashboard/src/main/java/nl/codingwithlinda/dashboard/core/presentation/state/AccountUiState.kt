@@ -7,6 +7,6 @@ data class AccountUiState(
     val userName: String = "rockefeller74",
     val accountBalance: String = "$10,382.45",
     val mostPopularCategory: ExpenseCategoryUi? = null,
-    val largestTransaction: TransactionUi = TransactionUi(),
+    val largestTransaction: TransactionUi? = null,
     val sumPreviousWeek: String = "-$762.20",
 )

@@ -3,6 +3,7 @@ package nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.date_time.timestampToString
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.mapExpenseCategoryIdentifierToDomain
 import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionUi
@@ -15,7 +16,7 @@ fun Transaction.toUi(
     val currencyFormatter = currencyFormatterFactory.getFormatter(this.amount)
     return TransactionUi(
         amount = currencyFormatter.formatCurrencyString(amountAsDouble, preferences),
-        timestamp = timestamp.toString(),
+        timestamp = timestampToString(this.timestamp),
         title = title,
         description = description,
         category = mapExpenseCategoryIdentifierToDomain(this.category)
