@@ -8,12 +8,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core.test_data.fakePreferencesAccount
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
@@ -31,18 +29,10 @@ class TransactionsAllViewModel(
     private val transactionsAccess = appModule.transactionsAccess
     private val _transactions = MutableStateFlow<List<TransactionGroupUi>>(emptyList())
 
-    val transactions = _transactions.map {
-        it
-    }.onStart {
-        withContext(viewModelScope.coroutineContext){
-            transactions().collect{
-                _transactions.value = it
-            }
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val transactions = _transactions
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _transactions.value)
 
-
-    suspend fun transactions() : Flow<List<TransactionGroupUi>> {
+    private suspend fun transactions() : Flow<List<TransactionGroupUi>> {
         val accountId = sessionManager.getUserId().firstOrNull() ?: return emptyFlow()
 
         println("TransactionsAllViewModel has accountId: $accountId")
@@ -50,12 +40,22 @@ class TransactionsAllViewModel(
         val prefs = preferencesAccess.getById(accountId) ?: fakePreferencesAccount(accountId)
         println("TransactionsAllViewModel has prefs: $prefs")
 
-       val transactions = accountId.let{ userId ->
-           transactionsAccess.readAllFK(userId)
-       }
-
-        return transactions.map {
+        val transactions = accountId.let{ userId ->
+            transactionsAccess.readAllFK(userId)
+        }.map {
             it.groupByDate().toUi(currencyFormatterFactory, prefs.preferences)
+        }
+        return transactions
+    }
+
+    init {
+        viewModelScope.launch {
+            transactions().collect(){transactions ->
+                println("TransactionsAllViewModel has collected  transactions in init: $transactions")
+                _transactions.update {
+                    transactions
+                }
+            }
         }
     }
 
