@@ -2,11 +2,18 @@ package nl.codingwithlinda.core_ui.currency
 
 import android.content.Context
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
+import java.math.BigDecimal
 
 abstract class CurrencyFormatter(
     open val context: Context
 ) {
     abstract fun cleanInput(input: String): String
+    fun formatCurrencyString(currency: BigDecimal, preferences: Preferences): String{
+        return currency.scaleToTwoDecimalPlaces().let {
+               formatCurrencyString(it, preferences)
+            }
+    }
     abstract fun formatCurrencyString(currency:String, preferences: Preferences): String
 
     fun applySymbol(currency: String, preferences: Preferences): String {

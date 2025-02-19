@@ -92,12 +92,19 @@ class DashboardViewModel(
             return@combine accountUiState
         }
         val prefs = preferencesAccess.getById(account.id) ?: fakePreferencesAccount(account.id)
+
+        val accountBalance = transactions.sumOf {
+            it.amount
+        }
+        val accountBalanceUi = currencyFormatterFactory.getFormatter(accountBalance).formatCurrencyString(accountBalance, prefs.preferences)
+
         val largestTransaction =  transactions.maxByOrNull {
             it.amount.abs()
         }?.toUi(currencyFormatterFactory, prefs.preferences )
 
         accountUiState.copy(
             userName = account.userName ,
+            accountBalance = accountBalanceUi,
             largestTransaction = largestTransaction,
         )
 

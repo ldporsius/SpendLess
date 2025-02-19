@@ -10,6 +10,7 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGrou
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import kotlin.math.abs
 
 enum class DayDiff{
     TODAY, YESTERDAY, OLDER
@@ -36,6 +37,23 @@ fun getDayFromTimestamp(timestamp: Long): Int {
     val day = date.atZone(ZoneId.systemDefault()).dayOfYear
     val diff = today - day
     return diff
+}
+@SuppressLint("NewApi")
+fun getPreviousWeek(
+    today: ZonedDateTime = ZonedDateTime.now(),
+    timestamp: Long): Int{
+    val dayOfYearToday = today.dayOfYear
+    val dayOfWeekToday = today.dayOfWeek.value
+    val date = Instant.ofEpochMilli(timestamp)
+    val dayOfYearAtTimestamp = date.atZone(ZoneId.systemDefault()).dayOfYear
+    val dayOfWeekAtTimestamp = date.atZone(ZoneId.systemDefault()).dayOfWeek.value
+
+    val diffDayOfYear = dayOfYearToday - dayOfYearAtTimestamp
+    val diffDayOfWeek = dayOfWeekToday - dayOfWeekAtTimestamp
+    println("day of week today: $dayOfWeekToday, day of week at timestamp: $dayOfWeekAtTimestamp")
+    println("Diff day of year: $diffDayOfYear, diff day of week: $diffDayOfWeek")
+    val dayRange = diffDayOfWeek + diffDayOfYear
+    return dayRange
 }
 fun List<Transaction>.groupByDate(): List<TransactionGroup>{
     println("MAP TRANSACTIONS TO GROUP: ORIGINAL = $this")

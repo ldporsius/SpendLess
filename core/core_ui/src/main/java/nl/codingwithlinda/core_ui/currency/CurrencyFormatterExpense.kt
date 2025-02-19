@@ -3,6 +3,8 @@ package nl.codingwithlinda.core_ui.currency
 import android.content.Context
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
+import java.math.BigDecimal
 
 class CurrencyFormatterExpense(
     override val context: Context
