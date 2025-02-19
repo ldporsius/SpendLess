@@ -1,6 +1,7 @@
 package nl.codingwithlinda.dashboard.transactions.recent.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +39,8 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 @Composable
 fun TransactionsComponent(
     modifier: Modifier = Modifier,
-    transactions: List<TransactionGroupUi>
+    transactions: List<TransactionGroupUi>,
+    onShowAll: () -> Unit
 ) {
 
     var expandedId by remember {
@@ -76,6 +78,9 @@ fun TransactionsComponent(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(end = 8.dp)
+                            .clickable {
+                                onShowAll()
+                            }
                     )
                 }
 

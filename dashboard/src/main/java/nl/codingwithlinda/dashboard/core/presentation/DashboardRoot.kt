@@ -14,7 +14,8 @@ import nl.codingwithlinda.dashboard.transactions.recent.presentation.Transaction
 
 @Composable
 fun DashboardRoot(
-    appModule: AppModule
+    appModule: AppModule,
+    onShowAll: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -43,7 +44,8 @@ fun DashboardRoot(
         accountUiState = viewModel.accountUiState.collectAsStateWithLifecycle().value,
         transactionsComponent = {
             TransactionsComponent(
-                transactions = viewModel.transactions.collectAsStateWithLifecycle().value
+                transactions = viewModel.transactions.collectAsStateWithLifecycle().value,
+                onShowAll = onShowAll
             )
         }
     )

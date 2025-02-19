@@ -53,7 +53,8 @@ class GetPreviousWeekTest{
     @Test
     fun `get previous week test - week half past is 11`(){
         val today = ZonedDateTime.now().with(DayOfWeek.WEDNESDAY)
-        val lastMonday = ZonedDateTime.now().with(DayOfWeek.WEDNESDAY).minusWeeks(1).minusDays(2)
+        val lastMonday = ZonedDateTime.now().with(DayOfWeek.WEDNESDAY)
+            .minusWeeks(1).minusDays(2)
         println("Last Monday: $lastMonday, " +
                 "${lastMonday.dayOfWeek.getDisplayName(
                     java.time.format.TextStyle.FULL,

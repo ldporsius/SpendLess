@@ -1,5 +1,6 @@
 package nl.codingwithlinda.core_ui
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
@@ -52,7 +53,15 @@ val bluish = Color(0xFF25005d)
 //    radius = Float.POSITIVE_INFINITY,
 //    tileMode = TileMode.Clamp
 //)
-
+val dashboardBackground = Brush.radialGradient(
+    colors = listOf(
+        Color(0xFF5A00C8),
+        Color(0xFF24005A),
+    ),
+    center = Offset(x = 0f, y = 1f),
+    radius = 1250f
+)
+/*
 val dashboardBackground = Brush.linearGradient(
     colors = listOf(
         bluish.copy(.45f),
@@ -63,6 +72,7 @@ val dashboardBackground = Brush.linearGradient(
     end = androidx.compose.ui.geometry.Offset(400f,800f),
     tileMode = TileMode.Clamp
 )
+*/
 
 
 

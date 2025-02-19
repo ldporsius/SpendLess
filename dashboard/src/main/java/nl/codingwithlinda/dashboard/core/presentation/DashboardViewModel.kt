@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
@@ -18,18 +17,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
-import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakePreferencesAccount
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
-import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.DayDiff
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
-import java.util.Locale.filter
 
 class DashboardViewModel(
     private val currencyFormatterFactory: CurrencyFormatterFactory,
@@ -129,7 +125,6 @@ class DashboardViewModel(
         viewModelScope.launch {
             //TESTING DELETE LATER
             transactionsAccess.delete(-1)
-
 
             runBlocking {
                 account.firstOrNull()?.let {

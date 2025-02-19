@@ -10,6 +10,7 @@ import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
+import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 
 @Composable
 fun SpendLessApp(
@@ -29,7 +30,16 @@ fun SpendLessApp(
         }
 
         composable<DashboardNavRoute.DashboardRoot>{
-           DashboardRoot(appModule)
+           DashboardRoot(
+               appModule = appModule,
+               onShowAll = {
+                   navHostController.navigate(DashboardNavRoute.AllTransactionsNavRoute)
+               }
+           )
+        }
+
+        composable<DashboardNavRoute.AllTransactionsNavRoute>{
+            AllTransactionsRoot(appModule)
         }
     }
 }

@@ -32,7 +32,8 @@ private fun TransactionsComponentPreview() {
             transactions = fakeTransactions("1").groupByDate().toUi(
                 currencyFormatterFactory = currencyFormatter,
                 preferences = preferences
-            )
+            ),
+            onShowAll = {}
         )
     }
 }
@@ -64,7 +65,8 @@ private fun DashboardScreenPreview() {
                 TransactionsComponent(
                     transactions = fakeTransactions(
                         "1"
-                    ).groupByDate().toUi(currencyFormatter, preferences)
+                    ).groupByDate().toUi(currencyFormatter, preferences),
+                    onShowAll = {}
                 )
             }
         )
