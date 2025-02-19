@@ -50,8 +50,7 @@ class TransactionsAllViewModel(
 
     init {
         viewModelScope.launch {
-            transactions().collect(){transactions ->
-                println("TransactionsAllViewModel has collected  transactions in init: $transactions")
+            transactions().collect{transactions ->
                 _transactions.update {
                     transactions
                 }
