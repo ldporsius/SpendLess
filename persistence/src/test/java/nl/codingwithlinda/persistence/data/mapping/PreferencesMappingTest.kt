@@ -3,6 +3,7 @@ package nl.codingwithlinda.persistence.data.mapping
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core.domain.model.PreferencesAccount
 import nl.codingwithlinda.core.domain.model.Separator
 import org.junit.Assert.*
 import org.junit.Test
@@ -17,16 +18,21 @@ class PreferencesMappingTest{
         decimalPlaces = 2,
     )
 
+    val preferencesAccount = PreferencesAccount(
+        preferences = preferences,
+        accountId = "123"
+    )
+
     @Test
     fun `test preferences mapping`(){
-        val preferencesEntity = preferences.toEntity()
+        val preferencesEntity = preferencesAccount.toEntity()
 
         println("preferencesEntity: $preferencesEntity")
         val preferencesDomain = preferencesEntity.toDomain()
 
         println("preferencesDomain: $preferencesDomain")
 
-        assertEquals(preferences, preferencesDomain)
+        assertEquals(preferencesAccount, preferencesDomain)
 
     }
 

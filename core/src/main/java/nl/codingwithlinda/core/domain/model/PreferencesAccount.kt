@@ -3,8 +3,7 @@ package nl.codingwithlinda.core.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Account(
-    val id: String,
-    val userName: String,
-    val pin: String,
+data class PreferencesAccount(
+    val preferences: Preferences,
+    val accountId: String
 )

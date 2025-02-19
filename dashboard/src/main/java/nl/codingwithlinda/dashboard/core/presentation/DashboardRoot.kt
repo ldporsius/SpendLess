@@ -7,9 +7,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import nl.codingwithlinda.core.di.AppModule
+import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
-import nl.codingwithlinda.dashboard.transactions.presentation.TransactionsComponent
+import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
 
 @Composable
 fun DashboardRoot(
@@ -22,12 +23,15 @@ fun DashboardRoot(
     val currencyFormatterFactory = CurrencyFormatterFactory(
         context = context
     )
+    val sessionManager: SessionManager = appModule.sessionManager
+
     val factory = viewModelFactory {
         initializer {
             DashboardViewModel(
                 appModule = appModule,
                 categoryFactory = categoryFactory,
-                currencyFormatterFactory = currencyFormatterFactory
+                currencyFormatterFactory = currencyFormatterFactory,
+                sessionManager = sessionManager
             )
         }
     }

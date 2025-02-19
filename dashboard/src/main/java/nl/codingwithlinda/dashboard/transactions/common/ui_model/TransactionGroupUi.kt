@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.transactions.presentation.ui_model
+package nl.codingwithlinda.dashboard.transactions.common.ui_model
 
 import nl.codingwithlinda.core_ui.util.UiText
 

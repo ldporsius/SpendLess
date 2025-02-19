@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.transactions.presentation.ui_model
+package nl.codingwithlinda.dashboard.transactions.common.ui_model
 
 import android.content.Context
 import nl.codingwithlinda.core.domain.model.ExpenseCategory

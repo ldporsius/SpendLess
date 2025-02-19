@@ -4,11 +4,13 @@ import android.os.Build
 import nl.codingwithlinda.core.domain.encryption.Crypto
 import nl.codingwithlinda.core.domain.model.Account
 import java.util.Base64
+import java.util.UUID
 
 class AccountFactory {
 
     fun create(userName: String, pin: String): Account {
         return Account(
+            id = UUID.randomUUID().toString(),
             userName = userName,
             pin = pin
         )

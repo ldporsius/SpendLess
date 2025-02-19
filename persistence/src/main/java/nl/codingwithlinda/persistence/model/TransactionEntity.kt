@@ -14,4 +14,5 @@ data class TransactionEntity(
     val title: String,
     val description: String,
     val category: Int,
+    val accountId: String
 )

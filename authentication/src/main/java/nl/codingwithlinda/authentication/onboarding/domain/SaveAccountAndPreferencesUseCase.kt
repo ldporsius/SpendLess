@@ -4,11 +4,12 @@ import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core.domain.model.PreferencesAccount
 
 class SaveAccountAndPreferencesUseCase(
     private val accountFactory: AccountFactory,
     private val accountAccess: DataSourceAccess<Account, Pair<String, String>>,
-    private val preferencesAccess: DataSourceAccess<Preferences, Long>,
+    private val preferencesAccess: DataSourceAccess<PreferencesAccount, Long>,
 ) {
 
     suspend fun save(account: Account, preferences: Preferences){
@@ -16,6 +17,11 @@ class SaveAccountAndPreferencesUseCase(
             accountAccess.create(it)
         }
 
-        preferencesAccess.create(preferences)
+        preferencesAccess.create(
+            PreferencesAccount(
+                preferences = preferences,
+                accountId = account.id
+            )
+        )
     }
 }

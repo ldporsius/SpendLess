@@ -7,7 +7,9 @@ import java.time.ZonedDateTime
 import kotlin.random.Random
 
 @SuppressLint("NewApi")
-fun fakeTransactions()= List(100) {
+fun fakeTransactions(
+    accountId: String
+)= List(100) {
 
     val amount = Random.nextDouble(-100.00, 1000.0)
     val category = Random.nextInt(0, 5)
@@ -17,5 +19,6 @@ fun fakeTransactions()= List(100) {
         title = "Adobe yearly",
         description = "Enjoyed a coffee at Starbucks with Jem and Jim",
         category = category,
+        accountId = accountId
     )
 }

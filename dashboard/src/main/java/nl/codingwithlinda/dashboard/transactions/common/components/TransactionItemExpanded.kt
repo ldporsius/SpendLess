@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.transactions.presentation.components
+package nl.codingwithlinda.dashboard.transactions.common.components
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +26,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import nl.codingwithlinda.core_ui.SpendLessTheme
-import nl.codingwithlinda.core_ui.primaryFixed
-import nl.codingwithlinda.core_ui.surfaceContainerHighest
-import nl.codingwithlinda.core_ui.surfaceContainerLowest
-import nl.codingwithlinda.dashboard.R
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionUi
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 
 @Composable
 fun TransactionItemExpanded(
@@ -112,20 +106,6 @@ fun TransactionItemExpanded(
             )
 
         }
-
-
-
     }
 }
 
-@Preview
-@Composable
-private fun TransactionItemExpandedPreview() {
-    SpendLessTheme {
-        TransactionItemExpanded(
-            context = LocalContext.current,
-            transaction = TransactionUi()
-        )
-
-    }
-}

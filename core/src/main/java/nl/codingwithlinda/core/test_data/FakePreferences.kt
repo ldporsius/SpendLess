@@ -3,6 +3,7 @@ package nl.codingwithlinda.core.test_data
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core.domain.model.PreferencesAccount
 import nl.codingwithlinda.core.domain.model.Separator
 
 fun fakePreferences() = Preferences(
@@ -12,3 +13,12 @@ fun fakePreferences() = Preferences(
     decimalSeparator = Separator.COMMA,
     decimalPlaces = 2
 )
+
+fun fakePreferencesAccount(
+    accountId: String
+): PreferencesAccount {
+    return PreferencesAccount(
+        preferences = fakePreferences(),
+        accountId = accountId
+    )
+}

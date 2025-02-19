@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping
+package nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping
 
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Transaction
@@ -6,7 +6,7 @@ import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.timestampToString
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.mapExpenseCategoryIdentifierToDomain
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionUi
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 
 fun Transaction.toUi(
     currencyFormatterFactory: CurrencyFormatterFactory,

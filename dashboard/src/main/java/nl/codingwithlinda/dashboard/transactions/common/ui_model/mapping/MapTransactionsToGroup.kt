@@ -1,12 +1,12 @@
-package nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping
+package nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping
 
 import android.annotation.SuppressLint
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.util.UiText
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionGroup
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionGroupUi
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroup
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime

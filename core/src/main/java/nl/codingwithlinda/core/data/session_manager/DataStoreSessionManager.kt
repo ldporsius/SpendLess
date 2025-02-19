@@ -8,8 +8,18 @@ import nl.codingwithlinda.core.domain.session_manager.SessionManager
 class DataStoreSessionManager(
     private val context: Context,
 ): SessionManager {
+    override suspend fun setSessionDuration(duration: Long) {
 
-    //todo: replace with datastore
+    }
+
+    override suspend fun setUserId(userId: String) {
+
+    }
+
+    override fun getUserId(): Flow<String?> {
+        return flowOf(null)
+    }
+
     override fun isUserLoggedIn(): Flow<Boolean> {
         return flowOf(false)
     }

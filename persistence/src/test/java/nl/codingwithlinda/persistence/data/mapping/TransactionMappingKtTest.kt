@@ -10,7 +10,7 @@ class TransactionMappingKtTest{
     @Test
     fun `test transaction mapping`() {
         val amount = BigDecimal("-10.01")
-        val transaction = fakeTransactions().first().copy(
+        val transaction = fakeTransactions("1").first().copy(
             amount = amount
         )
 

@@ -26,7 +26,10 @@ private fun OnboardingScreenPreview() {
             uiState = OnboardingUiState(
                 exampleFormattedText = "10.382,45",
                 preferences = preferences,
-                account = Account("Linda", "")
+                account = Account(
+                    id = "1",
+                    "Linda",
+                    "")
             ),
             onAction = {},
             onNavigate = {}

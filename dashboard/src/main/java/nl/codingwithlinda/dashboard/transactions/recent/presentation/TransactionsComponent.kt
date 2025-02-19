@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.transactions.presentation
+package nl.codingwithlinda.dashboard.transactions.recent.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,11 +29,11 @@ import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
-import nl.codingwithlinda.dashboard.transactions.presentation.components.TransactionItem
-import nl.codingwithlinda.dashboard.transactions.presentation.components.TransactionItemExpanded
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.TransactionGroupUi
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.groupByDate
-import nl.codingwithlinda.dashboard.transactions.presentation.ui_model.mapping.toUi
+import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItem
+import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItemExpanded
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 
 @Composable
 fun TransactionsComponent(
@@ -117,20 +117,3 @@ fun TransactionsComponent(
     }
 }
 
-@Preview
-@Composable
-private fun TransactionsComponentPreview() {
-    val currencyFormatter = CurrencyFormatterFactory(
-        context = LocalContext.current
-    )
-    val preferences = fakePreferences()
-    SpendLessTheme {
-        TransactionsComponent(
-            modifier = Modifier.fillMaxWidth(),
-            transactions = fakeTransactions().groupByDate().toUi(
-                currencyFormatterFactory = currencyFormatter,
-                preferences = preferences
-            )
-        )
-    }
-}

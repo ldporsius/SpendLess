@@ -5,6 +5,7 @@ import nl.codingwithlinda.persistence.model.AccountEntity
 
 fun Account.toEntity(): AccountEntity {
     return AccountEntity(
+        id = id,
         userName = userName,
         pin = pin
     )
@@ -12,6 +13,7 @@ fun Account.toEntity(): AccountEntity {
 
 fun AccountEntity.toDomain(): Account{
     return Account(
+        id = id,
         userName = userName,
         pin = pin
     )

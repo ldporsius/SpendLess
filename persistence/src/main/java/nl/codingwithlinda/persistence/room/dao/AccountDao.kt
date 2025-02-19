@@ -20,6 +20,12 @@ interface AccountDao {
     @Query("SELECT * FROM accounts WHERE userName = :userName")
     suspend fun getAccountForUser(userName: String): AccountEntity?
 
+    @Query("SELECT * FROM accounts WHERE id = :id")
+    suspend fun getAccountById(id: String): AccountEntity?
+
+    @Query("SELECT * FROM accounts WHERE id = :id")
+    fun getAccountByIdFlow(id: String): Flow<AccountEntity?>
+
     @Query("SELECT * FROM accounts WHERE userName = :userName AND pin = :pin")
     suspend fun getAccountForUserAndPIN(userName: String, pin: String): AccountEntity?
 }

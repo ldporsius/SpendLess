@@ -13,8 +13,11 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: TransactionEntity)
 
-    @Query("SELECT * FROM transactions")
-    fun getTransactions(): Flow<List<TransactionEntity>>
+    @Query("SELECT * FROM transactions WHERE accountId=:accountId")
+    fun getTransactionsForAccount(accountId: String): Flow<List<TransactionEntity>>
+
+    @Query("SELECT * FROM transactions WHERE id = :id")
+    suspend fun getTransactionById(id: Long): TransactionEntity?
 
     @Query("DELETE FROM transactions WHERE id = :id")
     suspend fun deleteTransaction(id: Long)

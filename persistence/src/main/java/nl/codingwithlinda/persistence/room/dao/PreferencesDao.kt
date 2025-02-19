@@ -13,7 +13,14 @@ interface PreferencesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun createPreferences(preferences: PreferencesEntity)
 
-    @Query("SELECT * FROM preferences LIMIT 1")
+    @Query("SELECT * FROM preferences WHERE accountId = :accountId LIMIT 1")
+    fun readPreferencesForAccount(accountId: String): Flow<PreferencesEntity?>
+
+    @Query("SELECT * FROM preferences WHERE accountId = :accountId LIMIT 1")
+    suspend fun getPreferencesForAccount(accountId: String): PreferencesEntity?
+
+    @Query("SELECT * FROM preferences")
     fun readPreferences(): Flow<List<PreferencesEntity>>
+
 
 }

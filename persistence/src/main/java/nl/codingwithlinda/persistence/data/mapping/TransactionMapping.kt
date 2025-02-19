@@ -13,7 +13,8 @@ fun TransactionEntity.toDomain(): Transaction{
         timestamp = this.timestamp,
         title = this.title,
         description = this.description,
-        category = this.category
+        category = this.category,
+        accountId = this.accountId
     )
 }
 
@@ -27,5 +28,7 @@ fun Transaction.toEntity(): TransactionEntity{
         title = this.title,
         description = this.description,
         category = this.category,
+        accountId = this.accountId
+
     )
 }
