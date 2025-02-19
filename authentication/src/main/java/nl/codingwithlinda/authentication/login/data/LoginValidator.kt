@@ -14,10 +14,10 @@ class LoginValidator(
     companion object{
         const val NUMBER_PIN_LENGTH = 5
     }
-    suspend fun validateCredentials(userName: String, pin: String): SpendResult<Boolean, LoginError> {
-        if (userName.isEmpty() || pin.isEmpty())  return SpendResult.Success(false)
+    suspend fun validateCredentials(userName: String, pin: String): SpendResult<Account?, LoginError> {
+        if (userName.isEmpty() || pin.isEmpty())  return SpendResult.Success(null)
 
-        if (pin.length < NUMBER_PIN_LENGTH) return SpendResult.Success(false)
+        if (pin.length < NUMBER_PIN_LENGTH) return SpendResult.Success(null)
 
         val account = accountAccess.read(Pair(userName,""))
             ?: return SpendResult.Failure(LoginError.UserNameUnknownError)
@@ -25,7 +25,7 @@ class LoginValidator(
         val pinDecrypted = accountFactory.decrypt(account).pin
         if (pin != pinDecrypted) return SpendResult.Failure(LoginError.WrongPINError)
 
-        return SpendResult.Success(true)
+        return SpendResult.Success(account)
 
     }
 }

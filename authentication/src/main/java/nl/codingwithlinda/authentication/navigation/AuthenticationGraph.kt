@@ -203,6 +203,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                         accountAccess = appModule.accountAccess,
                         accountFactory = AccountFactory()
                     ),
+                    sessionManager = appModule.sessionManager,
                     navToDashboard = {
                         navHostController.navigate(DashboardNavRoute.DashboardRoot)
                     }

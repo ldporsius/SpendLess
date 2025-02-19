@@ -17,12 +17,17 @@ import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.authentication.login.presentation.error.toUiText
 import nl.codingwithlinda.authentication.login.presentation.state.LoginAction
 import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
+import nl.codingwithlinda.core.data.AccountFactory
+import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
+import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
+import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.util.UiText
 
 
 class LoginViewModel(
     private val loginValidator: LoginValidator,
+    private val sessionManager: SessionManager,
     private val navToDashboard: () -> Unit
 ): ViewModel() {
 
@@ -62,7 +67,7 @@ class LoginViewModel(
                     _errorChannel.send(null)
                     _uiState.update {
                         it.copy(
-                            isLoginValid = res.data
+                            isLoginValid = res.data != null
                         )
                     }
                 }
@@ -95,7 +100,11 @@ class LoginViewModel(
                                 }
                             }
                             is SpendResult.Success -> {
-                                navToDashboard()
+                                res.data?.let {account ->
+                                    sessionManager.setUserId(account.id)
+                                    navToDashboard()
+                                }
+
                             }
                         }
 

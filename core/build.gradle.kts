@@ -45,7 +45,7 @@ dependencies {
 
     api(libs.kotlinx.serialization.json)
     api(libs.androidx.navigation.compose)
-    //api("androidx.datastore:datastore-android:1.1.2")
+    api(libs.androidx.datastore)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
