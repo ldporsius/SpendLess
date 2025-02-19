@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import nl.codingwithlinda.persistence.model.AccountEntity
-import nl.codingwithlinda.persistence.model.PreferencesEntity
-import nl.codingwithlinda.persistence.model.TransactionEntity
+import nl.codingwithlinda.persistence.room.domain.model.AccountEntity
+import nl.codingwithlinda.persistence.room.domain.model.PreferencesEntity
+import nl.codingwithlinda.persistence.room.domain.model.TransactionEntity
 import nl.codingwithlinda.persistence.room.dao.AccountDao
 import nl.codingwithlinda.persistence.room.dao.PreferencesDao
 import nl.codingwithlinda.persistence.room.dao.TransactionDao

@@ -1,7 +1,7 @@
-package nl.codingwithlinda.persistence.data.mapping
+package nl.codingwithlinda.persistence.room.data.mapping
 
 import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.persistence.model.AccountEntity
+import nl.codingwithlinda.persistence.room.domain.model.AccountEntity
 
 fun Account.toEntity(): AccountEntity {
     return AccountEntity(

@@ -1,7 +1,7 @@
-package nl.codingwithlinda.persistence.data.mapping
+package nl.codingwithlinda.persistence.room.data.mapping
 
 import nl.codingwithlinda.core.domain.model.Transaction
-import nl.codingwithlinda.persistence.model.TransactionEntity
+import nl.codingwithlinda.persistence.room.domain.model.TransactionEntity
 import java.math.BigDecimal
 
 fun TransactionEntity.toDomain(): Transaction{
@@ -18,7 +18,7 @@ fun TransactionEntity.toDomain(): Transaction{
     )
 }
 
-fun Transaction.toEntity(): TransactionEntity{
+fun Transaction.toEntity(): TransactionEntity {
     return TransactionEntity(
         id = 0,
         amount = this.amount.unscaledValue().toString(),

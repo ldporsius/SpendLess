@@ -1,6 +1,8 @@
 package nl.codingwithlinda.persistence.data.mapping
 
 import nl.codingwithlinda.core.test_data.fakeTransactions
+import nl.codingwithlinda.persistence.room.data.mapping.toDomain
+import nl.codingwithlinda.persistence.room.data.mapping.toEntity
 import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal

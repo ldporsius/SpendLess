@@ -1,4 +1,4 @@
-package nl.codingwithlinda.persistence.data.repository
+package nl.codingwithlinda.persistence.room.data.repository
 
 import android.content.Context
 import nl.codingwithlinda.persistence.room.SpendLessDatabase

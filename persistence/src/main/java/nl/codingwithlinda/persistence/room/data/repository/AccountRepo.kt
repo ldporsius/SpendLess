@@ -1,4 +1,4 @@
-package nl.codingwithlinda.persistence.data.repository
+package nl.codingwithlinda.persistence.room.data.repository
 
 import android.content.Context
 import nl.codingwithlinda.persistence.room.SpendLessDatabase
@@ -8,7 +8,7 @@ class AccountRepo(
 ) {
     private val db = SpendLessDatabase.getDatabase(context)
 
-    fun getAccountAccess(): AccountAccess{
+    fun getAccountAccess(): AccountAccess {
         return AccountAccess(db.accountDao)
     }
 }

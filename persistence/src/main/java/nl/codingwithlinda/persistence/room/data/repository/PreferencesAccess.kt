@@ -1,4 +1,4 @@
-package nl.codingwithlinda.persistence.data.repository
+package nl.codingwithlinda.persistence.room.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -7,8 +7,8 @@ import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessFK
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.PreferencesAccount
-import nl.codingwithlinda.persistence.data.mapping.toDomain
-import nl.codingwithlinda.persistence.data.mapping.toEntity
+import nl.codingwithlinda.persistence.room.data.mapping.toDomain
+import nl.codingwithlinda.persistence.room.data.mapping.toEntity
 import nl.codingwithlinda.persistence.room.dao.PreferencesDao
 
 class PreferencesAccess(

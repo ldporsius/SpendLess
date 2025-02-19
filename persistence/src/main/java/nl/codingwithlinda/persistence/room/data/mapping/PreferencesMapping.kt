@@ -1,10 +1,10 @@
-package nl.codingwithlinda.persistence.data.mapping
+package nl.codingwithlinda.persistence.room.data.mapping
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.PreferencesAccount
-import nl.codingwithlinda.persistence.model.PreferencesEntity
+import nl.codingwithlinda.persistence.room.domain.model.PreferencesEntity
 
 fun PreferencesAccount.toJson(): String{
     return Json.encodeToString(this)

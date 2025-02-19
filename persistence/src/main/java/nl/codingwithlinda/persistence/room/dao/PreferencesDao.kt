@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import nl.codingwithlinda.persistence.model.PreferencesEntity
+import nl.codingwithlinda.persistence.room.domain.model.PreferencesEntity
 
 @Dao
 interface PreferencesDao {

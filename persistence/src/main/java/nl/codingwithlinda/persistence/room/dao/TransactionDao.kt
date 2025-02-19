@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import nl.codingwithlinda.persistence.model.TransactionEntity
+import nl.codingwithlinda.persistence.room.domain.model.TransactionEntity
 
 @Dao
 interface TransactionDao {

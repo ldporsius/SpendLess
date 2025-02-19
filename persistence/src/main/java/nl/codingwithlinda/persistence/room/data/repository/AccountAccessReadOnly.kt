@@ -1,11 +1,11 @@
-package nl.codingwithlinda.persistence.data.repository
+package nl.codingwithlinda.persistence.room.data.repository
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
 import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.persistence.data.mapping.toDomain
+import nl.codingwithlinda.persistence.room.data.mapping.toDomain
 import nl.codingwithlinda.persistence.room.SpendLessDatabase
 import nl.codingwithlinda.persistence.room.dao.AccountDao
 

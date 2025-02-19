@@ -13,11 +13,11 @@ import nl.codingwithlinda.core.domain.model.PreferencesAccount
 import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
-import nl.codingwithlinda.persistence.data.repository.AccountAccessReadOnly
-import nl.codingwithlinda.persistence.data.repository.AccountRepo
-import nl.codingwithlinda.persistence.data.repository.PreferencesAccessForAccount
-import nl.codingwithlinda.persistence.data.repository.PreferencesRepo
-import nl.codingwithlinda.persistence.data.repository.TransactionRepo
+import nl.codingwithlinda.persistence.room.data.repository.AccountAccessReadOnly
+import nl.codingwithlinda.persistence.room.data.repository.AccountRepo
+import nl.codingwithlinda.persistence.room.data.repository.PreferencesAccessForAccount
+import nl.codingwithlinda.persistence.room.data.repository.PreferencesRepo
+import nl.codingwithlinda.persistence.room.data.repository.TransactionRepo
 
 class AndroidAppModule(
     private val application: Application

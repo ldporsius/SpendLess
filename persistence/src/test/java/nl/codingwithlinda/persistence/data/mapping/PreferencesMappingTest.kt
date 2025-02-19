@@ -5,6 +5,8 @@ import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.PreferencesAccount
 import nl.codingwithlinda.core.domain.model.Separator
+import nl.codingwithlinda.persistence.room.data.mapping.toDomain
+import nl.codingwithlinda.persistence.room.data.mapping.toEntity
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package nl.codingwithlinda.persistence.model
+package nl.codingwithlinda.persistence.room.domain.model
 
 import androidx.room.Entity
 import androidx.room.Index
