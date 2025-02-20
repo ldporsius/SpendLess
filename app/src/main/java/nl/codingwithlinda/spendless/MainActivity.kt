@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
@@ -40,25 +41,11 @@ class MainActivity : ComponentActivity() {
                 factory = factory
             )
 
-            var startDestination:NavRoute by remember {
-                mutableStateOf(AuthenticationNavRoute.AuthenticationRoot)
-            }
-            LaunchedEffect(true) {
-
-                viewModel.isUserLoggedIn.collect {
-                    startDestination = if (it) {
-                        DashboardNavRoute.DashboardRoot
-                    } else {
-                        AuthenticationNavRoute.AuthenticationRoot
-                    }
-                }
-            }
-
             SpendLessTheme {
                 SpendLessApp(
                     appModule = appModule,
                     navHostController = navHostController,
-                    startDestination = startDestination
+                    startDestination = AuthenticationNavRoute.AuthenticationRoot
                 )
             }
         }

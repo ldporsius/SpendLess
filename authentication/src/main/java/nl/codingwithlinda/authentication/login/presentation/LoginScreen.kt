@@ -129,8 +129,9 @@ fun LoginScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 32.dp)
-                            .focusable(true)
-                            .focusRequester(focusRequesterLoginButton),
+//                            .focusable(true)
+//                            .focusRequester(focusRequesterLoginButton),
+                                ,
                         enabled = uistate.isLoginValid
                     ) {
                         Text(text = "Login")

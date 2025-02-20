@@ -88,7 +88,7 @@ class LoginViewModel(
             }
 
             LoginAction.LoginAttempt -> {
-
+                println("LOGIN VIEW MODEL LOGINATTEMPT EVENT CALLED")
                 viewModelScope.launch {
                     _loginState.firstOrNull()?.let {res ->
                         when(res){

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 interface SessionManager {
 
     suspend fun setSessionDuration(duration: Long)
+    suspend fun getSessionDuration(): Long
     suspend fun setUserId(userId: String)
     fun getUserId(): Flow<String?>
     fun isUserLoggedIn(): Flow<Boolean>

@@ -29,6 +29,7 @@ import nl.codingwithlinda.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
+import nl.codingwithlinda.authentication.welcome_back.presentation.WelcomeBackRoot
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
@@ -49,6 +50,10 @@ fun NavGraphBuilder.authenticationNavGraph(
             navHostController = navHostController
         )
     }
+    composable<AuthenticationNavRoute.WelcomeBackRoute> {
+        WelcomeBackRoot()
+    }
+
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
         val factory = viewModelFactory {
             initializer {
@@ -218,6 +223,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             error = viewModel.errorChannel.collectAsStateWithLifecycle(null).value,
             onAction = viewModel::handleAction,
             onNavigate = {
+                println("LOGIN SCREEN NAVIGATE CALLED with event: $it")
                 navController.navigateToEvent(it)
             }
         )
