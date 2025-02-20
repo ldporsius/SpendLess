@@ -10,9 +10,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
+import nl.codingwithlinda.authentication.core.presentation.AuthenticationRoot
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.login.data.LoginValidator
+import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCase
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
@@ -25,7 +26,7 @@ import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinViewModel
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserNameScreen
 import nl.codingwithlinda.authentication.registration.user_name.presentation.RegisterUserViewModel
-import nl.codingwithlinda.core.data.AccountFactory
+import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
@@ -44,14 +45,12 @@ fun NavGraphBuilder.authenticationNavGraph(
     appModule: AppModule
 ) {
 
+
     composable<AuthenticationNavRoute.AuthenticationRoot> {
-        AuthenticationRootScreen(
+        AuthenticationRoot(
             appModule = appModule,
             navHostController = navHostController
         )
-    }
-    composable<AuthenticationNavRoute.WelcomeBackRoute> {
-        WelcomeBackRoot()
     }
 
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
@@ -199,7 +198,14 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
 
+    composable<AuthenticationNavRoute.WelcomeBackRoute> {
+        WelcomeBackRoot(
+            appModule = appModule
+        )
+    }
+
     composable<AuthenticationNavRoute.LoginRoute> {
+        val startSessionUseCase = StartSessionUseCase(appModule.sessionManager)
 
         val factory = viewModelFactory {
             initializer {
@@ -208,7 +214,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                         accountAccess = appModule.accountAccess,
                         accountFactory = AccountFactory()
                     ),
-                    sessionManager = appModule.sessionManager,
+                    startSessionUseCase = startSessionUseCase,
                     navToDashboard = {
                         navHostController.navigate(DashboardNavRoute.DashboardRoot)
                     }

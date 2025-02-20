@@ -14,22 +14,20 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.login.data.LoginValidator
+import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCase
 import nl.codingwithlinda.authentication.login.presentation.error.toUiText
 import nl.codingwithlinda.authentication.login.presentation.state.LoginAction
 import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
-import nl.codingwithlinda.core.data.AccountFactory
-import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
-import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.util.UiText
 
 
 class LoginViewModel(
     private val loginValidator: LoginValidator,
-    private val sessionManager: SessionManager,
+    private val startSessionUseCase: StartSessionUseCase,
     private val navToDashboard: () -> Unit
 ): ViewModel() {
+
 
 
     private val _userNameInput = MutableStateFlow("")
@@ -101,10 +99,9 @@ class LoginViewModel(
                             }
                             is SpendResult.Success -> {
                                 res.data?.let {account ->
-                                    sessionManager.setUserId(account.id)
+                                    startSessionUseCase.startSession(account)
                                     navToDashboard()
                                 }
-
                             }
                         }
 

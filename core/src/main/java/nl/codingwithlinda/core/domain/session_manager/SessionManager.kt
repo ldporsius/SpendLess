@@ -9,4 +9,7 @@ interface SessionManager {
     suspend fun setUserId(userId: String)
     fun getUserId(): Flow<String?>
     fun isUserLoggedIn(): Flow<Boolean>
+
+    suspend fun startSession()
+    suspend fun isSessionValid(currentTime: Long, ): Boolean
 }

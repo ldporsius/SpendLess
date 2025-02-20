@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.data
+package nl.codingwithlinda.authentication.core.data
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -6,7 +6,7 @@ import org.junit.Test
 
 class AccountFactoryTest{
 
-    val factory = AccountFactory()
+    val factory = nl.codingwithlinda.authentication.core.data.AccountFactory()
     val account = factory.create("linda", "12345")
 
     @Test

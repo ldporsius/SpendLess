@@ -1,6 +1,6 @@
 package nl.codingwithlinda.authentication.onboarding.domain
 
-import nl.codingwithlinda.core.data.AccountFactory
+import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Preferences

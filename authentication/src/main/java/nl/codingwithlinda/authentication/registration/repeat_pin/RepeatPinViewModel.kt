@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
-import nl.codingwithlinda.core.data.AccountFactory
+import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.authentication.core.domain.error.PINDiffersError
 import nl.codingwithlinda.authentication.login.data.LoginValidator.Companion.NUMBER_PIN_LENGTH
 import nl.codingwithlinda.core.domain.model.Account

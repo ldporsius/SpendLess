@@ -2,7 +2,6 @@ package nl.codingwithlinda.spendless.data.session_manager
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
@@ -11,6 +10,10 @@ import nl.codingwithlinda.persistence.datastore.data.UserSessionSerializer.datas
 class DataStoreSessionManager(
     private val context: Context,
 ): SessionManager {
+
+    companion object{
+        const val DEFAULT_SESSION_DURATION = 60_000 * 5L
+    }
 
     private val datastore = context.datastore
 
@@ -24,7 +27,7 @@ class DataStoreSessionManager(
     override suspend fun getSessionDuration(): Long {
         return datastore.data.map {
             it.sessionDuration
-        }.firstOrNull() ?: 15_000L
+        }.firstOrNull() ?: DEFAULT_SESSION_DURATION
     }
 
     override suspend fun setUserId(userId: String) {
@@ -45,5 +48,20 @@ class DataStoreSessionManager(
         return datastore.data.map {
             it.userId.isNotEmpty()
         }
+    }
+
+    override suspend fun startSession() {
+       datastore.updateData {
+           it.copy(
+               sessionStartTime = System.currentTimeMillis()
+           )
+       }
+    }
+    override suspend fun isSessionValid(currentTime: Long): Boolean {
+        val startTime = datastore.data.map {
+            it.sessionStartTime
+        }.firstOrNull() ?: 0L
+        val durationSettings = getSessionDuration()
+        return startTime + durationSettings < currentTime
     }
 }

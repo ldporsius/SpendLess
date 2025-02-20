@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import nl.codingwithlinda.authentication.core.presentation.AuthenticationRootScreen
+import nl.codingwithlinda.authentication.core.presentation.AuthenticationRoot
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
@@ -23,7 +23,7 @@ fun SpendLessApp(
     NavHost(navController = navHostController, startDestination = startDestination) {
 
         composable<AuthenticationNavRoute.AuthenticationRoot> {
-            AuthenticationRootScreen(
+            AuthenticationRoot(
                 appModule = appModule,
                 navHostController = navHostController
             )

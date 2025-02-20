@@ -12,17 +12,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.authentication.navigation.authenticationNavGraph
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
-import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
 
 @Composable
-fun AuthenticationRootScreen(
+fun AuthenticationRoot(
     appModule: AppModule,
     navHostController: NavHostController
 ) {
