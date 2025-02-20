@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
@@ -14,17 +16,15 @@ class MainViewModel(
     private val sessionManager: SessionManager
 ): ViewModel() {
 
-    private val _isSessionValid = MutableStateFlow(true)
+    //private val _isSessionValid = MutableStateFlow(true)
 
-    val isSessionValid = _isSessionValid
-        .onStart {
+    val isSessionValid = sessionManager.isUserLoggedIn()
+        .map{isUserLoggedIn ->
             val currentTime = System.currentTimeMillis()
-            _isSessionValid.value = sessionManager.isSessionValid(currentTime)
-        }.combine(sessionManager.isUserLoggedIn()){
-            isSessionValid, isUserLoggedIn ->
+            val isSessionValid = sessionManager.isSessionValid(currentTime)
+
             isSessionValid && isUserLoggedIn
         }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, _isSessionValid.value)
-
+        .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
 }

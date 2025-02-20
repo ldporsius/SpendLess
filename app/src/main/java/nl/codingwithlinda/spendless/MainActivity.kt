@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
 
 
             ObserveAsEvents(viewModel.isSessionValid) {
+                println("MAIN ACTIVITY IS SESSION VALID: $it")
                 startDestination = if (it) {
                     DashboardNavRoute.DashboardRoot
                 } else {

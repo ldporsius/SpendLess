@@ -11,5 +11,6 @@ interface SessionManager {
     fun isUserLoggedIn(): Flow<Boolean>
 
     suspend fun startSession()
+    suspend fun endSession()
     suspend fun isSessionValid(currentTime: Long, ): Boolean
 }

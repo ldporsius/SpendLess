@@ -1,14 +1,19 @@
 package nl.codingwithlinda.spendless.data.session_manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.persistence.datastore.data.UserSessionSerializer.datastore
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import kotlin.time.Duration.Companion.milliseconds
 
 class DataStoreSessionManager(
-    private val context: Context,
+    context: Context,
 ): SessionManager {
 
     companion object{
@@ -57,11 +62,29 @@ class DataStoreSessionManager(
            )
        }
     }
+    override suspend fun endSession() {
+        datastore.updateData {
+            it.copy(
+                userId = "",
+                sessionStartTime = 0L
+            )
+        }
+    }
+    @SuppressLint("NewApi")
     override suspend fun isSessionValid(currentTime: Long): Boolean {
+        val durationSettings = getSessionDuration()
+        println("SESSION MANAGER DURATION SETTINGS: ${durationSettings.milliseconds}")
+
         val startTime = datastore.data.map {
             it.sessionStartTime
-        }.firstOrNull() ?: 0L
-        val durationSettings = getSessionDuration()
-        return startTime + durationSettings < currentTime
+        }.firstOrNull() ?: (currentTime + durationSettings)
+
+        val localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneId.systemDefault())
+        println("SESSION MANAGER START TIME: ${localDateTime.toString()}")
+
+        val expiritionTime = localDateTime.plusMinutes(durationSettings.milliseconds.inWholeMinutes)
+        println("SESSION MANAGER EXPIRATION TIME: ${expiritionTime.toString()}")
+
+        return  currentTime - startTime < durationSettings
     }
 }

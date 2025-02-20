@@ -200,7 +200,10 @@ fun NavGraphBuilder.authenticationNavGraph(
 
     composable<AuthenticationNavRoute.WelcomeBackRoute> {
         WelcomeBackRoot(
-            appModule = appModule
+            appModule = appModule,
+            onNavAction = {
+                navController.navigateToEvent(it)
+            }
         )
     }
 
