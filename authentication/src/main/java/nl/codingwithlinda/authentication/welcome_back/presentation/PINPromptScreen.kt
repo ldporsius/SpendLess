@@ -19,7 +19,7 @@ import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboa
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 @Composable
-fun WelcomeBackScreen(
+fun PINPromptScreen(
     userName: String,
     onPINKeyboardAction: (PINKeyboardAction) -> Unit,
     onLogout: () -> Unit

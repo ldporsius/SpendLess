@@ -14,6 +14,7 @@ class LoginValidator(
     companion object{
         const val NUMBER_PIN_LENGTH = 5
     }
+
     suspend fun validateCredentials(userName: String, pin: String): SpendResult<Account?, LoginError> {
         if (userName.isEmpty() || pin.isEmpty())  return SpendResult.Success(null)
 

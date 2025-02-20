@@ -9,7 +9,7 @@ import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core.presentation.util.ObserveAsEvents
 
 @Composable
-fun WelcomeBackRoot(
+fun PINPromptRoot(
     appModule: AppModule,
     onNavAction: (NavigationEvent) -> Unit
 ) {
@@ -17,7 +17,9 @@ fun WelcomeBackRoot(
     val sessionManager = appModule.sessionManager
     val factory = viewModelFactory {
         initializer {
-            PINPromptViewModel(sessionManager)
+            PINPromptViewModel(
+                sessionManager = sessionManager,
+            )
         }
     }
 
@@ -31,7 +33,7 @@ fun WelcomeBackRoot(
         }
     }
 
-   WelcomeBackScreen(
+   PINPromptScreen(
        onPINKeyboardAction = viewModel::handleAction,
        userName = "rockefeller74",
        onLogout = viewModel::logout

@@ -30,7 +30,7 @@ import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
-import nl.codingwithlinda.authentication.welcome_back.presentation.WelcomeBackRoot
+import nl.codingwithlinda.authentication.welcome_back.presentation.PINPromptRoot
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
@@ -199,7 +199,7 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
 
     composable<AuthenticationNavRoute.WelcomeBackRoute> {
-        WelcomeBackRoot(
+        PINPromptRoot(
             appModule = appModule,
             onNavAction = {
                 navController.navigateToEvent(it)
