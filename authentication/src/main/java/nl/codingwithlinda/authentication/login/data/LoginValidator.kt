@@ -1,7 +1,7 @@
 package nl.codingwithlinda.authentication.login.data
 
 import nl.codingwithlinda.authentication.core.data.AccountFactory
-import nl.codingwithlinda.authentication.login.domain.LoginError
+import nl.codingwithlinda.core.domain.error.authentication_error.LoginError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult

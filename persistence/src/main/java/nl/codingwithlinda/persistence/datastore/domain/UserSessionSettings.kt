@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 data class UserSessionSettings(
     val userId: String = "",
     val sessionDuration: Long = 0L,
-    val sessionStartTime: Long = System.currentTimeMillis()
+    val sessionStartTime: Long = System.currentTimeMillis(),
+    val numberLoginAttempts: Int = 0,
+    val lockedOutStartTime: Long = 0L
 )

@@ -17,7 +17,7 @@ import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboa
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.authentication.core.presentation.util.toUiText
 import nl.codingwithlinda.authentication.core.data.AccountFactory
-import nl.codingwithlinda.authentication.core.domain.error.PINDiffersError
+import nl.codingwithlinda.core.domain.error.authentication_error.PINDiffersError
 import nl.codingwithlinda.authentication.login.data.LoginValidator.Companion.NUMBER_PIN_LENGTH
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult

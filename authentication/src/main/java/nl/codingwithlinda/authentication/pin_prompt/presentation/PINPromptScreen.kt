@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.welcome_back.presentation
+package nl.codingwithlinda.authentication.pin_prompt.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -16,12 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.PINKeyboard
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.core.presentation.error.toUiText
+import nl.codingwithlinda.authentication.pin_prompt.presentation.state.PinPromptUiState
+import nl.codingwithlinda.core.domain.error.authentication_error.SessionError
+import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 @Composable
 fun PINPromptScreen(
-    userName: String,
+    uiState: PinPromptUiState,
     onPINKeyboardAction: (PINKeyboardAction) -> Unit,
+    error: SessionError? = null,
+
     onLogout: () -> Unit
 ) {
 
@@ -51,11 +57,18 @@ fun PINPromptScreen(
 
                 WalletButton {  }
 
-                Text("Welcome back $userName!")
+                uiState.Header()
 
                 PINKeyboard {
                     onPINKeyboardAction(it)
                 }
+            }
+
+            error?.let {
+                ErrorBanner(
+                    error = it.toUiText(),
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
             }
         }
 

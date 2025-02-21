@@ -1,9 +1,6 @@
 package nl.codingwithlinda.core.domain.session_manager
 
 import kotlinx.coroutines.flow.Flow
-import nl.codingwithlinda.core.domain.error.RootError
-import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.core.domain.result.SpendResult
 
 interface SessionManager {
 
@@ -19,6 +16,11 @@ interface SessionManager {
 
     suspend fun lockOutUser()
     suspend fun unlockUser()
+    suspend fun isUserLockedOut(currentTime: Long): Boolean
 
-    suspend fun login(pin:String, onResult: (SpendResult<Account?, RootError>) -> Unit)
+    companion object{
+        const val DEFAULT_SESSION_DURATION = 60_000 * 5L
+        const val MAX_NUMBER_LOGIN_ATTEMPTS = 3
+        const val LOCKED_OUT_DURATION = 30_000
+    }
 }

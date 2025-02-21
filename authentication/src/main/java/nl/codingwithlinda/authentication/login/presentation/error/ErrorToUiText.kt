@@ -1,6 +1,6 @@
 package nl.codingwithlinda.authentication.login.presentation.error
 
-import nl.codingwithlinda.authentication.login.domain.LoginError
+import nl.codingwithlinda.core.domain.error.authentication_error.LoginError
 import nl.codingwithlinda.core_ui.util.UiText
 
 fun LoginError.toUiText(): UiText{

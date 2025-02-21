@@ -11,12 +11,14 @@ import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.PreferencesAccount
 import nl.codingwithlinda.core.domain.model.Transaction
+import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.persistence.room.data.repository.AccountAccessReadOnly
 import nl.codingwithlinda.persistence.room.data.repository.AccountRepo
 import nl.codingwithlinda.persistence.room.data.repository.PreferencesAccessForAccount
 import nl.codingwithlinda.persistence.room.data.repository.PreferencesRepo
 import nl.codingwithlinda.persistence.room.data.repository.TransactionRepo
+import nl.codingwithlinda.spendless.data.authentication_manager.AppAuthenticationManager
 
 class AndroidAppModule(
     private val application: Application
@@ -24,13 +26,17 @@ class AndroidAppModule(
     override val sessionManager: SessionManager
         get() = DataStoreSessionManager(
             context = application,
+        )
+
+    override val authenticationManager: AuthenticationManager
+        get() = AppAuthenticationManager(
+            sessionManager = sessionManager,
             loginValidator = LoginValidator(
                 accountAccess = accountAccess,
                 accountFactory = AccountFactory()
             ),
             accountAccess = accountAccessReadOnly
         )
-
     override val accountAccess: DataSourceAccess<Account, Pair<String, String>>
         get() = AccountRepo(application).getAccountAccess()
 

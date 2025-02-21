@@ -1,14 +1,16 @@
-package nl.codingwithlinda.authentication.core.domain.error
+package nl.codingwithlinda.core.domain.error.authentication_error
 
-import nl.codingwithlinda.authentication.login.domain.LoginError
 import nl.codingwithlinda.core.domain.error.RootError
 
 sealed interface SessionError: RootError {
+    class LoginFailedError(error: LoginError) : SessionError {
+
+    }
 
     data object NoAccountError: SessionError
     object SessionLockedError: SessionError
     object SessionExpiredError: SessionError
-    data class LoginFailedError(val error: LoginError): SessionError
+    object WrongPINError: SessionError
 
 }
 
