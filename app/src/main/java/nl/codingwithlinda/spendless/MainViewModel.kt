@@ -11,7 +11,6 @@ class MainViewModel(
     private val sessionManager: SessionManager
 ): ViewModel() {
 
-    //private val _isSessionValid = MutableStateFlow(true)
 
     val isSessionValid = sessionManager.isUserLoggedIn()
         .map{isUserLoggedIn ->

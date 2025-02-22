@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 startDestination = if (it) {
                     DashboardNavRoute.DashboardRoot
                 } else {
-                    AuthenticationNavRoute.AuthenticationRoot
+                    AuthenticationNavRoute.PINPromptRoute
                 }
             }
 

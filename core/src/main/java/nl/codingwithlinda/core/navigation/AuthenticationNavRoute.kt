@@ -28,9 +28,7 @@ sealed interface AuthenticationNavRoute : NavRoute {
     ): AuthenticationNavRoute
 
     @Serializable
-    data class PINPromptRoute(
-        val event: NavigationEvent
-    ) : AuthenticationNavRoute
+    data object PINPromptRoute: AuthenticationNavRoute
 
     @Serializable
     data object LoginRoute : AuthenticationNavRoute

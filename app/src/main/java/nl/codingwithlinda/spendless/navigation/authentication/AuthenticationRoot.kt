@@ -1,28 +1,23 @@
-package nl.codingwithlinda.authentication.core.presentation
+package nl.codingwithlinda.spendless.navigation.authentication
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
-import nl.codingwithlinda.authentication.navigation.authenticationNavGraph
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
+import nl.codingwithlinda.core.navigation.NavigationEvent
 
 @Composable
 fun AuthenticationRoot(
     appModule: AppModule,
-    navHostController: NavHostController
+    onNavAction: (NavigationEvent) -> Unit
 ) {
 
     val sessionManager = appModule.sessionManager
@@ -41,19 +36,15 @@ fun AuthenticationRoot(
         }
     }
     val navController = rememberNavController()
-    Scaffold {paddingValues ->
 
-        Box(modifier = Modifier.padding(paddingValues)) {
-            NavHost(navController = navController,
-                startDestination = AuthenticationNavRoute.PINPromptRoute
-            ){
-                authenticationNavGraph(
-                    navHostController = navHostController,
-                    navController = navController,
-                    appModule = appModule
-                )
-
-            }
-        }
+    NavHost(navController = navController,
+        startDestination = startDestination
+    ){
+        authenticationNavGraph(
+            //navController = navController,
+            appModule = appModule,
+            onNavAction = onNavAction
+        )
     }
+
 }

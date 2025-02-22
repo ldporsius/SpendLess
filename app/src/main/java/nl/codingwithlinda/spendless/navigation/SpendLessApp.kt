@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import kotlinx.coroutines.launch
-import nl.codingwithlinda.authentication.core.presentation.AuthenticationRoot
+import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationRoot
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
@@ -14,6 +14,8 @@ import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
+import nl.codingwithlinda.spendless.navigation.authentication.authenticationNavGraph
+import nl.codingwithlinda.spendless.navigation.util.navigateToEvent
 
 @Composable
 fun SpendLessApp(
@@ -26,37 +28,47 @@ fun SpendLessApp(
 
     NavHost(navController = navHostController, startDestination = startDestination) {
 
-        composable<AuthenticationNavRoute.AuthenticationRoot> {
+        authenticationNavGraph(
+            appModule = appModule,
+            onNavAction = {
+                navHostController.navigateToEvent(it)
+            }
+        )
+       /* composable<AuthenticationNavRoute.AuthenticationRoot> {
             AuthenticationRoot(
                 appModule = appModule,
-                navHostController = navHostController
+                onNavAction = {
+                    navHostController.navigateToEvent(it)
+                }
             )
-        }
+        }*/
 
         composable<DashboardNavRoute.DashboardRoot>{
 
             val scope = rememberCoroutineScope()
-           DashboardRoot(
-               appModule = appModule,
-               onShowAll = {
-                   scope.launch {
-                       authenticationManager.handleEvent(
-                           navHostController.navigate(DashboardNavRoute.AllTransactionsNavRoute)
-                       ).also {res ->
-                           when(
-                               res
-                           ) {
-                               is SpendResult.Failure -> {
+            DashboardRoot(
+                appModule = appModule,
+                onShowAll = {
+                    scope.launch {
+                        authenticationManager.handleEvent(
+                            navHostController.navigate(DashboardNavRoute.AllTransactionsNavRoute)
+                        ).also {res ->
+                            when(
+                                res
+                            ) {
+                                is SpendResult.Failure -> {
 
-                               }
-                               is SpendResult.Success -> TODO()
-                           }
+                                }
+                                is SpendResult.Success -> {
 
-                       }
-                   }
+                                }
+                            }
 
-               }
-           )
+                        }
+                    }
+
+                }
+            )
         }
 
         composable<DashboardNavRoute.AllTransactionsNavRoute>{

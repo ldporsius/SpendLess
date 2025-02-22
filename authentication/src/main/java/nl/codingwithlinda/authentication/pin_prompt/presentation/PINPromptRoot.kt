@@ -32,7 +32,7 @@ fun PINPromptRoot(
                 authenticationManager = appModule.authenticationManager,
                 onLoginSuccess = {
                     println("login success")
-                    onNavAction(NavigationEvent.RedirectToDashboard)
+                    onNavAction(NavigationEvent.NavToDashboard)
                 },
                 loggedInAccountUseCase = loggedInAccountUseCase,
             )

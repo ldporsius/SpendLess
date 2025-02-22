@@ -1,4 +1,4 @@
-package nl.codingwithlinda.authentication.navigation
+package nl.codingwithlinda.spendless.navigation.authentication
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -10,7 +10,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import nl.codingwithlinda.authentication.core.presentation.AuthenticationRoot
 import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
 import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCase
@@ -35,13 +34,13 @@ import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavigationEvent
-import nl.codingwithlinda.core.navigation.navigateToEvent
+import nl.codingwithlinda.spendless.navigation.util.navigateToEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
-    navHostController: NavHostController,
-    navController: NavController,
+    //navController: NavController,
+    onNavAction: (NavigationEvent) -> Unit,
     appModule: AppModule
 ) {
 
@@ -49,7 +48,7 @@ fun NavGraphBuilder.authenticationNavGraph(
     composable<AuthenticationNavRoute.AuthenticationRoot> {
         AuthenticationRoot(
             appModule = appModule,
-            navHostController = navHostController
+            onNavAction = onNavAction
         )
     }
 
@@ -69,7 +68,8 @@ fun NavGraphBuilder.authenticationNavGraph(
             uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                navController.navigateToEvent(it)
+                //navController.navigateToEvent(it)
+                onNavAction(it)
             }
         )
     }
@@ -82,10 +82,11 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 CreatePinViewModel { pin ->
-                    navController.navigate(
+                    /*navController.navigate(
                         AuthenticationNavRoute.RepeatPinRoute(
                         userName, pin)
-                    )
+                    )*/
+                    onNavAction(NavigationEvent.NavToRepeatPin(userName, pin))
                 }
             }
         }
@@ -101,7 +102,7 @@ fun NavGraphBuilder.authenticationNavGraph(
            errorBanner = {},
            onAction = viewModel::handleAction,
            onNavigate = {
-               navController.popBackStack()
+               onNavAction(NavigationEvent.NavUp)
            }
        )
     }
@@ -117,7 +118,8 @@ fun NavGraphBuilder.authenticationNavGraph(
                     userName = userName,
                     pin = pin,
                     navToOnboarding = {
-                        navController.navigate(AuthenticationNavRoute.OnboardingPreferencesRoute(it))
+                        //navController.navigate(AuthenticationNavRoute.OnboardingPreferencesRoute(it))
+                        onNavAction(NavigationEvent.NavToOnboarding(it))
                     }
                 )
             }
@@ -140,7 +142,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             },
             onAction = viewModel::handleAction,
             onNavigate = {
-                navController.popBackStack()
+                onNavAction(NavigationEvent.PopBackStack)
             }
         )
     }
@@ -167,11 +169,12 @@ fun NavGraphBuilder.authenticationNavGraph(
                     account = args.account,
                     saveAccountAndPreferencesUseCase = saveAccountAndPreferencesUseCase,
                     navToDashboard = {
-                        navHostController.navigate(DashboardNavRoute.DashboardRoot){
+                        onNavAction(NavigationEvent.NavToDashboard)
+                       /* navHostController.navigate(DashboardNavRoute.DashboardRoot){
                             popUpTo(AuthenticationNavRoute.AuthenticationRoot){
                                 inclusive = true
                             }
-                        }
+                        }*/
                     }
                 )
             }
@@ -184,7 +187,8 @@ fun NavGraphBuilder.authenticationNavGraph(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                if (it is NavigationEvent.RedirectToDashboard){
+                onNavAction(it)
+               /* if (it is NavigationEvent.RedirectToDashboard){
                     navHostController.navigate(DashboardNavRoute.DashboardRoot){
                         popUpTo(AuthenticationNavRoute.AuthenticationRoot){
                             inclusive = true
@@ -193,7 +197,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                 }
                 else {
                     navController.navigateToEvent(it)
-                }
+                }*/
             }
         )
     }
@@ -202,7 +206,9 @@ fun NavGraphBuilder.authenticationNavGraph(
         PINPromptRoot(
             appModule = appModule,
             onNavAction = {
-                navController.navigateToEvent(it)
+               // navController.navigateToEvent(it)
+                onNavAction(it)
+
             }
         )
     }
@@ -219,7 +225,8 @@ fun NavGraphBuilder.authenticationNavGraph(
                     ),
                     startSessionUseCase = startSessionUseCase,
                     navToDashboard = {
-                        navHostController.navigate(DashboardNavRoute.DashboardRoot)
+                        //navHostController.navigate(DashboardNavRoute.DashboardRoot)
+                        onNavAction(NavigationEvent.NavToDashboard)
                     }
                 )
             }
@@ -233,7 +240,8 @@ fun NavGraphBuilder.authenticationNavGraph(
             onAction = viewModel::handleAction,
             onNavigate = {
                 println("LOGIN SCREEN NAVIGATE CALLED with event: $it")
-                navController.navigateToEvent(it)
+                //navController.navigateToEvent(it)
+                onNavAction(it)
             }
         )
     }
