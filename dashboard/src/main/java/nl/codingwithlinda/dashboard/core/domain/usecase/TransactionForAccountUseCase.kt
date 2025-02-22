@@ -25,9 +25,6 @@ class TransactionForAccountUseCase(
                 transactionsAccess.readAllFK(accountId).map {
                     SpendResult.Success(it)
                 }
-
             )
-
         }
-
 }
