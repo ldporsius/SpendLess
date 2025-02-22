@@ -11,5 +11,6 @@ fun SessionError.toUiText(): UiText{
         SessionError.SessionExpiredError -> UiText.DynamicText("Session expired")
         SessionError.SessionLockedError -> UiText.DynamicText("Session locked. Please try again after ${LOCKED_OUT_DURATION / 1000} seconds")
         SessionError.WrongPINError -> UiText.DynamicText("Wrong PIN")
+        SessionError.NotLogggedInError -> UiText.DynamicText("User is not logged in")
     }
 }

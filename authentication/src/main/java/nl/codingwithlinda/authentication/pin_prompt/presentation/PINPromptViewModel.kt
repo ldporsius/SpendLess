@@ -48,21 +48,28 @@ class PINPromptViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _uiState.value)
 
     init {
-        loggedInAccountUseCase.y.onEach {res ->
+       /* loggedInAccountUseCase.y.onEach {res ->
             _uiState.update {
                 it.copy(
                     userName = res?.userName ?: "failed y"
                 )
             }
-        }.launchIn(viewModelScope)
-       /* loggedInAccountUseCase.loggedInAccount.onEach {res ->
-            _uiState.update {
-                it.copy(
-                    userName = res.toString()
-                )
+        }.launchIn(viewModelScope)*/
+        loggedInAccountUseCase.loggedInAccount.onEach {res ->
+            when(res){
+                is SpendResult.Failure -> {
+                    _errorChannel.send(res.error)
+                }
+                is SpendResult.Success -> {
+                    _uiState.update {
+                        it.copy(
+                            userName = res.data?.userName ?: "no account"
+                        )
+                    }
+                }
             }
+
         }.launchIn(viewModelScope)
-*/
 
         enteredPIN.onEach{pin ->
             if (pin.length == LoginValidator.NUMBER_PIN_LENGTH){
