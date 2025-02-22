@@ -3,10 +3,8 @@ package nl.codingwithlinda.spendless.data.authentication_manager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 import nl.codingwithlinda.authentication.core.data.session_manager.finite_states.SessionLockedState
 import nl.codingwithlinda.authentication.core.data.session_manager.finite_states.SessionUnlockedState
@@ -17,7 +15,9 @@ import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
+import nl.codingwithlinda.core.domain.session_manager.ESessionState
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
+import nl.codingwithlinda.core.navigation.NavigationEvent
 
 class AppAuthenticationManager(
     private val sessionManager: SessionManager,
@@ -79,6 +79,7 @@ class AppAuthenticationManager(
 
             }
             is SpendResult.Success -> {
+                sessionManager.startSession()
                 PINPromptAttempts = 0
             }
         }
@@ -92,16 +93,19 @@ class AppAuthenticationManager(
         sessionManager.endSession()
     }
 
-    override suspend fun <T : Any> handleEvent(event: T): SpendResult<T, SessionError> {
+    override suspend fun handleEvent(): ESessionState {
+        val isLoggedIn = sessionManager.isUserLoggedIn().firstOrNull() ?: false
         val isSessionValid = sessionManager.isSessionValid(System.currentTimeMillis())
-        toggleLockedState()
 
-        return if(isSessionValid){
-            SpendResult.Success(event)
-        }
-        else {
-            SpendResult.Failure(SessionError.SessionExpiredError)
-        }
+        println("AUTH MANAGER IS LOGGED IN: $isLoggedIn")
+        println("AUTH MANAGER IS SESSION VALID: $isSessionValid")
+
+        if(isLoggedIn && isSessionValid) return ESessionState.OK
+
+        if (!isLoggedIn) return ESessionState.LOGGED_OUT
+
+        return ESessionState.SESSION_EXPRIRED
+
     }
 
     private suspend fun toggleLockedState(){

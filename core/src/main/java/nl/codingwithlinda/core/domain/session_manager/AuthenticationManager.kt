@@ -14,5 +14,5 @@ interface AuthenticationManager {
     suspend fun login(pin:String): SpendResult<Account?, SessionError>
     suspend fun logout()
 
-    suspend fun <T: Any>handleEvent(event: T): SpendResult<T, SessionError>
+    suspend fun handleEvent():  ESessionState
 }

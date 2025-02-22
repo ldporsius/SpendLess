@@ -111,21 +111,20 @@ class DataStoreSessionManager(
             remaining.inWholeMilliseconds
         } ?: LOCKED_OUT_DURATION.milliseconds.inWholeMilliseconds
     }
-    @SuppressLint("NewApi")
+
+
     override suspend fun isSessionValid(currentTime: Long): Boolean {
         val durationSettings = getSessionDuration()
-        println("SESSION MANAGER DURATION SETTINGS: ${durationSettings.milliseconds}")
+        val durationInMinutes = durationSettings.milliseconds.inWholeMinutes
 
         val startTime = datastore.data.map {
             it.sessionStartTime
-        }.firstOrNull() ?: (currentTime + durationSettings)
+        }.firstOrNull() ?: 0L
 
-        val localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneId.systemDefault())
-        println("SESSION MANAGER START TIME: ${localDateTime.toString()}")
+        val diffTimeInMinutes = currentTime.milliseconds.inWholeMinutes - startTime.milliseconds.inWholeMinutes
 
-        val expiritionTime = localDateTime.plusMinutes(durationSettings.milliseconds.inWholeMinutes)
-        println("SESSION MANAGER EXPIRATION TIME: ${expiritionTime.toString()}")
+        val isSessionValid = diffTimeInMinutes < durationInMinutes
 
-        return  currentTime - startTime < durationSettings
+        return  isSessionValid
     }
 }

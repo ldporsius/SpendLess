@@ -37,14 +37,16 @@ fun PINPromptScreen(
     Scaffold { padding ->
         Box(modifier = Modifier
             .fillMaxSize()
-            .consumeWindowInsets(padding)
+            .padding(padding)
             ,
             contentAlignment = Alignment.Center
         ) {
 
             IconButton(
                 onClick = { onLogout() },
-                modifier = Modifier.align(Alignment.TopEnd)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.TopEnd)
             ) {
                 Image(
                    painter = painterResource(nl.codingwithlinda.core_ui.R.drawable.logout),

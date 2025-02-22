@@ -1,7 +1,5 @@
 package nl.codingwithlinda.authentication.core.domain.usecase
 
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.transform
 import nl.codingwithlinda.core.di.AccountAccessReadOnly
 import nl.codingwithlinda.core.domain.error.authentication_error.SessionError
@@ -18,7 +16,7 @@ class LoggedInAccountUseCase(
 
         sessionManager.getUserId().transform<String?, SpendResult<Account?, SessionError>>{ accountId ->
             if (accountId == null) {
-                emit(SpendResult.Failure(SessionError.NotLogggedInError))
+                emit(SpendResult.Failure(SessionError.NotLoggedInError))
 
             }
             accountId?.let {

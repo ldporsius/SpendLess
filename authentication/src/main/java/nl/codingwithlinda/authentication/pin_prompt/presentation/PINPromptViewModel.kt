@@ -99,6 +99,7 @@ class PINPromptViewModel(
 
                        }
                        is SpendResult.Success -> {
+
                            onLoginSuccess()
                        }
                    }

@@ -32,6 +32,7 @@ fun PINPromptRoot(
                 authenticationManager = appModule.authenticationManager,
                 onLoginSuccess = {
                     println("login success")
+
                     onNavAction(NavigationEvent.NavToDashboard)
                 },
                 loggedInAccountUseCase = loggedInAccountUseCase,
@@ -42,12 +43,6 @@ fun PINPromptRoot(
     val viewModel: PINPromptViewModel = viewModel(
         factory = factory
     )
-
-    ObserveAsEvents(sessionManager.isUserLoggedIn()) { loggedIn ->
-        if (!loggedIn) {
-            onNavAction(NavigationEvent.NavToLogin)
-        }
-    }
 
    PINPromptScreen(
        uiState = viewModel.uiState.collectAsStateWithLifecycle().value,

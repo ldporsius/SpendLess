@@ -45,12 +45,12 @@ fun NavGraphBuilder.authenticationNavGraph(
 ) {
 
 
-    composable<AuthenticationNavRoute.AuthenticationRoot> {
+   /* composable<AuthenticationNavRoute.AuthenticationRoot> {
         AuthenticationRoot(
             appModule = appModule,
             onNavAction = onNavAction
         )
-    }
+    }*/
 
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
         val factory = viewModelFactory {

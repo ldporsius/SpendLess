@@ -10,7 +10,7 @@ sealed interface NavigationEvent {
     data object NavToLogin: NavigationEvent
     data class NavToOnboarding(val account: Account): NavigationEvent
     data object NavToPINPrompt: NavigationEvent
-    data class NavToAllTransactions(val account: Account): NavigationEvent
+    data object NavToAllTransactions: NavigationEvent
 
     data object NavUp: NavigationEvent
     data object PopBackStack: NavigationEvent

@@ -5,20 +5,15 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
+import nl.codingwithlinda.spendless.data.authentication_manager.AppAuthenticationManager
 
 class MainViewModel(
-    private val sessionManager: SessionManager
+    private val authenticationManager: AuthenticationManager
 ): ViewModel() {
 
 
-    val isSessionValid = sessionManager.isUserLoggedIn()
-        .map{isUserLoggedIn ->
-            val currentTime = System.currentTimeMillis()
-            val isSessionValid = sessionManager.isSessionValid(currentTime)
-
-            isSessionValid && isUserLoggedIn
-        }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, true)
+    suspend fun isSessionValid() = authenticationManager.handleEvent()
 
 }
