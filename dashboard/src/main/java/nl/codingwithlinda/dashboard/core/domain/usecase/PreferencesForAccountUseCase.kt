@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.transform
 import nl.codingwithlinda.core.di.AccountAccess
 import nl.codingwithlinda.core.di.AccountAccessReadOnly
 import nl.codingwithlinda.core.di.PreferencesAccessForAccount
@@ -24,13 +25,13 @@ class PreferencesForAccountUseCase(
     private val sessionManager: SessionManager
 ) {
 
-    fun preferencesForLoggedInAccount() = flow<SpendResult<PreferencesAccount, RootError>>{
-        sessionManager.getUserId().map{ accountId ->
+    fun preferencesForLoggedInAccount() =
+        sessionManager.getUserId().transform<String?,SpendResult<PreferencesAccount, RootError>>{ accountId ->
             if (accountId == null) {
                 emit(SpendResult.Failure(SessionError.NoAccountError))
-                return@map
+                return@transform
             }
-            preferencesAccess.read(accountId).map {prefs ->
+            preferencesAccess.getById(accountId).let {prefs ->
                 if (prefs == null){
                     emit(SpendResult.Failure(NoDataError))
                 }
@@ -38,6 +39,5 @@ class PreferencesForAccountUseCase(
                     emit(SpendResult.Success(prefs))
             }
         }
-    }
 
 }
