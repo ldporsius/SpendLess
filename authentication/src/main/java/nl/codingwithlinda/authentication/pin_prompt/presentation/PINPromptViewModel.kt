@@ -19,10 +19,14 @@ import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
 import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINKeyboardAction
+import nl.codingwithlinda.authentication.core.presentation.components.pin_keyboard.state.PINUiState
 import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.authentication.pin_prompt.presentation.state.PinPromptUiState
 import nl.codingwithlinda.core.domain.error.authentication_error.SessionError
 import nl.codingwithlinda.core.domain.result.SpendResult
+import nl.codingwithlinda.core.domain.session_manager.SessionManager
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 class PINPromptViewModel(
     private val loggedInAccountUseCase: LoggedInAccountUseCase,
@@ -31,30 +35,40 @@ class PINPromptViewModel(
 ): ViewModel() {
 
     private val enteredPIN = MutableStateFlow("")
+    private val _pinUiState = MutableStateFlow(PINUiState())
+    val pinUiState = combine(
+        enteredPIN,
+        authenticationManager.isLockedOut,
+        _pinUiState) { pin, lockedOut, uiState ->
+        if (!lockedOut) {
+            uiState.copy(
+                numberInput = pin.map { it.digitToInt() }
+            )
+        }
+        else
+            uiState
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _pinUiState.value)
 
     private val _errorChannel = Channel<SessionError?>()
     val errorChannel = _errorChannel.receiveAsFlow()
 
-    private val _uiState = MutableStateFlow(PinPromptUiState("loading"))
+    private val _uiState = MutableStateFlow(PinPromptUiState(""))
     val uiState = combine(
         _uiState,
-        authenticationManager.isLockedOut
-    ){ui, state ->
+        authenticationManager.isLockedOut,
+        authenticationManager.remainingLockoutTime
+    ){ui, state , remainingTime ->
 
         ui.copy(
-            isLockedOut = state
+            isLockedOut = state,
+            retryTime = remainingTime.milliseconds.toComponents { minutes, seconds, nanoseconds ->
+                "${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2,'0')}"
+            }
         )
 
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _uiState.value)
 
     init {
-       /* loggedInAccountUseCase.y.onEach {res ->
-            _uiState.update {
-                it.copy(
-                    userName = res?.userName ?: "failed y"
-                )
-            }
-        }.launchIn(viewModelScope)*/
         loggedInAccountUseCase.loggedInAccount.onEach {res ->
             when(res){
                 is SpendResult.Failure -> {
@@ -73,14 +87,16 @@ class PINPromptViewModel(
 
         enteredPIN.onEach{pin ->
             if (pin.length == LoginValidator.NUMBER_PIN_LENGTH){
-               authenticationManager.login(pin).also {
-                   when(it){
+               authenticationManager.login(pin).also {res ->
+                   when(res){
                        is SpendResult.Failure -> {
-                           _errorChannel.send(it.error)
+                           if (res.error !is SessionError.SessionLockedError){
+                               _errorChannel.send(res.error)
+                               delay(2000)
+                               _errorChannel.send(null)
+                           }
                            enteredPIN.update { "" }
 
-                           delay(2000)
-                           _errorChannel.send(null)
                        }
                        is SpendResult.Success -> {
                            onLoginSuccess()
@@ -91,14 +107,11 @@ class PINPromptViewModel(
         }.launchIn(viewModelScope)
     }
     fun handleAction(action: PINKeyboardAction) {
-        viewModelScope.launch {
-            _errorChannel.send(null)
-        }
 
         when(action){
             is PINKeyboardAction.OnNumberClick -> {
                 enteredPIN.update {
-                    it + action.number
+                    (it + action.number).take(LoginValidator.NUMBER_PIN_LENGTH)
                 }
             }
             PINKeyboardAction.OnUndoClick -> {

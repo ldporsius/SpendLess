@@ -198,7 +198,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
 
-    composable<AuthenticationNavRoute.WelcomeBackRoute> {
+    composable<AuthenticationNavRoute.PINPromptRoute> {
         PINPromptRoot(
             appModule = appModule,
             onNavAction = {

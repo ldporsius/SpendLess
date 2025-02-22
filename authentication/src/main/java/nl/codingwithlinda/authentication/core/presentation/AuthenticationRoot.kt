@@ -34,7 +34,7 @@ fun AuthenticationRoot(
 
         sessionManager.isUserLoggedIn().firstOrNull().let{
             startDestination = if (it == true) {
-                AuthenticationNavRoute.WelcomeBackRoute
+                AuthenticationNavRoute.PINPromptRoute
             } else {
                 AuthenticationNavRoute.LoginRoute
             }
@@ -45,7 +45,7 @@ fun AuthenticationRoot(
 
         Box(modifier = Modifier.padding(paddingValues)) {
             NavHost(navController = navController,
-                startDestination = AuthenticationNavRoute.WelcomeBackRoute
+                startDestination = AuthenticationNavRoute.PINPromptRoute
             ){
                 authenticationNavGraph(
                     navHostController = navHostController,

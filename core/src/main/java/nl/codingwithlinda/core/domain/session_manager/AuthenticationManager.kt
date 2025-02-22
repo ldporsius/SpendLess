@@ -8,6 +8,8 @@ import nl.codingwithlinda.core.domain.result.SpendResult
 interface AuthenticationManager {
 
     val isLockedOut: Flow<Boolean>
+    val remainingLockoutTime: Flow<Long>
+    suspend fun isUserLockedOut(currentTime: Long): Boolean
     suspend fun login(userName:String, pin:String): SpendResult<Account?, SessionError>
     suspend fun login(pin:String): SpendResult<Account?, SessionError>
     suspend fun logout()

@@ -17,6 +17,7 @@ interface SessionManager {
     suspend fun lockOutUser()
     suspend fun unlockUser()
     suspend fun isUserLockedOut(currentTime: Long): Boolean
+    suspend fun remainingLockoutTime(currentTime: Long): Long
 
     companion object{
         const val DEFAULT_SESSION_DURATION = 60_000 * 5L

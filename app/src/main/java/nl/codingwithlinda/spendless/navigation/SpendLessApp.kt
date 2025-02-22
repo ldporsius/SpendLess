@@ -1,11 +1,14 @@
 package nl.codingwithlinda.spendless.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.core.presentation.AuthenticationRoot
 import nl.codingwithlinda.core.di.AppModule
+import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
@@ -19,6 +22,7 @@ fun SpendLessApp(
     startDestination: NavRoute
 ) {
 
+    val authenticationManager = appModule.authenticationManager
 
     NavHost(navController = navHostController, startDestination = startDestination) {
 
@@ -30,10 +34,27 @@ fun SpendLessApp(
         }
 
         composable<DashboardNavRoute.DashboardRoot>{
+
+            val scope = rememberCoroutineScope()
            DashboardRoot(
                appModule = appModule,
                onShowAll = {
-                   navHostController.navigate(DashboardNavRoute.AllTransactionsNavRoute)
+                   scope.launch {
+                       authenticationManager.handleEvent(
+                           navHostController.navigate(DashboardNavRoute.AllTransactionsNavRoute)
+                       ).also {res ->
+                           when(
+                               res
+                           ) {
+                               is SpendResult.Failure -> {
+
+                               }
+                               is SpendResult.Success -> TODO()
+                           }
+
+                       }
+                   }
+
                }
            )
         }

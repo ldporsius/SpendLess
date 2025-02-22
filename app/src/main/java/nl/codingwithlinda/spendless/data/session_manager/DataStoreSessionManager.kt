@@ -100,6 +100,17 @@ class DataStoreSessionManager(
         return false
     }
 
+    override suspend fun remainingLockoutTime(currentTime: Long): Long {
+        return datastore.data.map {
+            it.lockedOutStartTime
+        }.firstOrNull()?.let {lockedOutStartTime ->
+           val remaining =
+               SessionManager.Companion.LOCKED_OUT_DURATION.milliseconds
+                   .minus(currentTime.milliseconds - lockedOutStartTime.milliseconds)
+
+            remaining.inWholeMilliseconds
+        } ?: LOCKED_OUT_DURATION.milliseconds.inWholeMilliseconds
+    }
     @SuppressLint("NewApi")
     override suspend fun isSessionValid(currentTime: Long): Boolean {
         val durationSettings = getSessionDuration()

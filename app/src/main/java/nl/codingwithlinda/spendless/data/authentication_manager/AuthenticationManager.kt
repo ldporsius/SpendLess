@@ -1,25 +1,29 @@
 package nl.codingwithlinda.spendless.data.authentication_manager
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import nl.codingwithlinda.authentication.core.data.session_manager.finite_states.SessionLockedState
 import nl.codingwithlinda.authentication.core.data.session_manager.finite_states.SessionUnlockedState
-import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.authentication.core.domain.session_manager.SessionState
 import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.core.domain.error.authentication_error.SessionError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccessReadOnly
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.result.SpendResult
+import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 
 class AppAuthenticationManager(
     private val sessionManager: SessionManager,
     private val loginValidator: LoginValidator,
     accountAccess: DataSourceAccessReadOnly<Account, String>,
-    ): AuthenticationManager {
+): AuthenticationManager {
 
     private val sessionLockedState = SessionLockedState()
     private val sessionUnlockedState = SessionUnlockedState(
@@ -29,9 +33,26 @@ class AppAuthenticationManager(
 
     private var PINPromptAttempts = 0
     private var state: SessionState = sessionLockedState
+
     private val lockedOutStateFlow = MutableStateFlow(false)
     override val isLockedOut: Flow<Boolean>
-        get() = lockedOutStateFlow
+        get() = flow {
+            while (true) {
+                emit(sessionManager.isUserLockedOut(System.currentTimeMillis()))
+                delay(1000)
+            }
+        }
+
+    override val remainingLockoutTime: Flow<Long>
+        get() = isLockedOut.transform{
+                val remainingTime = sessionManager.remainingLockoutTime(System.currentTimeMillis())
+                emit(remainingTime)
+            }
+
+
+    override suspend fun isUserLockedOut(currentTime: Long): Boolean {
+        return sessionManager.isUserLockedOut(currentTime)
+    }
 
     override suspend fun login(userName: String, pin: String): SpendResult<Account?, SessionError> {
         toggleLockedState()
@@ -48,15 +69,14 @@ class AppAuthenticationManager(
 
         when(result){
             is SpendResult.Failure -> {
-                if(result.error is SessionError.LoginFailedError){
 
-                    PINPromptAttempts ++
+                PINPromptAttempts ++
 
-                    if(PINPromptAttempts >= 3){
-                        sessionManager.lockOutUser()
-                        PINPromptAttempts = 0
-                    }
+                if(PINPromptAttempts >= 3){
+                    sessionManager.lockOutUser()
+                    PINPromptAttempts = 0
                 }
+
             }
             is SpendResult.Success -> {
                 PINPromptAttempts = 0
@@ -88,11 +108,10 @@ class AppAuthenticationManager(
         val isLockedOut = sessionManager.isUserLockedOut(System.currentTimeMillis())
         lockedOutStateFlow.emit(isLockedOut)
 
-        if(isLockedOut){
-            state = sessionLockedState
-        }
-        else{
-            state = sessionUnlockedState
+        state = if(isLockedOut){
+            sessionLockedState
+        } else{
+            sessionUnlockedState
         }
     }
 }

@@ -32,7 +32,7 @@ fun PINPromptRoot(
                 authenticationManager = appModule.authenticationManager,
                 onLoginSuccess = {
                     println("login success")
-                    //onNavAction(NavigationEvent.RedirectToDashboard)
+                    onNavAction(NavigationEvent.RedirectToDashboard)
                 },
                 loggedInAccountUseCase = loggedInAccountUseCase,
             )
@@ -51,6 +51,7 @@ fun PINPromptRoot(
 
    PINPromptScreen(
        uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+       pinUiState = viewModel.pinUiState.collectAsStateWithLifecycle().value,
        onPINKeyboardAction = viewModel::handleAction,
        error = viewModel.errorChannel.collectAsStateWithLifecycle(null).value,
        onLogout = viewModel::logout
