@@ -12,11 +12,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core.test_data.fakePreferencesAccount
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
-import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase
@@ -75,11 +74,10 @@ class DashboardViewModel(
     }
 
 
-    val prefs = preferencesForAccountUseCase.preferencesForLoggedInAccount().map {res ->
+    private val prefs = preferencesForAccountUseCase.preferencesForLoggedInAccount().map { res ->
         when(res){
             is SpendResult.Failure ->{
-                //todo???
-                fakePreferencesAccount("fake_account_id")
+                null
             }
             is SpendResult.Success -> {
                 res.data
@@ -96,6 +94,9 @@ class DashboardViewModel(
         _accountUiState){ account, prefs, transactions, accountUiState ->
 
         if (account == null){
+            return@combine accountUiState
+        }
+        if (prefs == null){
             return@combine accountUiState
         }
 
@@ -119,6 +120,10 @@ class DashboardViewModel(
 
     val transactions = _transactions
         .combine(prefs){ transactions, prefs ->
+
+            if (prefs == null){
+                return@combine emptyList()
+            }
             transactions.groupByDate()
                 .filter {
                     it.date != DayDiff.OLDER

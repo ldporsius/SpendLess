@@ -24,17 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.core.test_data.fakePreferences
-import nl.codingwithlinda.core.test_data.fakeTransactions
-import nl.codingwithlinda.core_ui.SpendLessTheme
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItem
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItemExpanded
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
-import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
-import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 
 @Composable
 fun TransactionsComponent(

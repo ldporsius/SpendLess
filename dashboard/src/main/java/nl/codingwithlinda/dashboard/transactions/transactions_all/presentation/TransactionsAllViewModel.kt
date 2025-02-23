@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.test_data.fakePreferencesAccount
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
@@ -37,12 +36,15 @@ class TransactionsAllViewModel(
 
         println("TransactionsAllViewModel has accountId: $accountId")
 
-        val prefs = preferencesAccess.getById(accountId) ?: fakePreferencesAccount(accountId)
+        val prefs = preferencesAccess.getById(accountId)
         println("TransactionsAllViewModel has prefs: $prefs")
 
         val transactions = accountId.let{ userId ->
             transactionsAccess.readAllFK(userId)
         }.map {
+            if (prefs == null){
+                return@map emptyList<TransactionGroupUi>()
+            }
             it.groupByDate().toUi(currencyFormatterFactory, prefs.preferences)
         }
         return transactions

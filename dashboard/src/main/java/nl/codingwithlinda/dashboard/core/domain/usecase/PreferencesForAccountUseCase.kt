@@ -22,10 +22,16 @@ class PreferencesForAccountUseCase(
             }
             preferencesAccess.getById(accountId).let {prefs ->
                 if (prefs == null){
+                    println("PREFERENCES FOR ACCOUNT USE CASE: No preferences found for account $accountId")
                     emit(SpendResult.Failure(NoDataError))
                 }
-                else
+                else{
+                    println("PREFERENCES FOR ACCOUNT USE CASE: Found preferences for account $accountId")
+                    println("PREFERENCES FOR ACCOUNT USE CASE: $prefs")
                     emit(SpendResult.Success(prefs))
+
+                }
+
             }
         }
 

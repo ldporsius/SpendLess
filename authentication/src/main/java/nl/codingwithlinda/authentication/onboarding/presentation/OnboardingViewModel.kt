@@ -26,7 +26,7 @@ class OnboardingViewModel(
 ): ViewModel() {
 
     private val exampleText = "1038245"
-    private val preferences = Preferences(
+    private val examplePrefs = Preferences(
         expensesFormat = ExpensesFormat.MINUS,
         currency = Currency.EURO,
         thousandsSeparator = Separator.PERIOD,
@@ -34,9 +34,9 @@ class OnboardingViewModel(
         decimalPlaces = 2
     )
     private val exampleFormattedText =
-        currencyFormatter.formatCurrencyString(exampleText, preferences)
+        currencyFormatter.formatCurrencyString(exampleText, examplePrefs)
 
-    private val _preferences = MutableStateFlow(preferences)
+    private val _preferences = MutableStateFlow(examplePrefs)
     private val _uiState = MutableStateFlow(
         OnboardingUiState(
             exampleFormattedText,
@@ -78,7 +78,7 @@ class OnboardingViewModel(
 
             OnboardingAction.SaveOnboarding -> {
                 viewModelScope.launch {
-                    saveAccountAndPreferencesUseCase.save(account, preferences)
+                    saveAccountAndPreferencesUseCase.save(account, _preferences.value)
                     navToDashboard()
                 }
             }
