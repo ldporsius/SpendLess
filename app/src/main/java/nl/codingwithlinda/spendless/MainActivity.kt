@@ -49,10 +49,6 @@ class MainActivity : ComponentActivity() {
                 factory = factory
             )
 
-            val startDestination: NavRoute by remember {
-                mutableStateOf(Destination.HomeGraph)
-            }
-
             LaunchedEffect(true) {
                 viewModel.isSessionValid().let {sessionState ->
                     when(sessionState){
@@ -76,7 +72,6 @@ class MainActivity : ComponentActivity() {
                 SpendLessApp(
                     appModule = appModule,
                     navHostController = navHostController,
-                    startDestination = startDestination,
                     onNavAction = {navRoute ->
                         scope.launch {
                             viewModel.isSessionValid().let { sessionState ->
