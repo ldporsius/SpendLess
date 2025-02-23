@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.settings.presentation.state
+package nl.codingwithlinda.dashboard.settings.main.presentation.state
 
 sealed interface SettingsAction {
     data object NavigateToPreferences : SettingsAction

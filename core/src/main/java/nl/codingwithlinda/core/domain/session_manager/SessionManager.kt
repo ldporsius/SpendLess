@@ -20,7 +20,7 @@ interface SessionManager {
     suspend fun remainingLockoutTime(currentTime: Long): Long
 
     companion object{
-        const val DEFAULT_SESSION_DURATION = 60_000 * 5L
+        const val DEFAULT_SESSION_DURATION = 60_000 * 1L
         const val MAX_NUMBER_LOGIN_ATTEMPTS = 3
         const val LOCKED_OUT_DURATION = 30_000
     }

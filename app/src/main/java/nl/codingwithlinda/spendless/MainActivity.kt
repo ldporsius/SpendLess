@@ -10,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -49,23 +51,38 @@ class MainActivity : ComponentActivity() {
                 factory = factory
             )
 
-            LaunchedEffect(true) {
-                viewModel.isSessionValid().let {sessionState ->
-                    when(sessionState){
-                        ESessionState.OK -> {
-                            navHostController.navigate(Destination.HomeGraph)
-                        }
+            val lifecycleOwner = LocalLifecycleOwner.current
+            LaunchedEffect(lifecycleOwner.lifecycle) {
 
-                        ESessionState.LOGGED_OUT -> {
-                            navHostController.navigate(LoginRoute){
-                                popUpTo(Destination.HomeGraph){
-                                    inclusive = true
+                lifecycleOwner.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+
+                    viewModel.isSessionValid().let { sessionState ->
+                        when (sessionState) {
+                            ESessionState.OK -> {
+                                navHostController.navigate(Destination.HomeGraph){
+                                    popUpTo(Destination.HomeGraph){
+                                        inclusive = false
+                                    }
+                                    launchSingleTop = true
+                                    this.restoreState = true
                                 }
                             }
-                        }
 
-                        ESessionState.SESSION_EXPRIRED -> {
-                            navHostController.navigate(PINPromptRoute)
+                            ESessionState.LOGGED_OUT -> {
+                                navHostController.navigate(LoginRoute) {
+                                    popUpTo(Destination.HomeGraph) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
+
+                            ESessionState.SESSION_EXPRIRED -> {
+                                navHostController.navigate(PINPromptRoute){
+                                    popUpTo(Destination.HomeGraph){
+                                        inclusive = true
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -99,7 +116,11 @@ class MainActivity : ComponentActivity() {
                                     }
 
                                     ESessionState.SESSION_EXPRIRED -> {
-                                        navHostController.navigate(PINPromptRoute)
+                                        navHostController.navigate(PINPromptRoute){
+                                            popUpTo(Destination.HomeGraph){
+                                                inclusive = true
+                                            }
+                                        }
                                     }
                                 }
                             }

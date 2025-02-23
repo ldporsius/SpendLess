@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.settings.presentation
+package nl.codingwithlinda.dashboard.settings.main.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core_ui.shared_components.CustomColoredIconButton
-import nl.codingwithlinda.dashboard.settings.presentation.state.SettingsAction
+import nl.codingwithlinda.dashboard.settings.main.presentation.state.SettingsAction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.shared_components.CustomColoredIconButton
-import nl.codingwithlinda.dashboard.settings.presentation.UserSettingsRoot
+import nl.codingwithlinda.dashboard.settings.main.presentation.UserSettingsRoot
 
 @androidx.compose.ui.tooling.preview.Preview
 @Composable

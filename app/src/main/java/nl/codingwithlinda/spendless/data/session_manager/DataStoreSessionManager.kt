@@ -117,6 +117,7 @@ class DataStoreSessionManager(
 
         val diffTimeInMinutes = currentTime.milliseconds.inWholeMinutes - startTime.milliseconds.inWholeMinutes
 
+        println("YOUR SESSION IS : $diffTimeInMinutes MINUTES OLD")
         val isSessionValid = diffTimeInMinutes < durationInMinutes
 
         return  isSessionValid

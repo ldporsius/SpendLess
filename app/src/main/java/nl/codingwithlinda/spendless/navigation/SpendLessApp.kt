@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
-import nl.codingwithlinda.dashboard.settings.presentation.UserSettingsRoot
-import nl.codingwithlinda.dashboard.settings.presentation.state.SettingsAction
+import nl.codingwithlinda.dashboard.settings.main.presentation.UserSettingsRoot
+import nl.codingwithlinda.dashboard.settings.main.presentation.state.SettingsAction
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
 import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
@@ -34,9 +34,6 @@ fun SpendLessApp(
 ) {
 
     NavHost(navController = navHostController, startDestination = Destination.HomeGraph) {
-
-
-
         navigation<Destination.AuthenticationGraph>(startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
             authenticationNavGraph(
                 appModule = appModule,
