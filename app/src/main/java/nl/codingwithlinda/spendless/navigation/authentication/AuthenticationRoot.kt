@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.spendless.navigation.core.NavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 
 @Composable
@@ -24,16 +24,7 @@ fun AuthenticationRoot(
     var startDestination: NavRoute by remember {
         mutableStateOf(AuthenticationNavRoute.AuthenticationRoot)
     }
-    LaunchedEffect(true) {
 
-        sessionManager.isUserLoggedIn().firstOrNull().let{
-            startDestination = if (it == true) {
-                AuthenticationNavRoute.PINPromptRoute
-            } else {
-                AuthenticationNavRoute.LoginRoute
-            }
-        }
-    }
     val navController = rememberNavController()
 
     NavHost(navController = navController,

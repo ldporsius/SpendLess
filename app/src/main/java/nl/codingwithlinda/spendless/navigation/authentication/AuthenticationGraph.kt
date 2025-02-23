@@ -68,10 +68,6 @@ fun NavGraphBuilder.authenticationNavGraph(
         val factory = viewModelFactory {
             initializer {
                 CreatePinViewModel { pin ->
-                    /*navController.navigate(
-                        AuthenticationNavRoute.RepeatPinRoute(
-                        userName, pin)
-                    )*/
                     onNavAction(NavigationEvent.NavToRepeatPin(userName, pin))
                 }
             }
@@ -157,11 +153,6 @@ fun NavGraphBuilder.authenticationNavGraph(
                     saveAccountAndPreferencesUseCase = saveAccountAndPreferencesUseCase,
                     navToDashboard = {
                         onNavAction(NavigationEvent.NavToDashboard)
-                       /* navHostController.navigate(DashboardNavRoute.DashboardRoot){
-                            popUpTo(AuthenticationNavRoute.AuthenticationRoot){
-                                inclusive = true
-                            }
-                        }*/
                     }
                 )
             }
@@ -179,16 +170,8 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     }
 
-    composable<AuthenticationNavRoute.PINPromptRoute> {
-        PINPromptRoot(
-            appModule = appModule,
-            onNavAction = {
-                onNavAction(NavigationEvent.NavToDashboard)
-            }
-        )
-    }
 
-    composable<AuthenticationNavRoute.LoginRoute> {
+    composable<LoginRoute> {
         val startSessionUseCase = StartSessionUseCase(appModule.sessionManager)
 
         val factory = viewModelFactory {
@@ -200,7 +183,6 @@ fun NavGraphBuilder.authenticationNavGraph(
                     ),
                     startSessionUseCase = startSessionUseCase,
                     navToDashboard = {
-                        //navHostController.navigate(DashboardNavRoute.DashboardRoot)
                         onNavAction(NavigationEvent.NavToDashboard)
                     }
                 )

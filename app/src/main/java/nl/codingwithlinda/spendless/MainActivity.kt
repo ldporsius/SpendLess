@@ -18,10 +18,13 @@ import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.domain.session_manager.ESessionState
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
 import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
-import nl.codingwithlinda.spendless.navigation.core.NavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 import nl.codingwithlinda.spendless.application.SpendLessApplication
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.spendless.navigation.SpendLessApp
+import nl.codingwithlinda.spendless.navigation.authentication.LoginRoute
+import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.Destination
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,23 +49,23 @@ class MainActivity : ComponentActivity() {
                 factory = factory
             )
 
-            var startDestination: NavRoute by remember {
-                mutableStateOf(DashboardNavRoute.DashboardRoot)
+            val startDestination: NavRoute by remember {
+                mutableStateOf(Destination.HomeGraph)
             }
 
             LaunchedEffect(true) {
                 viewModel.isSessionValid().let {sessionState ->
-                    startDestination = when(sessionState){
+                    when(sessionState){
                         ESessionState.OK -> {
-                            DashboardNavRoute.DashboardRoot
+                            navHostController.navigate(Destination.HomeGraph)
                         }
 
                         ESessionState.LOGGED_OUT -> {
-                            AuthenticationNavRoute.LoginRoute
+                            navHostController.navigate(LoginRoute)
                         }
 
                         ESessionState.SESSION_EXPRIRED -> {
-                            AuthenticationNavRoute.PINPromptRoute
+                            navHostController.navigate(PINPromptRoute)
                         }
                     }
                 }
@@ -84,11 +87,11 @@ class MainActivity : ComponentActivity() {
                                     }
 
                                     ESessionState.LOGGED_OUT -> {
-                                       navHostController.navigate( AuthenticationNavRoute.LoginRoute)
+                                       navHostController.navigate( LoginRoute)
                                     }
 
                                     ESessionState.SESSION_EXPRIRED -> {
-                                        navHostController.navigate(AuthenticationNavRoute.PINPromptRoute)
+                                        navHostController.navigate(PINPromptRoute)
                                     }
                                 }
                             }

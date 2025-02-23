@@ -2,13 +2,15 @@ package nl.codingwithlinda.spendless.navigation.util
 
 import androidx.navigation.NavHostController
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
+import nl.codingwithlinda.spendless.navigation.authentication.LoginRoute
+import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
 import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
 
 fun NavHostController.navigateToEvent(event: NavigationEvent) {
     when (event) {
         is NavigationEvent.NavToRegisterUserName -> navigate(AuthenticationNavRoute.RegisterUserNameRoute)
         is NavigationEvent.NavToCreatePin -> navigate(AuthenticationNavRoute.CreatePinRoute(event.userName))
-        NavigationEvent.NavToLogin -> navigate(AuthenticationNavRoute.LoginRoute)
+        NavigationEvent.NavToLogin -> navigate(LoginRoute)
         NavigationEvent.NavToDashboard -> {
            navigate(
                 DashboardNavRoute.DashboardRoot
@@ -27,7 +29,7 @@ fun NavHostController.navigateToEvent(event: NavigationEvent) {
             )
         }
         NavigationEvent.NavToPINPrompt -> {
-            navigate(AuthenticationNavRoute.PINPromptRoute)
+            navigate(PINPromptRoute)
         }
         is NavigationEvent.NavToRepeatPin -> {
             navigate(AuthenticationNavRoute.RepeatPinRoute(event.userName, event.pin))
