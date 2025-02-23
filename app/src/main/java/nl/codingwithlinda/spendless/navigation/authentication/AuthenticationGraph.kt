@@ -28,7 +28,6 @@ import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
-import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
 import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense

@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.NavRoute
 import nl.codingwithlinda.core.navigation.NavigationEvent
 
