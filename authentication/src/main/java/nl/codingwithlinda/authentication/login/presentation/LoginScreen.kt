@@ -46,10 +46,8 @@ fun LoginScreen(
     onNavigate: (NavigationEvent) -> Unit
 ) {
     val focusRequester = FocusRequester()
-    val focusRequesterLoginButton = FocusRequester()
-    val focusManager = LocalFocusManager.current
 
-    var pinImeAction: ImeAction  = remember(uistate.isLoginValid){
+    val pinImeAction: ImeAction  = remember(uistate.isLoginValid){
         if (uistate.isLoginValid) ImeAction.Send
         else ImeAction.Previous
     }
@@ -64,7 +62,7 @@ fun LoginScreen(
         ) {
             Box(modifier = Modifier
                 .fillMaxSize()
-                .consumeWindowInsets(paddingValues)
+                .padding(paddingValues)
                 ) {
                 Column(
                     Modifier
@@ -129,8 +127,6 @@ fun LoginScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 32.dp)
-//                            .focusable(true)
-//                            .focusRequester(focusRequesterLoginButton),
                                 ,
                         enabled = uistate.isLoginValid
                     ) {
@@ -150,9 +146,12 @@ fun LoginScreen(
 
                 error?.let {
                     ErrorBanner(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .consumeWindowInsets(paddingValues)
                             .imePadding()
-                            .align(Alignment.BottomCenter),
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                        ,
                         error = it)
                 }
             }
