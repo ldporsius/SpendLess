@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.navigation.DashboardNavRoute
-import nl.codingwithlinda.core.navigation.NavRoute
+import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
+import nl.codingwithlinda.spendless.navigation.core.NavRoute
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 import nl.codingwithlinda.spendless.navigation.authentication.authenticationNavGraph

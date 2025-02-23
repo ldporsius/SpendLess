@@ -1,8 +1,8 @@
-package nl.codingwithlinda.core.navigation
+package nl.codingwithlinda.spendless.navigation.dashboard
 
 import kotlinx.serialization.Serializable
 
-sealed interface DashboardNavRoute : NavRoute{
+sealed interface DashboardNavRoute : nl.codingwithlinda.spendless.navigation.core.NavRoute {
 
     @Serializable
     data object DashboardRoot : DashboardNavRoute

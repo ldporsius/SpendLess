@@ -17,8 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.domain.session_manager.ESessionState
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
-import nl.codingwithlinda.core.navigation.DashboardNavRoute
-import nl.codingwithlinda.core.navigation.NavRoute
+import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
+import nl.codingwithlinda.spendless.navigation.core.NavRoute
 import nl.codingwithlinda.spendless.application.SpendLessApplication
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.spendless.navigation.SpendLessApp

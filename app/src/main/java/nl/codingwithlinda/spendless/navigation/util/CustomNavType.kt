@@ -1,9 +1,8 @@
-package nl.codingwithlinda.core.navigation
+package nl.codingwithlinda.spendless.navigation.util
 
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

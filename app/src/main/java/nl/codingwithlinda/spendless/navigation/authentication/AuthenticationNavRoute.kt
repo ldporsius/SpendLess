@@ -2,7 +2,7 @@ package nl.codingwithlinda.spendless.navigation.authentication
 
 import kotlinx.serialization.Serializable
 import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.core.navigation.NavRoute
+import nl.codingwithlinda.spendless.navigation.core.NavRoute
 
 
 sealed interface AuthenticationNavRoute : NavRoute {
