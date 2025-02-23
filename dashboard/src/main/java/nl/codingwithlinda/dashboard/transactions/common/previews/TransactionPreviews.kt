@@ -68,7 +68,8 @@ private fun DashboardScreenPreview() {
                     ).groupByDate().toUi(currencyFormatter, preferences),
                     onShowAll = {}
                 )
-            }
+            },
+            onNavToSettings = {  }
         )
     }
 

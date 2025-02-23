@@ -40,6 +40,7 @@ import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 @Composable
 fun DashboardScreen(
    accountUiState: AccountUiState,
+   onNavToSettings: () -> Unit,
    transactionsComponent: @Composable () -> Unit
 ) {
     Scaffold(
@@ -56,7 +57,7 @@ fun DashboardScreen(
                     },
                     actions = {
                         IconButton(
-                            onClick = { /*settings*/ },
+                            onClick = { onNavToSettings() },
                         ) {
                             Icon(
                                 Icons.Default.Settings, contentDescription = "Settings",

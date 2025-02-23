@@ -57,7 +57,11 @@ class MainActivity : ComponentActivity() {
                         }
 
                         ESessionState.LOGGED_OUT -> {
-                            navHostController.navigate(LoginRoute)
+                            navHostController.navigate(LoginRoute){
+                                popUpTo(Destination.HomeGraph){
+                                    inclusive = true
+                                }
+                            }
                         }
 
                         ESessionState.SESSION_EXPRIRED -> {
@@ -78,11 +82,20 @@ class MainActivity : ComponentActivity() {
                                 println("MAIN ACTIVITY HAS session state: $sessionState")
                                 when (sessionState) {
                                     ESessionState.OK -> {
-                                       navHostController.navigate(navRoute)
+                                       navHostController.navigate(navRoute){
+                                           popUpTo(navRoute){
+                                               inclusive = false
+                                           }
+                                           this.launchSingleTop = true
+                                       }
                                     }
 
                                     ESessionState.LOGGED_OUT -> {
-                                       navHostController.navigate( LoginRoute)
+                                       navHostController.navigate( LoginRoute){
+                                           popUpTo(Destination.HomeGraph){
+                                               inclusive = true
+                                           }
+                                       }
                                     }
 
                                     ESessionState.SESSION_EXPRIRED -> {

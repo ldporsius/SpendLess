@@ -15,8 +15,6 @@ class DataStoreSessionManager(
     context: Context,
 ): SessionManager {
 
-
-
     private val datastore = context.datastore
 
     override suspend fun setSessionDuration(duration: Long) {

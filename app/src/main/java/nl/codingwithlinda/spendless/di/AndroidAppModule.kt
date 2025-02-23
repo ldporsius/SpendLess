@@ -23,20 +23,7 @@ import nl.codingwithlinda.spendless.data.authentication_manager.AppAuthenticatio
 class AndroidAppModule(
     private val application: Application
 ): AppModule {
-    override val sessionManager: SessionManager
-        get() = DataStoreSessionManager(
-            context = application,
-        )
 
-    override val authenticationManager: AuthenticationManager
-        get() = AppAuthenticationManager(
-            sessionManager = sessionManager,
-            loginValidator = LoginValidator(
-                accountAccess = accountAccess,
-                accountFactory = AccountFactory()
-            ),
-            accountAccess = accountAccessReadOnly
-        )
     override val accountAccess: DataSourceAccess<Account, Pair<String, String>>
         get() = AccountRepo(application).getAccountAccess()
 
@@ -51,4 +38,19 @@ class AndroidAppModule(
 
     override val transactionsAccess: DataSourceAccessFK<Transaction, Long, String>
         get() = TransactionRepo(application).access
+
+    override val sessionManager: SessionManager
+            = DataStoreSessionManager(
+        context = application,
+    )
+
+    override val authenticationManager: AuthenticationManager
+            = AppAuthenticationManager(
+        sessionManager = sessionManager,
+        loginValidator = LoginValidator(
+            accountAccess = accountAccess,
+            accountFactory = AccountFactory()
+        ),
+        accountAccess = accountAccessReadOnly
+    )
 }
