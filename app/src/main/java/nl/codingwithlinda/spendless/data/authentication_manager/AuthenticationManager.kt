@@ -17,12 +17,11 @@ import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.core.domain.session_manager.ESessionState
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
-import nl.codingwithlinda.core.navigation.NavigationEvent
 
 class AppAuthenticationManager(
     private val sessionManager: SessionManager,
     private val loginValidator: LoginValidator,
-    accountAccess: DataSourceAccessReadOnly<Account, String>,
+    private val accountAccess: DataSourceAccessReadOnly<Account, String>,
 ): AuthenticationManager {
 
     private val sessionLockedState = SessionLockedState()
@@ -63,7 +62,7 @@ class AppAuthenticationManager(
 
         toggleLockedState()
 
-        val accountId = sessionManager.getUserId().firstOrNull() ?: return SpendResult.Failure(SessionError.NoAccountError)
+        val accountId = sessionManager.getAccountId().firstOrNull() ?: return SpendResult.Failure(SessionError.NoAccountError)
 
         val result = state.login(accountId = accountId, pin = pin)
 
@@ -94,15 +93,17 @@ class AppAuthenticationManager(
     }
 
     override suspend fun handleEvent(): ESessionState {
-        val isLoggedIn = sessionManager.isUserLoggedIn().firstOrNull() ?: false
+        val accountId = sessionManager.getAccountId().firstOrNull() ?: return ESessionState.LOGGED_OUT
+        accountAccess.getById(accountId) ?: return ESessionState.LOGGED_OUT
+
+        val isLoggedIn = sessionManager.isUserLoggedIn().firstOrNull() ?: return ESessionState.LOGGED_OUT
+
         val isSessionValid = sessionManager.isSessionValid(System.currentTimeMillis())
 
         println("AUTH MANAGER IS LOGGED IN: $isLoggedIn")
         println("AUTH MANAGER IS SESSION VALID: $isSessionValid")
 
         if(isLoggedIn && isSessionValid) return ESessionState.OK
-
-        if (!isLoggedIn) return ESessionState.LOGGED_OUT
 
         return ESessionState.SESSION_EXPRIRED
 

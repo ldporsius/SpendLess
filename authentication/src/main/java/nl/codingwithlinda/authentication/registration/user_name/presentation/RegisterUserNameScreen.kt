@@ -48,11 +48,12 @@ fun RegisterUserNameScreen(
     ) { paddingValues ->
         Box(
             modifier = Modifier
-                .consumeWindowInsets(paddingValues)
                 .fillMaxSize()
+                .padding(paddingValues)
         ) {
             Column(
                 modifier = Modifier
+
                     .fillMaxSize()
                     .padding(horizontal = 32.dp, vertical = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -150,7 +151,9 @@ fun RegisterUserNameScreen(
                 if (uistate.userNameDuplicateError != null) {
                     ErrorBanner(
                         error = uistate.userNameDuplicateError,
-                        modifier = Modifier .imePadding()
+                        modifier = Modifier
+                            .consumeWindowInsets(paddingValues)
+                            .imePadding()
 
                     )
                 }

@@ -33,7 +33,7 @@ class TransactionsAllViewModel(
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _transactions.value)
 
     private suspend fun transactions() : Flow<List<TransactionGroupUi>> {
-        val accountId = sessionManager.getUserId().firstOrNull() ?: return emptyFlow()
+        val accountId = sessionManager.getAccountId().firstOrNull() ?: return emptyFlow()
 
         println("TransactionsAllViewModel has accountId: $accountId")
 

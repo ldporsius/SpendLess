@@ -1,6 +1,5 @@
 package nl.codingwithlinda.spendless.navigation.util
 
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute

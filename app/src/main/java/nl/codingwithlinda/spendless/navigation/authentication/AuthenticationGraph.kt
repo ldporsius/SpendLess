@@ -5,12 +5,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import nl.codingwithlinda.authentication.core.presentation.components.CreatePinScreen
+import nl.codingwithlinda.authentication.registration.common.CreatePinScreen
 import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCase
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
@@ -32,9 +30,7 @@ import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.navigation.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.CustomNavType
-import nl.codingwithlinda.core.navigation.DashboardNavRoute
 import nl.codingwithlinda.core.navigation.NavigationEvent
-import nl.codingwithlinda.spendless.navigation.util.navigateToEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
 import kotlin.reflect.typeOf
 
@@ -151,14 +147,15 @@ fun NavGraphBuilder.authenticationNavGraph(
         typeMap = mapOf(
             typeOf<Account>() to CustomNavType.AccountType
         )
-    ){
+    ){ backStackEntry ->
 
-        val args = it.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
+        val args = backStackEntry.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
 
         val saveAccountAndPreferencesUseCase = SaveAccountAndPreferencesUseCase(
             accountFactory = AccountFactory(),
             accountAccess = appModule.accountAccess,
             preferencesAccess = appModule.preferencesAccess,
+            sessionManager = appModule.sessionManager
         )
         val currencyFormatter = CurrencyFormatterExpense(LocalContext.current)
 

@@ -14,7 +14,7 @@ class LoggedInAccountUseCase(
 
    val loggedInAccount=
 
-        sessionManager.getUserId().transform<String?, SpendResult<Account?, SessionError>>{ accountId ->
+        sessionManager.getAccountId().transform<String?, SpendResult<Account?, SessionError>>{ accountId ->
             if (accountId == null) {
                 emit(SpendResult.Failure(SessionError.NotLoggedInError))
 

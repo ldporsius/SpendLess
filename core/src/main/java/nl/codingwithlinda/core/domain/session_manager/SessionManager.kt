@@ -6,8 +6,8 @@ interface SessionManager {
 
     suspend fun setSessionDuration(duration: Long)
     suspend fun getSessionDuration(): Long
-    suspend fun setUserId(userId: String)
-    fun getUserId(): Flow<String?>
+    suspend fun setAccountId(userId: String)
+    fun getAccountId(): Flow<String?>
     fun isUserLoggedIn(): Flow<Boolean>
 
     suspend fun startSession()

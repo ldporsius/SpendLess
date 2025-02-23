@@ -1,6 +1,5 @@
 package nl.codingwithlinda.spendless.data.session_manager
 
-import android.annotation.SuppressLint
 import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -10,9 +9,6 @@ import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.D
 import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.LOCKED_OUT_DURATION
 import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.MAX_NUMBER_LOGIN_ATTEMPTS
 import nl.codingwithlinda.persistence.datastore.data.UserSessionSerializer.datastore
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
 import kotlin.time.Duration.Companion.milliseconds
 
 class DataStoreSessionManager(
@@ -36,23 +32,23 @@ class DataStoreSessionManager(
         }.firstOrNull() ?: DEFAULT_SESSION_DURATION
     }
 
-    override suspend fun setUserId(userId: String) {
+    override suspend fun setAccountId(userId: String) {
         datastore.updateData {
             it.copy(
-                userId = userId
+                accountId = userId
             )
         }
     }
 
-    override fun getUserId(): Flow<String?> {
+    override fun getAccountId(): Flow<String?> {
         return datastore.data.map {
-            it.userId
+            it.accountId
         }
     }
 
     override fun isUserLoggedIn(): Flow<Boolean> {
         return datastore.data.map {
-            it.userId.isNotEmpty()
+            it.accountId.isNotEmpty()
         }
     }
 
@@ -66,7 +62,7 @@ class DataStoreSessionManager(
     override suspend fun endSession() {
         datastore.updateData {
             it.copy(
-                userId = "",
+                accountId = "",
                 sessionStartTime = 0L
             )
         }

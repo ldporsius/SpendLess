@@ -14,7 +14,7 @@ class TestTransactionsUseCase(
     suspend fun insertFakeTransactions(){
         transactionsAccess.delete(-1)
 
-        sessionManager.getUserId().firstOrNull()?.let {
+        sessionManager.getAccountId().firstOrNull()?.let {
             fakeTransactions(it).onEach {
                 transactionsAccess.create(it)
             }

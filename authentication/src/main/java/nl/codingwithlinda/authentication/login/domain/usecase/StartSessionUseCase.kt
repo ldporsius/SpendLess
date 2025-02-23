@@ -8,7 +8,7 @@ class StartSessionUseCase(
 ) {
 
     suspend fun startSession(account: Account){
-        sessionManager.setUserId(account.id)
+        sessionManager.setAccountId(account.id)
         sessionManager.startSession()
     }
 }

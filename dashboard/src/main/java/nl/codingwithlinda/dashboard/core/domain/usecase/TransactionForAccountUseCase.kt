@@ -16,7 +16,7 @@ class TransactionForAccountUseCase(
 ) {
 
     fun transactionsForLoggedInAccount() =
-        sessionManager.getUserId().transform<String?, SpendResult<List<Transaction>, RootError>>{ accountId ->
+        sessionManager.getAccountId().transform<String?, SpendResult<List<Transaction>, RootError>>{ accountId ->
             if (accountId == null) {
                 emit(SpendResult.Failure(SessionError.NoAccountError))
                 return@transform

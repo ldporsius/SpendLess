@@ -56,17 +56,19 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(true) {
                 viewModel.isSessionValid().let {sessionState ->
-                   when(sessionState){
-                       ESessionState.OK -> {
-                           startDestination = DashboardNavRoute.DashboardRoot
-                       }
-                       ESessionState.LOGGED_OUT -> {
-                           startDestination = AuthenticationNavRoute.LoginRoute
-                       }
-                       ESessionState.SESSION_EXPRIRED -> {
-                           startDestination = AuthenticationNavRoute.PINPromptRoute
-                       }
-                   }
+                    startDestination = when(sessionState){
+                        ESessionState.OK -> {
+                            DashboardNavRoute.DashboardRoot
+                        }
+
+                        ESessionState.LOGGED_OUT -> {
+                            AuthenticationNavRoute.LoginRoute
+                        }
+
+                        ESessionState.SESSION_EXPRIRED -> {
+                            AuthenticationNavRoute.PINPromptRoute
+                        }
+                    }
                 }
             }
 
