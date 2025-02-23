@@ -40,14 +40,13 @@ import nl.codingwithlinda.authentication.onboarding.presentation.components.Sele
 import nl.codingwithlinda.authentication.onboarding.presentation.components.ThousandsSeparatorComponent
 import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingAction
 import nl.codingwithlinda.authentication.onboarding.presentation.state.OnboardingUiState
-import nl.codingwithlinda.core.navigation.NavigationEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
     uiState: OnboardingUiState,
     onAction: (OnboardingAction) -> Unit,
-    onNavigate: (NavigationEvent) -> Unit
+    onNavigate: () -> Unit
 ) {
     Scaffold (
         topBar = {
@@ -55,7 +54,7 @@ fun OnboardingScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(
-                        onClick = { onNavigate(NavigationEvent.NavToCreatePin(uiState.account.userName)) },
+                        onClick = { onNavigate() },
                         modifier = Modifier
                             .padding(16.dp)
                     ) {
@@ -197,7 +196,6 @@ fun OnboardingScreen(
                 Button(
                     onClick = {
                         onAction(OnboardingAction.SaveOnboarding)
-                        //onNavigate(NavigationEvent.RedirectToDashboard)
                     },
                     modifier = Modifier
                         .fillMaxWidth(),

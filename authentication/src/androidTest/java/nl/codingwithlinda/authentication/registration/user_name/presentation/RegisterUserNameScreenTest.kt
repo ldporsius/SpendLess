@@ -27,7 +27,7 @@ class RegisterUserNameScreenTest{
                 RegisterUserNameScreen(
                     uistate = uistate,
                     onAction = {},
-                    onNavigate = {}
+                    navToCreatePin = {}
                 )
             }
         }

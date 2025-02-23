@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.firstOrNull
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.navigation.NavRoute
-import nl.codingwithlinda.core.navigation.NavigationEvent
+import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 
 @Composable
 fun AuthenticationRoot(

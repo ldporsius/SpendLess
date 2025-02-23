@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.navigation
+package nl.codingwithlinda.spendless.navigation.util
 
 import nl.codingwithlinda.core.domain.model.Account
 

@@ -3,7 +3,6 @@ package nl.codingwithlinda.spendless.navigation.util
 import androidx.navigation.NavHostController
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
 import nl.codingwithlinda.core.navigation.DashboardNavRoute
-import nl.codingwithlinda.core.navigation.NavigationEvent
 
 fun NavHostController.navigateToEvent(event: NavigationEvent) {
     when (event) {

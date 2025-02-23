@@ -1,6 +1,5 @@
 package nl.codingwithlinda.authentication.login.presentation
 
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,17 +21,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core_ui.shared_components.CustomTextField
 import nl.codingwithlinda.authentication.login.presentation.state.LoginAction
 import nl.codingwithlinda.authentication.login.presentation.state.LoginViewState
-import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
 import nl.codingwithlinda.core_ui.util.UiText
@@ -43,7 +39,7 @@ fun LoginScreen(
     uistate: LoginViewState,
     error: UiText? = null,
     onAction: (LoginAction) -> Unit,
-    onNavigate: (NavigationEvent) -> Unit
+    onNavigate: () -> Unit
 ) {
     val focusRequester = FocusRequester()
 
@@ -133,7 +129,7 @@ fun LoginScreen(
                         Text(text = "Login")
                     }
                     TextButton(
-                        onClick = { onNavigate(NavigationEvent.NavToRegisterUserName) },
+                        onClick = { onNavigate() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 32.dp)

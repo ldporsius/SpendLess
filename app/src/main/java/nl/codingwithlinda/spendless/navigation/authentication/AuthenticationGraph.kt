@@ -29,23 +29,15 @@ import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.navigation.CustomNavType
-import nl.codingwithlinda.core.navigation.NavigationEvent
+import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
-    //navController: NavController,
     onNavAction: (NavigationEvent) -> Unit,
     appModule: AppModule
 ) {
 
-
-   /* composable<AuthenticationNavRoute.AuthenticationRoot> {
-        AuthenticationRoot(
-            appModule = appModule,
-            onNavAction = onNavAction
-        )
-    }*/
 
     composable<AuthenticationNavRoute.RegisterUserNameRoute> {
         val factory = viewModelFactory {
@@ -62,9 +54,8 @@ fun NavGraphBuilder.authenticationNavGraph(
         RegisterUserNameScreen(
             uistate = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
-            onNavigate = {
-                //navController.navigateToEvent(it)
-                onNavAction(it)
+            navToCreatePin = {
+                onNavAction(NavigationEvent.NavToCreatePin(viewModel.uiState.value.userNameInput))
             }
         )
     }
@@ -183,17 +174,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                onNavAction(it)
-               /* if (it is NavigationEvent.RedirectToDashboard){
-                    navHostController.navigate(DashboardNavRoute.DashboardRoot){
-                        popUpTo(AuthenticationNavRoute.AuthenticationRoot){
-                            inclusive = true
-                        }
-                    }
-                }
-                else {
-                    navController.navigateToEvent(it)
-                }*/
+                onNavAction(NavigationEvent.NavToCreatePin(args.account.userName))
             }
         )
     }
@@ -202,9 +183,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         PINPromptRoot(
             appModule = appModule,
             onNavAction = {
-               // navController.navigateToEvent(it)
-                onNavAction(it)
-
+                onNavAction(NavigationEvent.NavToDashboard)
             }
         )
     }
@@ -235,9 +214,7 @@ fun NavGraphBuilder.authenticationNavGraph(
             error = viewModel.errorChannel.collectAsStateWithLifecycle(null).value,
             onAction = viewModel::handleAction,
             onNavigate = {
-                println("LOGIN SCREEN NAVIGATE CALLED with event: $it")
-                //navController.navigateToEvent(it)
-                onNavAction(it)
+                onNavAction(NavigationEvent.NavToRegisterUserName)
             }
         )
     }

@@ -5,18 +5,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.flow.receiveAsFlow
-import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
-import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.navigation.NavigationEvent
-import nl.codingwithlinda.core.presentation.util.ObserveAsEvents
 
 @Composable
 fun PINPromptRoot(
     appModule: AppModule,
-    onNavAction: (NavigationEvent) -> Unit
+    onNavAction: () -> Unit
 ) {
 
     val sessionManager = appModule.sessionManager
@@ -33,7 +28,7 @@ fun PINPromptRoot(
                 onLoginSuccess = {
                     println("login success")
 
-                    onNavAction(NavigationEvent.NavToDashboard)
+                    onNavAction()
                 },
                 loggedInAccountUseCase = loggedInAccountUseCase,
             )

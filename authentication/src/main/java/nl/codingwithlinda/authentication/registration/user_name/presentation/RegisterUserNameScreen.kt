@@ -32,15 +32,13 @@ import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterAction
 import nl.codingwithlinda.authentication.registration.user_name.presentation.state.RegisterUserViewState
-import nl.codingwithlinda.core.navigation.NavigationEvent
 import nl.codingwithlinda.core_ui.shared_components.WalletButton
 
 @Composable
 fun RegisterUserNameScreen(
     uistate: RegisterUserViewState,
     onAction: (RegisterAction) -> Unit,
-    onNavigate: (NavigationEvent) -> Unit
-
+    navToCreatePin: () -> Unit,
 ) {
     Scaffold(
         modifier = Modifier
@@ -109,12 +107,11 @@ fun RegisterUserNameScreen(
                         unfocusedBorderColor = Color.Transparent
 
                     )
-
                 )
 
                 Button(
                     onClick = {
-                        onNavigate(NavigationEvent.NavToCreatePin(uistate.userNameInput))
+                        navToCreatePin()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
