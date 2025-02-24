@@ -3,6 +3,7 @@ package nl.codingwithlinda.spendless.di
 import android.app.Application
 import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.authentication.login.data.LoginValidator
+import nl.codingwithlinda.core.data.AccountCryptor
 import nl.codingwithlinda.spendless.data.session_manager.DataStoreSessionManager
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
@@ -49,7 +50,7 @@ class AndroidAppModule(
         sessionManager = sessionManager,
         loginValidator = LoginValidator(
             accountAccess = accountAccess,
-            accountFactory = AccountFactory()
+            accountCryptor = AccountCryptor()
         ),
         accountAccess = accountAccessReadOnly
     )

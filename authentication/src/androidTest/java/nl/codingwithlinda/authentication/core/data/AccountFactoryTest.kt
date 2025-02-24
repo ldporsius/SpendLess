@@ -8,12 +8,13 @@ class AccountFactoryTest{
 
     val factory = nl.codingwithlinda.authentication.core.data.AccountFactory()
     val account = factory.create("linda", "12345")
+    val cryptor = nl.codingwithlinda.core.data.AccountCryptor()
 
     @Test
     fun testAccountFactory_encryptedIsDecrypted() = runBlocking {
-        val encrypted = factory.encrypt(account)
+        val encrypted = cryptor.encrypt(account)
         println("encrypted account: $encrypted")
-        val decrypted = factory.decrypt(encrypted)
+        val decrypted = cryptor.decrypt(encrypted)
         println("decrypted account: $decrypted")
 
         assertTrue(account.pin == decrypted.pin)
@@ -23,9 +24,9 @@ class AccountFactoryTest{
     fun testAccountFactory_noCrashInvalidPin() = runBlocking {
         val account = factory.create("linda", "")
 
-        val encrypted = factory.encrypt(account)
+        val encrypted = cryptor.encrypt(account)
         println("encrypted account: $encrypted")
-        val decrypted = factory.decrypt(encrypted)
+        val decrypted = cryptor.decrypt(encrypted)
         println("decrypted account: $decrypted")
 
         assertTrue(account.pin == decrypted.pin)

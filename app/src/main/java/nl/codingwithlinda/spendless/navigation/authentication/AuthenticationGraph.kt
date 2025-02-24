@@ -14,9 +14,9 @@ import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCas
 import nl.codingwithlinda.core_ui.shared_components.ErrorBanner
 import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
-import nl.codingwithlinda.authentication.onboarding.domain.SaveAccountAndPreferencesUseCase
-import nl.codingwithlinda.authentication.onboarding.presentation.OnboardingScreen
-import nl.codingwithlinda.authentication.onboarding.presentation.OnboardingViewModel
+import nl.codingwithlinda.user_settings.onboarding.domain.SaveAccountAndPreferencesUseCase
+import nl.codingwithlinda.user_settings.onboarding.presentation.OnboardingScreen
+import nl.codingwithlinda.user_settings.onboarding.presentation.OnboardingViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
@@ -27,7 +27,7 @@ import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
-import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
+import nl.codingwithlinda.core.data.AccountCryptor
 import nl.codingwithlinda.spendless.navigation.util.CustomNavType
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
@@ -138,7 +138,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         val args = backStackEntry.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
 
         val saveAccountAndPreferencesUseCase = SaveAccountAndPreferencesUseCase(
-            accountFactory = AccountFactory(),
+            accountCryptor = AccountCryptor(),
             accountAccess = appModule.accountAccess,
             preferencesAccess = appModule.preferencesAccess,
             sessionManager = appModule.sessionManager
@@ -179,7 +179,7 @@ fun NavGraphBuilder.authenticationNavGraph(
                 LoginViewModel(
                     loginValidator = LoginValidator(
                         accountAccess = appModule.accountAccess,
-                        accountFactory = AccountFactory()
+                        accountCryptor = AccountCryptor()
                     ),
                     startSessionUseCase = startSessionUseCase,
                     navToDashboard = {
