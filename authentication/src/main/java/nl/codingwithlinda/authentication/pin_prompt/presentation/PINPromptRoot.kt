@@ -27,7 +27,6 @@ fun PINPromptRoot(
                 authenticationManager = appModule.authenticationManager,
                 onLoginSuccess = {
                     println("login success")
-
                     onNavAction()
                 },
                 loggedInAccountUseCase = loggedInAccountUseCase,

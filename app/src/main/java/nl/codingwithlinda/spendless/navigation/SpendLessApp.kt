@@ -35,6 +35,10 @@ import nl.codingwithlinda.user_settings.preferences.domain.GetUserPreferencesUse
 import nl.codingwithlinda.user_settings.preferences.domain.SaveUserPreferencesUseCase
 import nl.codingwithlinda.user_settings.preferences.presentation.UserPreferencesScreen
 import nl.codingwithlinda.user_settings.preferences.presentation.UserPreferencesViewModel
+import nl.codingwithlinda.user_settings.security.domain.usecase.GetSecuritySettingsUseCase
+import nl.codingwithlinda.user_settings.security.domain.usecase.SaveSecuritySettingsUseCase
+import nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel
+import nl.codingwithlinda.user_settings.security.presentation.UserSettingsSecurityScreen
 
 @Composable
 fun SpendLessApp(
@@ -56,7 +60,6 @@ fun SpendLessApp(
                 PINPromptRoot(
                     appModule = appModule,
                     onNavAction = {
-                        //onNavAction(NavigationEvent.NavToDashboard)
                         navHostController.navigate(DashboardNavRoute.DashboardRoot){
                             popUpTo(PINPromptRoute){
                                 inclusive = true
@@ -112,7 +115,6 @@ fun SpendLessApp(
                            }
                        }
                     }
-
                 )
             }
             composable<UserSettingsPreferencesNav> {
@@ -153,20 +155,31 @@ fun SpendLessApp(
                 ) {
                     onNavAction(UserSettingsRootNav)
                 }
-
             }
+
+
             composable<UserSettingsSecurityNav> {
+
+                val getSecuritySettingsUseCase = GetSecuritySettingsUseCase(appModule.sessionManager)
+                val saveSecuritySettingsUseCase = SaveSecuritySettingsUseCase(appModule.sessionManager)
 
                 val factory = viewModelFactory {
                     initializer {
-                        nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel()
+                        SecuritySettingsViewModel(
+                            getSecuritySettingsUseCase = getSecuritySettingsUseCase,
+                            saveSecuritySettingsUseCase = saveSecuritySettingsUseCase,
+                            onSaved = {
+                                println("SAVED SECURITY SETTINGS. NAVIGATING BACK TO SETTINGS ROOT")
+                                onNavAction(UserSettingsRootNav)
+                            }
+                        )
                     }
                 }
-                val viewModel = viewModel<nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel>(
+                val viewModel = viewModel<SecuritySettingsViewModel>(
                     factory = factory
                 )
 
-                nl.codingwithlinda.user_settings.security.presentation.UserSettingsSecurityScreen(
+                UserSettingsSecurityScreen(
                     uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
                     onAction = viewModel::handleAction,
                     onNavBack = {

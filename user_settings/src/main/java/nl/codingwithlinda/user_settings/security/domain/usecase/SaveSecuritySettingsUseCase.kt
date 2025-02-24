@@ -14,6 +14,8 @@ class SaveSecuritySettingsUseCase(
     ) {
        val sessInMillis = sessionDuration.duration.toLong()
 
+        println("SAVESECURITY SETTINGS USECASE. SESSION DURATION: $sessInMillis")
+
         sessionManager.setSessionDuration(sessInMillis)
 
         val lockInMillis = lockedOutDuration.duration.toLong()

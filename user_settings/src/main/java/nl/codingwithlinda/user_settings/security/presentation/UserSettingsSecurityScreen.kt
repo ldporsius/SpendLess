@@ -71,7 +71,7 @@ fun UserSettingsSecurityScreen(
                 }
 
                 Button(
-                    onClick = { /*TODO*/ }
+                    onClick = { onAction(SecurityAction.Save) }
                     ,
                     modifier = Modifier.fillMaxWidth()
                 ) {
