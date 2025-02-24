@@ -157,6 +157,22 @@ fun SpendLessApp(
             }
             composable<UserSettingsSecurityNav> {
 
+                val factory = viewModelFactory {
+                    initializer {
+                        nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel()
+                    }
+                }
+                val viewModel = viewModel<nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel>(
+                    factory = factory
+                )
+
+                nl.codingwithlinda.user_settings.security.presentation.UserSettingsSecurityScreen(
+                    uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+                    onAction = viewModel::handleAction,
+                    onNavBack = {
+                        onNavAction(UserSettingsRootNav)
+                    }
+                )
             }
         }
     }

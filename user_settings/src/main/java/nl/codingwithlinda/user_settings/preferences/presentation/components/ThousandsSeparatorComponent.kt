@@ -22,7 +22,6 @@ fun ThousandsSeparatorComponent(
     onSelected: (Separator) -> Unit
 ) {
 
-
     Text(text = "Thousands separator",
         style = MaterialTheme.typography.bodySmall)
 
