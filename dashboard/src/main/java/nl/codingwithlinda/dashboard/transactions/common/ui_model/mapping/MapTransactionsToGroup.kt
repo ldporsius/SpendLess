@@ -10,7 +10,6 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGrou
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import kotlin.math.abs
 
 sealed interface TransactionKey{
     data class Simple(val dayDiff: DayDiff): TransactionKey {
@@ -70,7 +69,7 @@ fun dayToUiText(transactionKey: TransactionKey): UiText{
             return when(transactionKey.dayGroup.daydiff){
                 0 -> UiText.DynamicText("Today")
                 1 -> UiText.DynamicText("Yesterday")
-                else -> UiText.DynamicText("Older")
+                else -> UiText.DynamicText("Day difference: " + transactionKey.dayGroup.daydiff.toString())
             }
         }
         is TransactionKey.Simple -> {

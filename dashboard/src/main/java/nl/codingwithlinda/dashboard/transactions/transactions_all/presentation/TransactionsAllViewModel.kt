@@ -15,6 +15,7 @@ import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDateGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 
 class TransactionsAllViewModel(
@@ -45,7 +46,8 @@ class TransactionsAllViewModel(
             if (prefs == null){
                 return@map emptyList<TransactionGroupUi>()
             }
-            it.groupByDate().toUi(currencyFormatterFactory, prefs.preferences)
+            it.groupByDateGroup().toUi(currencyFormatterFactory, prefs.preferences)
+            //it.groupByDate().toUi(currencyFormatterFactory, prefs.preferences)
         }
         return transactions
     }
