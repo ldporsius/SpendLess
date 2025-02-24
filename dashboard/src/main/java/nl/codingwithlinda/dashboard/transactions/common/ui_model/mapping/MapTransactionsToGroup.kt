@@ -33,7 +33,7 @@ sealed interface TransactionKey{
     fun isOlder(): Boolean
 }
 
-data class DayGroup(val daydiff: Int, val date: Long)
+data class DayGroup(val daydiff: Int)
 
 @SuppressLint("NewApi")
 fun getDayGroupFromTimestamp(timestamp: Long): DayGroup {
@@ -41,26 +41,32 @@ fun getDayGroupFromTimestamp(timestamp: Long): DayGroup {
     val date = Instant.ofEpochMilli(timestamp)
     val day = date.atZone(ZoneId.systemDefault()).dayOfYear
     val diff = today - day
-    return DayGroup(diff, timestamp)
+    return DayGroup(diff)
 }
 
+@SuppressLint("NewApi")
 fun List<Transaction>.groupByDateGroup(): List<TransactionGroup>{
     println("MAP TRANSACTIONS TO GROUP: ORIGINAL = $this")
 
-    val dayValueMap = this.groupBy {
+    val dayValueMap = this.groupBy{
         getDayGroupFromTimestamp(it.timestamp)
+    }.map {
+        it.key to ZonedDateTime.now().minusDays(it.key.daydiff.toLong())
+
     }
-        .map{
+
+
+    return  dayValueMap
+          .map{
             TransactionGroup(
-                date = TransactionKey.Detailed(it.key),
-                transactions = it.value
+                date = TransactionKey.Detailed(it.first),
+                transactions = this.filter { transaction ->
+                    getDayGroupFromTimestamp(transaction.timestamp) == it.first
+                }
+
             )
         }
-
-    return dayValueMap
 }
-
-
 
 enum class DayDiff{
     TODAY, YESTERDAY, OLDER
@@ -73,10 +79,9 @@ fun dayToUiText(transactionKey: TransactionKey): UiText{
                 0 -> UiText.DynamicText("Today")
                 1 -> UiText.DynamicText("Yesterday")
                 else -> {
-                    val parsedDate = Instant.ofEpochMilli(transactionKey.dayGroup.date).let {instant ->
-                        ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).format(
-                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-                        )
+                    val parsedDate =
+                        transactionKey.dayGroup.daydiff.let {
+                        ZonedDateTime.now().minusDays(it.toLong()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
 
                     }
                     UiText.DynamicText(parsedDate)
