@@ -8,5 +8,6 @@ data class UserSessionSettings(
     val sessionDuration: Long = 60_000 * 1,
     val sessionStartTime: Long = System.currentTimeMillis(),
     val numberLoginAttempts: Int = 0,
-    val lockedOutStartTime: Long = 0L
+    val lockedOutStartTime: Long = 0L,
+    val lockedOutDuration: Long = 30_000
 )

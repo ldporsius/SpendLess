@@ -14,6 +14,8 @@ interface SessionManager {
     suspend fun endSession()
     suspend fun isSessionValid(currentTime: Long, ): Boolean
 
+    suspend fun setLockedOutDuration(duration: Long)
+    suspend fun getLockedOutDuration(): Long
     suspend fun lockOutUser()
     suspend fun unlockUser()
     suspend fun isUserLockedOut(currentTime: Long): Boolean
@@ -22,6 +24,6 @@ interface SessionManager {
     companion object{
         const val DEFAULT_SESSION_DURATION = 60_000 * 1L
         const val MAX_NUMBER_LOGIN_ATTEMPTS = 3
-        const val LOCKED_OUT_DURATION = 30_000
+        const val DEFAULT_LOCKED_OUT_DURATION = 30_000L
     }
 }

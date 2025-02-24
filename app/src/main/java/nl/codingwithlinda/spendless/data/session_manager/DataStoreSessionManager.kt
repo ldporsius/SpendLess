@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.DEFAULT_SESSION_DURATION
-import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.LOCKED_OUT_DURATION
+import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.DEFAULT_LOCKED_OUT_DURATION
 import nl.codingwithlinda.core.domain.session_manager.SessionManager.Companion.MAX_NUMBER_LOGIN_ATTEMPTS
 import nl.codingwithlinda.persistence.datastore.data.UserSessionSerializer.datastore
 import kotlin.time.Duration.Companion.milliseconds
@@ -89,7 +89,7 @@ class DataStoreSessionManager(
         datastore.data.map {
             it.lockedOutStartTime
         }.firstOrNull()?.let {lockedOutTime ->
-          return currentTime - lockedOutTime < LOCKED_OUT_DURATION
+          return currentTime - lockedOutTime < DEFAULT_LOCKED_OUT_DURATION
         }
         return false
     }
@@ -99,11 +99,11 @@ class DataStoreSessionManager(
             it.lockedOutStartTime
         }.firstOrNull()?.let {lockedOutStartTime ->
            val remaining =
-               SessionManager.Companion.LOCKED_OUT_DURATION.milliseconds
+               SessionManager.Companion.DEFAULT_LOCKED_OUT_DURATION.milliseconds
                    .minus(currentTime.milliseconds - lockedOutStartTime.milliseconds)
 
             remaining.inWholeMilliseconds
-        } ?: LOCKED_OUT_DURATION.milliseconds.inWholeMilliseconds
+        } ?: DEFAULT_LOCKED_OUT_DURATION.milliseconds.inWholeMilliseconds
     }
 
 
@@ -121,5 +121,19 @@ class DataStoreSessionManager(
         val isSessionValid = diffTimeInMinutes < durationInMinutes
 
         return  isSessionValid
+    }
+
+    override suspend fun setLockedOutDuration(duration: Long) {
+        datastore.updateData {
+            it.copy(
+                lockedOutDuration = duration
+            )
+        }
+    }
+
+    override suspend fun getLockedOutDuration(): Long {
+        return datastore.data.map {
+            it.lockedOutDuration
+        }.firstOrNull()?: DEFAULT_LOCKED_OUT_DURATION
     }
 }
