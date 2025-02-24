@@ -10,6 +10,8 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGrou
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 sealed interface TransactionKey{
     data class Simple(val dayDiff: DayDiff): TransactionKey {
@@ -31,7 +33,7 @@ sealed interface TransactionKey{
     fun isOlder(): Boolean
 }
 
-data class DayGroup(val daydiff: Int,)
+data class DayGroup(val daydiff: Int, val date: Long)
 
 @SuppressLint("NewApi")
 fun getDayGroupFromTimestamp(timestamp: Long): DayGroup {
@@ -39,7 +41,7 @@ fun getDayGroupFromTimestamp(timestamp: Long): DayGroup {
     val date = Instant.ofEpochMilli(timestamp)
     val day = date.atZone(ZoneId.systemDefault()).dayOfYear
     val diff = today - day
-    return DayGroup(diff)
+    return DayGroup(diff, timestamp)
 }
 
 fun List<Transaction>.groupByDateGroup(): List<TransactionGroup>{
@@ -63,13 +65,22 @@ fun List<Transaction>.groupByDateGroup(): List<TransactionGroup>{
 enum class DayDiff{
     TODAY, YESTERDAY, OLDER
 }
+@SuppressLint("NewApi")
 fun dayToUiText(transactionKey: TransactionKey): UiText{
     when(transactionKey){
         is TransactionKey.Detailed -> {
             return when(transactionKey.dayGroup.daydiff){
                 0 -> UiText.DynamicText("Today")
                 1 -> UiText.DynamicText("Yesterday")
-                else -> UiText.DynamicText("Day difference: " + transactionKey.dayGroup.daydiff.toString())
+                else -> {
+                    val parsedDate = Instant.ofEpochMilli(transactionKey.dayGroup.date).let {instant ->
+                        ZonedDateTime.ofInstant(instant, ZoneId.systemDefault()).format(
+                            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                        )
+
+                    }
+                    UiText.DynamicText(parsedDate)
+                }
             }
         }
         is TransactionKey.Simple -> {
