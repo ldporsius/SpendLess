@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.core_ui.secondaryFixed
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItem
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 
@@ -42,6 +44,17 @@ fun AllTransactionsScreen(
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            androidx.compose.material3.FloatingActionButton(
+                onClick = {
+                    //new transaction
+                },
+                containerColor = secondaryFixed
+            ){
+                androidx.compose.material3.Icon(
+                    imageVector = androidx.compose.material.icons.Icons.Default.Add, contentDescription = null)
+            }
         }
     ) { padding ->
         Column(
