@@ -87,7 +87,12 @@ fun SpendLessApp(
             }
 
             composable<DashboardNavRoute.AllTransactionsNavRoute> {
-                AllTransactionsRoot(appModule)
+                AllTransactionsRoot(
+                    appModule = appModule,
+                    onNavBack = {
+                        navHostController.navigateUp()
+                    }
+                )
             }
         }
 

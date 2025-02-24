@@ -13,6 +13,7 @@ import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 @Composable
 fun AllTransactionsRoot(
     appModule: AppModule,
+    onNavBack: () -> Unit
 ) {
     val currencyFormatterFactory = CurrencyFormatterFactory(LocalContext.current)
 
@@ -29,6 +30,9 @@ fun AllTransactionsRoot(
 
     AllTransactionsScreen(
         transactions = viewModel.transactions.collectAsStateWithLifecycle().value,
+        onNavBack = {
+            onNavBack()
+        }
 
     )
 

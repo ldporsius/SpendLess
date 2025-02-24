@@ -125,8 +125,8 @@ class DashboardViewModel(
                 return@combine emptyList()
             }
             transactions.groupByDate()
-                .filter {
-                    it.date != DayDiff.OLDER
+                .filterNot {
+                    it.date.isOlder()
                 }
                 .toUi(
                     currencyFormatterFactory = currencyFormatterFactory,

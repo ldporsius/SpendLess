@@ -12,15 +12,78 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import kotlin.math.abs
 
+sealed interface TransactionKey{
+    data class Simple(val dayDiff: DayDiff): TransactionKey {
+        override fun isOlder(): Boolean {
+           return when(dayDiff){
+               DayDiff.TODAY -> false
+               DayDiff.YESTERDAY -> false
+               DayDiff.OLDER -> true
+           }
+        }
+    }
+
+    data class Detailed(val dayGroup: DayGroup): TransactionKey {
+        override fun isOlder(): Boolean {
+            return false
+        }
+    }
+
+    fun isOlder(): Boolean
+}
+
+data class DayGroup(val daydiff: Int,)
+
+@SuppressLint("NewApi")
+fun getDayGroupFromTimestamp(timestamp: Long): DayGroup {
+    val today = ZonedDateTime.now().dayOfYear
+    val date = Instant.ofEpochMilli(timestamp)
+    val day = date.atZone(ZoneId.systemDefault()).dayOfYear
+    val diff = today - day
+    return DayGroup(diff)
+}
+
+fun List<Transaction>.groupByDateGroup(): List<TransactionGroup>{
+    println("MAP TRANSACTIONS TO GROUP: ORIGINAL = $this")
+
+    val dayValueMap = this.groupBy {
+        getDayGroupFromTimestamp(it.timestamp)
+    }
+        .map{
+            TransactionGroup(
+                date = TransactionKey.Detailed(it.key),
+                transactions = it.value
+            )
+        }
+
+    return dayValueMap
+}
+
+
+
 enum class DayDiff{
     TODAY, YESTERDAY, OLDER
 }
-fun dayToUiText(dayDiff: DayDiff): UiText{
-   return when (dayDiff) {
-       DayDiff.TODAY -> UiText.DynamicText("Today")
-       DayDiff.YESTERDAY -> UiText.DynamicText("Yesterday")
-       else -> UiText.DynamicText("Older")
-   }
+fun dayToUiText(transactionKey: TransactionKey): UiText{
+    when(transactionKey){
+        is TransactionKey.Detailed -> {
+            return when(transactionKey.dayGroup.daydiff){
+                0 -> UiText.DynamicText("Today")
+                1 -> UiText.DynamicText("Yesterday")
+                else -> UiText.DynamicText("Older")
+            }
+        }
+        is TransactionKey.Simple -> {
+            val dayDiff = transactionKey.dayDiff
+            return when (dayDiff) {
+                DayDiff.TODAY -> UiText.DynamicText("Today")
+                DayDiff.YESTERDAY -> UiText.DynamicText("Yesterday")
+                else -> UiText.DynamicText("Older")
+            }
+
+        }
+    }
+
 }
 
 fun dayToDayDiff(day: Int): DayDiff{
@@ -38,6 +101,7 @@ fun getDayFromTimestamp(timestamp: Long): Int {
     val diff = today - day
     return diff
 }
+
 @SuppressLint("NewApi")
 fun getPreviousWeek(
     today: ZonedDateTime = ZonedDateTime.now(),
@@ -55,6 +119,7 @@ fun getPreviousWeek(
     val dayRange = diffDayOfWeek + diffDayOfYear
     return dayRange
 }
+
 fun List<Transaction>.groupByDate(): List<TransactionGroup>{
     println("MAP TRANSACTIONS TO GROUP: ORIGINAL = $this")
 
@@ -63,7 +128,7 @@ fun List<Transaction>.groupByDate(): List<TransactionGroup>{
     }
    .map{
         TransactionGroup(
-            date = dayToDayDiff(it.key),
+            date = TransactionKey.Simple(dayToDayDiff(it.key)),
             transactions = it.value
         )
     }
