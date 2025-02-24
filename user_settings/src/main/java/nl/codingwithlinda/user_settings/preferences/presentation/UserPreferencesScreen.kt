@@ -38,10 +38,12 @@ import nl.codingwithlinda.user_settings.preferences.presentation.components.Deci
 import nl.codingwithlinda.user_settings.preferences.presentation.components.ExpensesFormatComponent
 import nl.codingwithlinda.user_settings.preferences.presentation.components.SelectCurrencyComponent
 import nl.codingwithlinda.user_settings.preferences.presentation.components.ThousandsSeparatorComponent
+import nl.codingwithlinda.user_settings.main.presentation.state.UserPrefsAction
+import nl.codingwithlinda.user_settings.preferences.presentation.state.UserPrefsUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OnboardingScreen(
+fun UserPreferencesScreen(
     uiState: UserPrefsUiState,
     onAction: (UserPrefsAction) -> Unit,
     onNavigate: () -> Unit
@@ -49,7 +51,9 @@ fun OnboardingScreen(
     Scaffold (
         topBar = {
             TopAppBar(
-                title = {},
+                title = {
+                    Text("Preferences")
+                },
                 navigationIcon = {
                     IconButton(
                         onClick = { onNavigate() },
@@ -70,7 +74,7 @@ fun OnboardingScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
-            contentAlignment = Alignment.BottomCenter
+            contentAlignment = Alignment.TopCenter
         ) {
 
 
@@ -81,18 +85,6 @@ fun OnboardingScreen(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(
-                    text = "Set SpendLess",
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = "to your preferences",
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = "You can change it at any time in Settings",
-                    style = MaterialTheme.typography.bodyMedium
-                )
                 ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -123,6 +115,7 @@ fun OnboardingScreen(
 
                 ExpensesFormatComponent(
                     selectedExpensesFormat = uiState.preferences.expensesFormat.ordinal,
+                    currentCurrency = uiState.currencySymbol(),
                     onExpensesFormatSelected = {
                         onAction(UserPrefsAction.OnSelectExpensesFormat(it))
                     }
@@ -197,9 +190,9 @@ fun OnboardingScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth(),
-                    enabled = uiState.isStartTrackingEnabled()
+                    enabled = uiState.isSaveEnabled()
                 ) {
-                    Text("Start Tracking!")
+                    Text("Save")
                 }
             }
         }

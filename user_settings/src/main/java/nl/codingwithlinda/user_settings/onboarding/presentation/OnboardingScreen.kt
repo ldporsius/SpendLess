@@ -34,14 +34,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import nl.codingwithlinda.user_settings.onboarding.presentation.state.OnboardingAction
-import nl.codingwithlinda.user_settings.onboarding.presentation.state.OnboardingUiState
+import nl.codingwithlinda.user_settings.main.presentation.state.UserPrefsAction
+import nl.codingwithlinda.user_settings.main.presentation.state.UserPrefsAction.SavePrefs
+import nl.codingwithlinda.user_settings.preferences.presentation.state.UserPrefsUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
-    uiState: OnboardingUiState,
-    onAction: (OnboardingAction) -> Unit,
+    uiState: UserPrefsUiState,
+    onAction: (UserPrefsAction) -> Unit,
     onNavigate: () -> Unit
 ) {
     Scaffold (
@@ -121,8 +122,9 @@ fun OnboardingScreen(
 
                 nl.codingwithlinda.user_settings.preferences.presentation.components.ExpensesFormatComponent(
                     selectedExpensesFormat = uiState.preferences.expensesFormat.ordinal,
+                    currentCurrency = uiState.currencySymbol(),
                     onExpensesFormatSelected = {
-                        onAction(OnboardingAction.OnSelectExpensesFormat(it))
+                        onAction(UserPrefsAction.OnSelectExpensesFormat(it))
                     }
                 )
 
@@ -166,7 +168,7 @@ fun OnboardingScreen(
                                 expanded = shouldShowCurrencyPicker,
                                 onDismissRequest = { shouldShowCurrencyPicker = false },
                                 onCurrencySelected = {
-                                    onAction(OnboardingAction.OnSelectCurrency(it))
+                                    onAction(UserPrefsAction.OnSelectCurrency(it))
                                     shouldShowCurrencyPicker = false
 
                                 }
@@ -179,23 +181,23 @@ fun OnboardingScreen(
                 nl.codingwithlinda.user_settings.preferences.presentation.components.DecimalSeparatorComponent(
                     selectedSeparator = uiState.preferences.decimalSeparator.order,
                     onSelected = {
-                        onAction(OnboardingAction.OnSelectDecimalSeparator(it))
+                        onAction(UserPrefsAction.OnSelectDecimalSeparator(it))
                     }
                 )
                 nl.codingwithlinda.user_settings.preferences.presentation.components.ThousandsSeparatorComponent(
                     selectedSeparator = uiState.preferences.thousandsSeparator.order,
                     onSelected = {
-                        onAction(OnboardingAction.OnSelectThousandsSeparator(it))
+                        onAction(UserPrefsAction.OnSelectThousandsSeparator(it))
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-                        onAction(OnboardingAction.SaveOnboarding)
+                        onAction(SavePrefs)
                     },
                     modifier = Modifier
                         .fillMaxWidth(),
-                    enabled = uiState.isStartTrackingEnabled()
+                    enabled = uiState.isSaveEnabled()
                 ) {
                     Text("Start Tracking!")
                 }

@@ -1,5 +1,6 @@
 package nl.codingwithlinda.spendless.navigation.authentication
 
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.registration.common.CreatePinScreen
 import nl.codingwithlinda.authentication.login.data.LoginValidator
 import nl.codingwithlinda.authentication.login.domain.usecase.StartSessionUseCase
@@ -16,7 +18,7 @@ import nl.codingwithlinda.authentication.login.presentation.LoginScreen
 import nl.codingwithlinda.authentication.login.presentation.LoginViewModel
 import nl.codingwithlinda.user_settings.onboarding.domain.SaveAccountAndPreferencesUseCase
 import nl.codingwithlinda.user_settings.onboarding.presentation.OnboardingScreen
-import nl.codingwithlinda.user_settings.onboarding.presentation.OnboardingViewModel
+import nl.codingwithlinda.user_settings.preferences.presentation.UserPreferencesViewModel
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinHeader
 import nl.codingwithlinda.authentication.registration.create_pin.presentation.CreatePinViewModel
 import nl.codingwithlinda.authentication.registration.repeat_pin.RepeatPinHeader
@@ -31,6 +33,7 @@ import nl.codingwithlinda.core.data.AccountCryptor
 import nl.codingwithlinda.spendless.navigation.util.CustomNavType
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
+import nl.codingwithlinda.user_settings.onboarding.domain.GetExampleUserPrefsUseCase
 import kotlin.reflect.typeOf
 
 fun NavGraphBuilder.authenticationNavGraph(
@@ -135,6 +138,7 @@ fun NavGraphBuilder.authenticationNavGraph(
         )
     ){ backStackEntry ->
 
+        val scope = rememberCoroutineScope()
         val args = backStackEntry.toRoute<AuthenticationNavRoute.OnboardingPreferencesRoute>()
 
         val saveAccountAndPreferencesUseCase = SaveAccountAndPreferencesUseCase(
@@ -147,17 +151,19 @@ fun NavGraphBuilder.authenticationNavGraph(
 
         val factory = viewModelFactory {
             initializer {
-                OnboardingViewModel(
+                UserPreferencesViewModel(
                     currencyFormatter = currencyFormatter,
-                    account = args.account,
-                    saveAccountAndPreferencesUseCase = saveAccountAndPreferencesUseCase,
-                    navToDashboard = {
-                        onNavAction(NavigationEvent.NavToDashboard)
+                    getUserPreferencesUseCase = GetExampleUserPrefsUseCase(),
+                    actionOnSave = {
+                        scope.launch {
+                            saveAccountAndPreferencesUseCase.save(args.account, it)
+                            onNavAction(NavigationEvent.NavToDashboard)
+                        }
                     }
                 )
             }
         }
-        val viewModel = viewModel<OnboardingViewModel>(
+        val viewModel = viewModel<UserPreferencesViewModel>(
             factory = factory
         )
 

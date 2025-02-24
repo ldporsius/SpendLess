@@ -12,7 +12,7 @@ import nl.codingwithlinda.persistence.room.dao.PreferencesDao
 import nl.codingwithlinda.persistence.room.dao.TransactionDao
 
 @Database(
-    version = 5,
+    version = 6,
     entities = [AccountEntity::class, PreferencesEntity::class, TransactionEntity::class]
 )
 abstract class SpendLessDatabase: RoomDatabase(){

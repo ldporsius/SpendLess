@@ -1,4 +1,4 @@
-package nl.codingwithlinda.user_settings.onboarding.presentation.state
+package nl.codingwithlinda.user_settings.preferences.presentation.state
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -8,10 +8,10 @@ import nl.codingwithlinda.core_ui.currency.CurrencyUi
 import nl.codingwithlinda.core_ui.currency.currencySymbolMap
 import nl.codingwithlinda.core_ui.currency.currencyToUiText
 
-data class OnboardingUiState(
+data class UserPrefsUiState(
     val exampleFormattedText: String,
     val preferences: Preferences,
-    //val account: Account
+
 ){
     @Composable
     fun currencyUiList(): List<CurrencyUi> {
@@ -21,6 +21,12 @@ data class OnboardingUiState(
         return texts
     }
 
+    @Composable
+    fun currencySymbol(): String {
+        return currencySymbolMap[preferences.currency]?.let {
+            LocalContext.current.getString(it)
+        } ?: ""
+    }
     @Composable
     fun getCurrencyUi(currency: Currency): CurrencyUi {
         val context = LocalContext.current
@@ -34,7 +40,7 @@ data class OnboardingUiState(
         )
     }
 
-    fun isStartTrackingEnabled(): Boolean{
+    fun isSaveEnabled(): Boolean{
         return preferences.thousandsSeparator != preferences.decimalSeparator
     }
 }

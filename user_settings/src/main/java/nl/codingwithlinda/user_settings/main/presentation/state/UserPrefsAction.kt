@@ -1,4 +1,4 @@
-package nl.codingwithlinda.user_settings.preferences.presentation
+package nl.codingwithlinda.user_settings.main.presentation.state
 
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat

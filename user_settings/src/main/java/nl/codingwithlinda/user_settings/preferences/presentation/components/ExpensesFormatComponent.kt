@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core_ui.LocalSegmentedButtonColorProvider
 import nl.codingwithlinda.core_ui.segmentedButtonColors
@@ -21,6 +22,7 @@ import nl.codingwithlinda.core_ui.segmentedButtonColors
 @Composable
 fun ExpensesFormatComponent(
     selectedExpensesFormat: Int,
+    currentCurrency: String,
     onExpensesFormatSelected: (ExpensesFormat) -> Unit
 ) {
 
@@ -49,7 +51,7 @@ fun ExpensesFormatComponent(
                 modifier = Modifier.padding(end = 8.dp),
                 colors = LocalSegmentedButtonColorProvider.current
             ) {
-                Text(text = "-$10")
+                Text(text = "-${currentCurrency}10")
             }
             SegmentedButton(
                 onClick = {
@@ -59,7 +61,7 @@ fun ExpensesFormatComponent(
                 shape = RoundedCornerShape(16.dp),
                 colors = LocalSegmentedButtonColorProvider.current
             ) {
-                Text(text = "($10)")
+                Text(text = "(${currentCurrency}10)")
             }
         }
     }

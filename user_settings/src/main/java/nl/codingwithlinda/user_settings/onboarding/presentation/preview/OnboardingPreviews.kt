@@ -3,12 +3,12 @@ package nl.codingwithlinda.user_settings.onboarding.presentation.preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import nl.codingwithlinda.user_settings.onboarding.presentation.OnboardingScreen
-import nl.codingwithlinda.user_settings.onboarding.presentation.state.OnboardingUiState
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
 import nl.codingwithlinda.core_ui.SpendLessTheme
+import nl.codingwithlinda.user_settings.preferences.presentation.state.UserPrefsUiState
 
 @Preview
 @Composable
@@ -22,7 +22,7 @@ private fun OnboardingScreenPreview() {
     )
     SpendLessTheme {
         OnboardingScreen(
-            uiState = OnboardingUiState(
+            uiState = UserPrefsUiState(
                 exampleFormattedText = "10.382,45",
                 preferences = preferences,
 
