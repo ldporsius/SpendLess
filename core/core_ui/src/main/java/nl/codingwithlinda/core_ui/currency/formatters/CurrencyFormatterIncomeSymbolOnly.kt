@@ -32,9 +32,13 @@ class CurrencyFormatterIncomeSymbolOnly(
             .replace(",", decimalSeparator)
             .replace(".", decimalSeparator)
 
+        println("CURRENCYFORMATTER INCOME SYMBOL ONLY. currency after replace: $currency")
+        val thousands = currency.substringBefore(decimalSeparator)
 
-        val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
-        val decimals = currency.takeLast(2).padStart(2, '0')
+
+        val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
+        val decimals = currency.substringAfter(decimalSeparator, "")
+            .padStart(2, '0')
 
        return annotatedString(
            toBeAnnotated = currencySymbol,
@@ -56,7 +60,6 @@ class CurrencyFormatterIncomeSymbolOnly(
                neutral
             )
         }
-
     }
 
     override fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
