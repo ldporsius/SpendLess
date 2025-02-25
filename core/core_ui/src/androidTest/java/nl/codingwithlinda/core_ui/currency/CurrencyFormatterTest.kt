@@ -13,7 +13,8 @@ import org.junit.Test
 class CurrencyFormatterTest{
 
     val context = ApplicationProvider.getApplicationContext<Application>()
-    private val currencyFormatter = CurrencyFormatterExpense(context)
+    val currencySymbolProvider = AppCurrencySymbolProvider(context)
+    private val currencyFormatter = CurrencyFormatterExpense(currencySymbolProvider)
     val preferences = Preferences(
         expensesFormat = ExpensesFormat.MINUS,
         currency = Currency.EURO,
