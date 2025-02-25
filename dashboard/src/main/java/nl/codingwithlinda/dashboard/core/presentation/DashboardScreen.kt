@@ -14,16 +14,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -36,13 +39,18 @@ import nl.codingwithlinda.core_ui.primaryFixed
 import nl.codingwithlinda.core_ui.purplish
 import nl.codingwithlinda.core_ui.secondaryFixed
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
+import nl.codingwithlinda.dashboard.core.presentation.state.DashboardCreateTransactionUiState
+import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
    accountUiState: AccountUiState,
    onNavToSettings: () -> Unit,
-   transactionsComponent: @Composable () -> Unit
+   transactionUiState: DashboardCreateTransactionUiState,
+   onCreateTransaction: () -> Unit,
+   transactionsComponent: @Composable () -> Unit,
+   createTransactionComponent: @Composable () -> Unit,
 ) {
     Scaffold(
         modifier = Modifier
@@ -76,7 +84,7 @@ fun DashboardScreen(
         floatingActionButton = {
             androidx.compose.material3.FloatingActionButton(
                 onClick = {
-                    //new transaction
+                   onCreateTransaction()
                 },
                 containerColor = secondaryFixed
             ){
@@ -239,6 +247,47 @@ fun DashboardScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 transactionsComponent()
+
+                val sheetState = rememberModalBottomSheetState(
+                    skipPartiallyExpanded = true
+                )
+                if(transactionUiState.showCreateTransaction){
+                    ModalBottomSheet(
+                        onDismissRequest = {
+                            onCreateTransaction()
+                        },
+                        sheetState = sheetState,
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier
+                            .fillMaxHeight()
+
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                            ,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Create transaction",
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            IconButton(
+                                onClick = {
+                                    onCreateTransaction()
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "close"
+                                )
+                            }
+                        }
+                        createTransactionComponent()
+                    }
+                }
             }
 
         }

@@ -2,7 +2,9 @@ package nl.codingwithlinda.core_ui
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.SegmentedButtonColors
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -72,6 +74,15 @@ fun segmentedButtonColors() = SegmentedButtonColors(
 val LocalSegmentedButtonColorProvider = compositionLocalOf {
    segmentedButtonColors()
 }
+
+val LocalShapeProvider = compositionLocalOf {
+    Shapes()
+}
+@Composable
+fun transparentTextFieldColors() = OutlinedTextFieldDefaults.colors(
+    unfocusedContainerColor = Color.Transparent,
+    unfocusedBorderColor = Color.Transparent,
+)
 
 @Composable
 fun SpendLessTheme(

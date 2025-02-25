@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -22,6 +23,7 @@ import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUse
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
+import nl.codingwithlinda.dashboard.core.presentation.state.DashboardCreateTransactionUiState
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.DayDiff
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDateGroup
@@ -141,6 +143,18 @@ class DashboardViewModel(
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
 
+    private val _dashboardCreateTransactionUiState = MutableStateFlow(
+        DashboardCreateTransactionUiState()
+    )
+    val dashboardCreateTransactionUiState = _dashboardCreateTransactionUiState.asStateFlow()
+
+    fun onCreateTransaction() {
+        _dashboardCreateTransactionUiState.update {
+            it.copy(
+                showCreateTransaction = !it.showCreateTransaction
+            )
+        }
+    }
     init {
         viewModelScope.launch {
             //TESTING DELETE LATER

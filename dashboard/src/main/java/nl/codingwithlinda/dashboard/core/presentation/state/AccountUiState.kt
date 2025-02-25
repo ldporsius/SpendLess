@@ -9,4 +9,5 @@ data class AccountUiState(
     val mostPopularCategory: ExpenseCategoryUi? = null,
     val largestTransaction: TransactionUi? = null,
     val sumPreviousWeek: String = "-$762.20",
+
 )

@@ -13,6 +13,7 @@ import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.dashboard.core.presentation.DashboardScreen
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
+import nl.codingwithlinda.dashboard.core.presentation.state.DashboardCreateTransactionUiState
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItemExpanded
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
@@ -78,7 +79,12 @@ private fun DashboardScreenPreview() {
                     onShowAll = {}
                 )
             },
-            onNavToSettings = {  }
+            onNavToSettings = { },
+            transactionUiState = DashboardCreateTransactionUiState(),
+            onCreateTransaction = {},
+            createTransactionComponent = {
+
+            }
         )
     }
 
