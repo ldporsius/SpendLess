@@ -2,7 +2,7 @@ package nl.codingwithlinda.core_ui.currency.formatters
 
 import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.Preferences
-import nl.codingwithlinda.core_ui.currency.CurrencySymbolProvider
+import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.currency.decimalSeparatorMap
 import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces

@@ -1,6 +1,7 @@
 package nl.codingwithlinda.core_ui.currency
 
 import android.content.Context
+import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core.domain.model.Preferences
 
 class AppCurrencySymbolProvider(

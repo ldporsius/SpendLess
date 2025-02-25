@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core_ui.currency
+package nl.codingwithlinda.core.domain.currency
 
 import nl.codingwithlinda.core.domain.model.Preferences
 
