@@ -1,6 +1,7 @@
 package nl.codingwithlinda.core_ui.currency
 
 import android.content.Context
+import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
 import java.math.BigDecimal
@@ -9,12 +10,12 @@ abstract class CurrencyFormatter(
     open val context: Context
 ) {
     abstract fun cleanInput(input: String): String
-    fun formatCurrencyString(currency: BigDecimal, preferences: Preferences): String{
+    fun formatCurrencyString(currency: BigDecimal, preferences: Preferences): AnnotatedString{
         return currency.scaleToTwoDecimalPlaces().let {
                formatCurrencyString(it, preferences)
             }
     }
-    abstract fun formatCurrencyString(currency:String, preferences: Preferences): String
+    abstract fun formatCurrencyString(currency:String, preferences: Preferences): AnnotatedString
 
     fun applySymbol(currency: String, preferences: Preferences): String {
         val currencySymbol = currencySymbolMap[preferences.currency] ?: return currency
@@ -32,7 +33,6 @@ abstract class CurrencyFormatter(
         }
 
         val appliedThousandsSeparator = arrayWholeNumber.joinToString("").dropLast(1)
-
 
         return appliedThousandsSeparator
     }

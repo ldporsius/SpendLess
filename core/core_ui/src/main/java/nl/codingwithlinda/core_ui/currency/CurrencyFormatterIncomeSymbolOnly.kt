@@ -8,7 +8,7 @@ import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core_ui.incomeColor
 
-class CurrencyFormatterIncome(
+class CurrencyFormatterIncomeSymbolOnly(
     override val context: Context
 ): CurrencyFormatter(
     context
@@ -27,15 +27,13 @@ class CurrencyFormatterIncome(
         return buildAnnotatedString {
             withStyle(SpanStyle(
                 color = incomeColor
-            )){
+            )) {
                 append(currencySymbol)
-
-                append(
-                    "$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}"
-                )
             }
+            append(
+                "$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}"
+            )
         }
-
     }
 
 }

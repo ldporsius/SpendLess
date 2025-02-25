@@ -59,7 +59,10 @@ fun DashboardRoot(
     )
     val createTransactionViewModelFactory = viewModelFactory {
         initializer {
-            CreateTransactionViewModel()
+            CreateTransactionViewModel(
+                currencyFormatterFactory = currencyFormatterFactory,
+                preferencesForAccountUseCase = preferencesForAccountUseCase
+            )
         }
     }
     val createTransactionViewModel = viewModel<CreateTransactionViewModel>(

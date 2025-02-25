@@ -41,13 +41,13 @@ class UserPreferencesViewModel(
     private val _preferences = MutableStateFlow(examplePrefs)
     private val _uiState = MutableStateFlow(
         UserPrefsUiState(
-            exampleFormattedText,
+            exampleFormattedText.text,
             _preferences.value,
         )
     )
     val uiState = _uiState.combine(_preferences){state, preferences ->
         state.copy(
-            exampleFormattedText =  currencyFormatter.formatCurrencyString(exampleText, preferences),
+            exampleFormattedText =  currencyFormatter.formatCurrencyString(exampleText, preferences).text,
             preferences = preferences
         )
     }.onStart {

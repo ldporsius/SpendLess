@@ -42,6 +42,9 @@ val secondaryFixed = Color(0xFFe5ea58)
 val secondaryFixedDim = Color(0xFFc9ce3e)
 val success = Color(0xFF29ac08)
 
+val expenseColor = Color(0xFFA40019)
+val incomeColor = Color(0xFF29AC08)
+
 val purplish = Color(0xFF50337B)
 val bluish = Color(0xFF25005d)
 //val dashboardBackground = Brush.radialGradient(

@@ -10,14 +10,19 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import nl.codingwithlinda.core_ui.transparentTextFieldColors
 
 @Composable
 fun TransparentTextField(
     modifier: Modifier = Modifier,
     text: String,
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit,
     placeholder: @Composable (() -> Unit)? = null,
     isSingleLine: Boolean = true,
@@ -26,12 +31,16 @@ fun TransparentTextField(
     imeAction: ImeAction = ImeAction.Done
 ) {
 
-
         OutlinedTextField(
             modifier = modifier,
             value = text,
+            textStyle = TextStyle(
+                textAlign = TextAlign.Center,
+            ),
             onValueChange = onValueChange,
             placeholder = placeholder,
+            prefix = prefix,
+            suffix = suffix,
             singleLine = isSingleLine,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,

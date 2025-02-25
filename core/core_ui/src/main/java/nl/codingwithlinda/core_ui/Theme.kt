@@ -82,6 +82,10 @@ val LocalShapeProvider = compositionLocalOf {
 fun transparentTextFieldColors() = OutlinedTextFieldDefaults.colors(
     unfocusedContainerColor = Color.Transparent,
     unfocusedBorderColor = Color.Transparent,
+    focusedContainerColor = Color.Transparent,
+    focusedBorderColor = Color.Transparent,
+    disabledContainerColor = Color.Transparent,
+    disabledBorderColor = Color.Transparent,
 )
 
 @Composable

@@ -1,6 +1,7 @@
 package nl.codingwithlinda.dashboard.transactions.common.ui_model
 
 import android.content.Context
+import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core_ui.util.UiText
 import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
@@ -8,7 +9,7 @@ import java.util.UUID
 
 data class TransactionUi(
     val id: String = UUID.randomUUID().toString(),
-    val amount: String = "-$59.99",
+    val amount: AnnotatedString = AnnotatedString("-$59.99"),
     val timestamp: String = "Jan 7, 2025",
     val title: String = "Adobe Yearly",
     val description: String = "Enjoyed a coffee and a snack at Starbucks with Rick and M.",

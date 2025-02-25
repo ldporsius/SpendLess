@@ -38,7 +38,6 @@ fun TransactionsComponent(
 ) {
 
 
-    val context = LocalContext.current
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
         Box(
             modifier = Modifier
@@ -51,7 +50,7 @@ fun TransactionsComponent(
                         topEnd = 32.dp
                     )
                 )
-                .padding(16.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
         ) {
             Column(
                 Modifier.fillMaxWidth()

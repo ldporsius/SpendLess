@@ -109,7 +109,7 @@ fun TransactionItemExpanded(
 
                 Spacer(modifier = Modifier.weight(1f))
                 Text(transaction.amount,
-                    style = MaterialTheme.typography.bodyLarge
+                    //style = MaterialTheme.typography.bodyLarge
                 )
             }
 

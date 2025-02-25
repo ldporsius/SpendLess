@@ -117,7 +117,7 @@ class DashboardViewModel(
 
         accountUiState.copy(
             userName = account.userName ,
-            accountBalance = accountBalanceUi,
+            accountBalance = accountBalanceUi.text,
             largestTransaction = largestTransaction,
         )
 
