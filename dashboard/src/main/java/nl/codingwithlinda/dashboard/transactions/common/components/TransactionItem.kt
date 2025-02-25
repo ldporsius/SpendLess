@@ -20,7 +20,6 @@ fun TransactionItem(
     context: Context,
     transaction: TransactionUi,
     imageSize: TextUnit = 24.sp,
-    onClick: (id: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -31,9 +30,7 @@ fun TransactionItem(
         Box(
             modifier =
             TransactionItemModifier()
-                .clickable {
-                    onClick(transaction.id)
-                }
+
         ) {
             Text(transaction.imageText(context),
                 fontSize = imageSize

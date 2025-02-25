@@ -1,5 +1,6 @@
 package nl.codingwithlinda.dashboard.transactions.common.previews
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,6 +10,7 @@ import nl.codingwithlinda.core.test_data.fakePreferences
 import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.dashboard.core.presentation.DashboardScreen
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItemExpanded
@@ -16,9 +18,10 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
+import java.time.format.FormatStyle
 
 
-
+@SuppressLint("NewApi")
 @Preview
 @Composable
 private fun TransactionsComponentPreview() {
@@ -31,7 +34,8 @@ private fun TransactionsComponentPreview() {
             modifier = Modifier.fillMaxWidth(),
             transactions = fakeTransactions("1").groupByDate().toUi(
                 currencyFormatterFactory = currencyFormatter,
-                preferences = preferences
+                preferences = preferences,
+               formatter = DateTimeConverter.MEDIUM_DATE
             ),
             onShowAll = {}
         )
@@ -51,6 +55,7 @@ private fun TransactionItemExpandedPreview() {
 }
 
 
+@SuppressLint("NewApi")
 @Preview
 @Composable
 private fun DashboardScreenPreview() {
@@ -65,7 +70,11 @@ private fun DashboardScreenPreview() {
                 TransactionsComponent(
                     transactions = fakeTransactions(
                         "1"
-                    ).groupByDate().toUi(currencyFormatter, preferences),
+                    ).groupByDate().toUi(
+                        currencyFormatter,
+                        preferences,
+                        formatter = DateTimeConverter.SHORT_DATE
+                    ),
                     onShowAll = {}
                 )
             },

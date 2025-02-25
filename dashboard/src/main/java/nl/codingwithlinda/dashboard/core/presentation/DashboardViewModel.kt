@@ -1,5 +1,6 @@
 package nl.codingwithlinda.dashboard.core.presentation
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +16,7 @@ import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
@@ -22,7 +24,9 @@ import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUse
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.DayDiff
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
+import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDateGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
+import java.time.format.FormatStyle
 
 class DashboardViewModel(
     private val currencyFormatterFactory: CurrencyFormatterFactory,
@@ -118,19 +122,21 @@ class DashboardViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _accountUiState.value)
 
 
+    @SuppressLint("NewApi")
     val transactions = _transactions
         .combine(prefs){ transactions, prefs ->
 
             if (prefs == null){
                 return@combine emptyList()
             }
-            transactions.groupByDate()
+            transactions.groupByDateGroup()
                 .filterNot {
                     it.date.isOlder()
                 }
                 .toUi(
                     currencyFormatterFactory = currencyFormatterFactory,
-                    preferences = prefs.preferences
+                    preferences = prefs.preferences,
+                    formatter = DateTimeConverter.MEDIUM_DATE
                 )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 

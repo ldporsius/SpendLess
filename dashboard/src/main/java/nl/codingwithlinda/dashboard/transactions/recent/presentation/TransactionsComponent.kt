@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItem
 import nl.codingwithlinda.dashboard.transactions.common.components.TransactionItemExpanded
+import nl.codingwithlinda.dashboard.transactions.common.components.TransactionsList
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 
 @Composable
@@ -36,9 +37,7 @@ fun TransactionsComponent(
     onShowAll: () -> Unit
 ) {
 
-    var expandedId by remember {
-        mutableStateOf("")
-    }
+
     val context = LocalContext.current
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
         Box(
@@ -46,7 +45,7 @@ fun TransactionsComponent(
                 .fillMaxWidth()
                 .height(480.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
                     shape = RoundedCornerShape(
                         topStart = 32.dp,
                         topEnd = 32.dp
@@ -77,39 +76,9 @@ fun TransactionsComponent(
                     )
                 }
 
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
-                ) {
-
-                    items(transactions) { transactionGroup ->
-
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(
-                                transactionGroup.header.asString().uppercase(),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            transactionGroup.transactions.onEach { transaction ->
-                                if (transaction.id == expandedId) {
-                                    TransactionItemExpanded(
-                                        context = context,
-                                        transaction = transaction
-                                    )
-                                } else {
-                                    TransactionItem(
-                                        context = context,
-                                        transaction = transaction,
-                                        onClick = {
-                                            expandedId = it
-                                        }
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+                TransactionsList(
+                    transactions = transactions
+                )
             }
         }
     }

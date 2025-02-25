@@ -1,5 +1,6 @@
 package nl.codingwithlinda.dashboard.transactions.transactions_all.presentation
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
@@ -13,10 +14,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDateGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
+import java.time.format.FormatStyle
 
 class TransactionsAllViewModel(
     private val currencyFormatterFactory: CurrencyFormatterFactory,
@@ -32,6 +35,7 @@ class TransactionsAllViewModel(
     val transactions = _transactions
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _transactions.value)
 
+    @SuppressLint("NewApi")
     private suspend fun transactions() : Flow<List<TransactionGroupUi>> {
         val accountId = sessionManager.getAccountId().firstOrNull() ?: return emptyFlow()
 
@@ -46,8 +50,12 @@ class TransactionsAllViewModel(
             if (prefs == null){
                 return@map emptyList<TransactionGroupUi>()
             }
-            it.groupByDateGroup().toUi(currencyFormatterFactory, prefs.preferences)
-            //it.groupByDate().toUi(currencyFormatterFactory, prefs.preferences)
+            it.groupByDateGroup().toUi(
+                currencyFormatterFactory,
+                prefs.preferences,
+                formatter = DateTimeConverter.SHORT_DATE
+            )
+
         }
         return transactions
     }

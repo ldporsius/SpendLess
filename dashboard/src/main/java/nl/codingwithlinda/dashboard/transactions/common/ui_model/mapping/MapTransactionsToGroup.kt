@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.core_ui.util.UiText
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
@@ -72,7 +73,10 @@ enum class DayDiff{
     TODAY, YESTERDAY, OLDER
 }
 @SuppressLint("NewApi")
-fun dayToUiText(transactionKey: TransactionKey): UiText{
+fun dayToUiText(
+    transactionKey: TransactionKey,
+    formatter: DateTimeConverter = DateTimeConverter.MEDIUM_DATE
+): UiText{
     when(transactionKey){
         is TransactionKey.Detailed -> {
             return when(transactionKey.dayGroup.daydiff){
@@ -81,7 +85,8 @@ fun dayToUiText(transactionKey: TransactionKey): UiText{
                 else -> {
                     val parsedDate =
                         transactionKey.dayGroup.daydiff.let {
-                        ZonedDateTime.now().minusDays(it.toLong()).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+                        val date =ZonedDateTime.now().minusDays(it.toLong())
+                          formatter.convert(date)
 
                     }
                     UiText.DynamicText(parsedDate)
@@ -153,13 +158,17 @@ fun List<Transaction>.groupByDate(): List<TransactionGroup>{
 
 fun List<TransactionGroup>.toUi(
     currencyFormatterFactory: CurrencyFormatterFactory,
-    preferences: Preferences
+    preferences: Preferences,
+    formatter: DateTimeConverter
 ): List<TransactionGroupUi> {
 
    return this.map { transactionGroup ->
 
         TransactionGroupUi(
-            header = dayToUiText(transactionGroup.date),
+            header = dayToUiText(
+                transactionGroup.date,
+                formatter
+            ),
             transactions = transactionGroup.transactions.map { transaction ->
                 transaction.toUi(currencyFormatterFactory, preferences)
             }
