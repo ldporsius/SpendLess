@@ -14,8 +14,8 @@ import androidx.navigation.compose.navigation
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
+import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
+import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
@@ -123,7 +123,8 @@ fun SpendLessApp(
                 )
             }
             composable<UserSettingsPreferencesNav> {
-                val currencyFormatter = CurrencyFormatterExpense(LocalContext.current)
+                val currencySymbolProvider = AppCurrencySymbolProvider(LocalContext.current)
+                val currencyFormatter = CurrencyFormatterExpense(currencySymbolProvider)
 
                 val scope = rememberCoroutineScope()
 

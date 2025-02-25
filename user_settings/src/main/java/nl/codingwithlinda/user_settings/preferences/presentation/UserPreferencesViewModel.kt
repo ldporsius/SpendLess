@@ -14,7 +14,7 @@ import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
 import nl.codingwithlinda.core.domain.result.SpendResult
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatter
+import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatter
 import nl.codingwithlinda.user_settings.main.presentation.state.UserPrefsAction
 import nl.codingwithlinda.user_settings.preferences.domain.IGetUserPrefs
 import nl.codingwithlinda.user_settings.preferences.presentation.state.UserPrefsUiState

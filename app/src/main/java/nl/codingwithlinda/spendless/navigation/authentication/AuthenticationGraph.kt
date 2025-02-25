@@ -30,9 +30,10 @@ import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.core.data.AccountCryptor
+import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
 import nl.codingwithlinda.spendless.navigation.util.CustomNavType
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatterExpense
+import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
 import nl.codingwithlinda.user_settings.onboarding.domain.GetExampleUserPrefsUseCase
 import kotlin.reflect.typeOf
 
@@ -147,7 +148,8 @@ fun NavGraphBuilder.authenticationNavGraph(
             preferencesAccess = appModule.preferencesAccess,
             sessionManager = appModule.sessionManager
         )
-        val currencyFormatter = CurrencyFormatterExpense(LocalContext.current)
+        val currencySymbolProvider = AppCurrencySymbolProvider(LocalContext.current)
+        val currencyFormatter = CurrencyFormatterExpense(currencySymbolProvider)
 
         val factory = viewModelFactory {
             initializer {

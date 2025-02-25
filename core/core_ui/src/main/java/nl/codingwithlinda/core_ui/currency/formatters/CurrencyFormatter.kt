@@ -1,13 +1,15 @@
-package nl.codingwithlinda.core_ui.currency
+package nl.codingwithlinda.core_ui.currency.formatters
 
-import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core_ui.currency.CurrencySymbolProvider
+import nl.codingwithlinda.core_ui.currency.decimalSeparatorMap
+import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
 import java.math.BigDecimal
 
 abstract class CurrencyFormatter(
-    open val context: Context
+    private val currencySymbolProvider: CurrencySymbolProvider
 ) {
     abstract fun cleanInput(input: String): String
     fun formatCurrencyString(currency: BigDecimal, preferences: Preferences): AnnotatedString{
@@ -17,14 +19,15 @@ abstract class CurrencyFormatter(
     }
     abstract fun formatCurrencyString(currency:String, preferences: Preferences): AnnotatedString
 
-    fun applySymbol(currency: String, preferences: Preferences): String {
-        val currencySymbol = currencySymbolMap[preferences.currency] ?: return currency
-        val currencyString = context.getString(currencySymbol)
+    fun applySymbol(preferences: Preferences): String {
+
+        val currencyString = currencySymbolProvider.getCurrencySymbol(preferences)
+
 
         return currencyString
     }
 
-    fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
+    open fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
         val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: return currency
 
         val arrayWholeNumber = currency.dropLast(2).map { it.toString() }.toMutableList()
@@ -32,12 +35,12 @@ abstract class CurrencyFormatter(
             arrayWholeNumber.add(i, thousandsSeparator)
         }
 
-        val appliedThousandsSeparator = arrayWholeNumber.joinToString("").dropLast(1)
+        val appliedThousandsSeparator = arrayWholeNumber.joinToString("").dropLast(1).padStart(2,'0')
 
         return appliedThousandsSeparator
     }
-    fun applyDecimalSeparators(currency: String, preferences: Preferences): String {
-        val decimalSeparator = decimalSeparatorMap[preferences.decimalSeparator] ?: return currency
+    fun getDecimalSeparator(preferences: Preferences): String {
+        val decimalSeparator = decimalSeparatorMap[preferences.decimalSeparator] ?: return ""
         return decimalSeparator
     }
 }

@@ -1,20 +1,17 @@
-package nl.codingwithlinda.core_ui.currency
+package nl.codingwithlinda.core_ui.currency.formatters
 
-import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
-import nl.codingwithlinda.core.domain.model.TransactionType
+import nl.codingwithlinda.core_ui.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.expenseColor
-import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
-import java.math.BigDecimal
 
 class CurrencyFormatterExpense(
-    override val context: Context
+    currencySymbolProvider: CurrencySymbolProvider,
 ): CurrencyFormatter(
-    context
+    currencySymbolProvider
 ) {
     override fun cleanInput(input: String): String {
         return input.filter { it.isDigit() }
@@ -23,9 +20,9 @@ class CurrencyFormatterExpense(
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
 
         val currency = cleanInput(_currency)
-        val currencySymbol = applySymbol(currency, preferences)
+        val currencySymbol = applySymbol(preferences)
         val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
-        val decimalSeparator = applyDecimalSeparators(currency, preferences)
+        val decimalSeparator = getDecimalSeparator(preferences)
 
         return when(
             preferences.expensesFormat

@@ -167,7 +167,7 @@ val interactionSource = remember { MutableInteractionSource() }
             isSingleLine = true,
             keyboardType = KeyboardType.Number,
             keyboardActions = KeyboardActions(),
-            imeAction = ImeAction.Next
+            imeAction = ImeAction.None
         )
     }
 }

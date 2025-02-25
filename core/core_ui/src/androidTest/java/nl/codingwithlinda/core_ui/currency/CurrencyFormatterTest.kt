@@ -6,6 +6,7 @@ import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.model.Separator
+import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

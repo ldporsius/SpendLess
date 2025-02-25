@@ -1,17 +1,17 @@
-package nl.codingwithlinda.core_ui.currency
+package nl.codingwithlinda.core_ui.currency.formatters
 
-import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.model.Preferences
+import nl.codingwithlinda.core_ui.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.incomeColor
 
 class CurrencyFormatterIncome(
-    override val context: Context
+    currencySymbolProvider: CurrencySymbolProvider,
 ): CurrencyFormatter(
-    context
+    currencySymbolProvider
 ) {
 
     override fun cleanInput(input: String): String {
@@ -20,9 +20,10 @@ class CurrencyFormatterIncome(
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
 
         val currency = cleanInput(_currency)
-        val currencySymbol = applySymbol(currency, preferences)
+        val currencySymbol = applySymbol( preferences)
         val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
-        val decimalSeparator = applyDecimalSeparators(currency, preferences)
+        val decimalSeparator = getDecimalSeparator(preferences)
+        val decimals = currency.takeLast(2).padEnd(2, '0')
 
         return buildAnnotatedString {
             withStyle(SpanStyle(
@@ -31,7 +32,7 @@ class CurrencyFormatterIncome(
                 append(currencySymbol)
 
                 append(
-                    "$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}"
+                    "$appliedThousandsSeparator$decimalSeparator${decimals}"
                 )
             }
         }
