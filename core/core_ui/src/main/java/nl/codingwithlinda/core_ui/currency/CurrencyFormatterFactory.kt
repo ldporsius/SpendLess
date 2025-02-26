@@ -4,6 +4,7 @@ import android.content.Context
 import nl.codingwithlinda.core.domain.model.TransactionType
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatter
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
+import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpenseColored
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterIncome
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterIncomeSymbolOnly
 import java.math.BigDecimal
@@ -22,7 +23,7 @@ class CurrencyFormatterFactory(
     fun getFormatterSymbolOnly(transactionType: TransactionType): CurrencyFormatter {
         return when (transactionType) {
             TransactionType.INCOME -> CurrencyFormatterIncomeSymbolOnly(currencySymbolProvider)
-            TransactionType.EXPENSE -> CurrencyFormatterExpense(currencySymbolProvider)
+            TransactionType.EXPENSE -> CurrencyFormatterExpenseColored(currencySymbolProvider)
         }
     }
     fun getFormatter(amount: BigDecimal): CurrencyFormatter {

@@ -1,13 +1,16 @@
 package nl.codingwithlinda.core_ui.currency.formatters
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
+import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.incomeColor
+import nl.codingwithlinda.core_ui.onSurface
+import nl.codingwithlinda.core_ui.primary
 
 class CurrencyFormatterIncomeSymbolOnly(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -16,10 +19,7 @@ class CurrencyFormatterIncomeSymbolOnly(
 ) {
 
     override fun cleanInput(input: String): String {
-        val noLetters = input.filter { !it.isLetter() }
-            val beforeDecimalSep = noLetters.substringBefore('.')
-        val afterDecimalSep = noLetters.substringAfter('.')
-        return "${beforeDecimalSep}.${afterDecimalSep}"
+       return input
     }
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
         val currencySymbol = applySymbol(preferences)
@@ -42,13 +42,19 @@ class CurrencyFormatterIncomeSymbolOnly(
 
        return annotatedString(
            toBeAnnotated = currencySymbol,
-           neutral = "$appliedThousandsSeparator$decimalSeparator$decimals"
+           neutral = "$appliedThousandsSeparator",
+           neutralColor = if(_currency.isEmpty()) onSurface.copy(0.5f) else onSurface,
+           decimals = "$decimalSeparator$decimals",
+           decimalColor = if(currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
        )
     }
 
     private fun annotatedString(
         toBeAnnotated: String,
-        neutral: String
+        neutral: String,
+        neutralColor: Color,
+        decimals: String,
+        decimalColor: Color = onSurface
     ): AnnotatedString{
         return buildAnnotatedString {
             withStyle(SpanStyle(
@@ -56,9 +62,24 @@ class CurrencyFormatterIncomeSymbolOnly(
             )) {
                 append(toBeAnnotated)
             }
-            append(
-               neutral
-            )
+            withStyle(
+                SpanStyle(
+                    color = neutralColor
+                )
+            ) {
+                append(
+                    neutral
+                )
+            }
+            withStyle(
+                SpanStyle(
+                    color = decimalColor
+                )
+            ) {
+                append(
+                    decimals
+                )
+            }
         }
     }
 

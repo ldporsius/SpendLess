@@ -12,9 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -27,9 +32,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -115,59 +122,56 @@ fun CreateTransactionScreen(
             keyboardActions = KeyboardActions(),
             imeAction = ImeAction.Next
         )
-// initialize focus reference to be able to request focus programmatically
-val focusRequester = remember { FocusRequester() }
-        // MutableInteractionSource to track changes of the component's interactions (like "focused")
-val interactionSource = remember { MutableInteractionSource() }
-
-        val kc = LocalSoftwareKeyboardController.current
-        Text(uiState.amount,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    focusRequester.requestFocus()
-                    kc?.show()
-                }.focusable(
-                    interactionSource = interactionSource
-                )
-            ,
-            textAlign = TextAlign.Center
-        )
 
         Spacer(modifier = Modifier.height(16.dp))
-        TransparentTextField(
-            modifier = Modifier
-                .wrapContentWidth()
-                .focusRequester(focusRequester)
-                .height(1.dp)
-            ,
-            text = uiState.amountEntered,
-            onValueChange = {
-                onAction(CreateTransactionAction.EnterAmount(it))
-            },
-            placeholder = {
-                Text(text = uiState.amountPlaceholder,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+
+
+       BasicTextField(
+           modifier = Modifier
+               .fillMaxWidth()
+               .background(color = Color.Transparent)
+               .padding(16.dp),
+           value = uiState.amountEntered,
+           onValueChange = {
+               onAction(CreateTransactionAction.EnterAmount(it))
+           },
+           keyboardOptions = KeyboardOptions(
+               keyboardType = KeyboardType.Decimal,
+               imeAction = ImeAction.Done
+           ),
+           singleLine = true
+
+       ){
+           innerTextField ->
+            innerTextField.let {
+                    Text(uiState.amount,
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+            }
+       }
+
+
+
+        CompositionLocalProvider(
+            LocalContentColor provides Color.White
+        ) {
+            val amountTextFieldState = rememberTextFieldState()
+            BasicTextField(
+                state = amountTextFieldState,
+                textStyle = TextStyle(
+                    color = LocalContentColor.current,
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.DarkGray)
+                    .padding(16.dp),
+
                 )
-            },
-            prefix = {
-                Text(text = uiState.amountPrefix,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                )
-            },
-            suffix = {
-                Text(
-                    text = uiState.amountSuffix,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                )
-            },
-            isSingleLine = true,
-            keyboardType = KeyboardType.Number,
-            keyboardActions = KeyboardActions(),
-            imeAction = ImeAction.None
-        )
+        }
     }
 }

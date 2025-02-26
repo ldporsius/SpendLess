@@ -14,3 +14,11 @@ val thousandsSeparatorMap = mapOf(
     Separator.SPACE to " "
 
 )
+
+fun Separator.toUi(): String {
+    return when(this){
+        Separator.COMMA -> ","
+        Separator.PERIOD -> "."
+        Separator.SPACE -> " "
+    }
+}

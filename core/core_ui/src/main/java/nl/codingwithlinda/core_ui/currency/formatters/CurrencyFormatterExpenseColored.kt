@@ -8,7 +8,7 @@ import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.expenseColor
 
-class CurrencyFormatterExpense(
+class CurrencyFormatterExpenseColored(
     currencySymbolProvider: CurrencySymbolProvider,
 ): CurrencyFormatter(
     currencySymbolProvider

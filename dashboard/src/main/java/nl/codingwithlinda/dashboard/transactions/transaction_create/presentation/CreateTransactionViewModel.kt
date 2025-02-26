@@ -14,6 +14,7 @@ import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionAction
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionUiState
+import java.math.BigDecimal
 
 class CreateTransactionViewModel(
     private val currencyFormatterFactory: CurrencyFormatterFactory,
@@ -31,6 +32,7 @@ class CreateTransactionViewModel(
     private val _uiState = MutableStateFlow(CreateTransactionUiState())
     val uiState = combine(_prefs, _amountEntered, _uiState) { prefs, amountEntered, uiState ->
         val currencyFormatter = currencyFormatterFactory.getFormatterSymbolOnly(uiState.transactionType)
+        val amountBigD = BigDecimal(amountEntered)
         uiState.copy(
             amountEntered = amountEntered,
             amount = currencyFormatter.formatCurrencyString(
