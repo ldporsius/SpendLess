@@ -49,12 +49,12 @@ class CurrencyFormatterIncomeSymbolOnly(
        )
     }
 
-    private fun annotatedString(
+    override fun annotatedString(
         toBeAnnotated: String,
         neutral: String,
         neutralColor: Color,
         decimals: String,
-        decimalColor: Color = onSurface
+        decimalColor: Color
     ): AnnotatedString{
         return buildAnnotatedString {
             withStyle(SpanStyle(

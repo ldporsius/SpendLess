@@ -7,6 +7,10 @@ import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.incomeColor
+import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import java.math.BigDecimal
+import java.math.BigInteger
 
 class CurrencyFormatterIncome(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -18,12 +22,17 @@ class CurrencyFormatterIncome(
         return input.filter { it.isDigit() }
     }
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
-
-        val currency = cleanInput(_currency)
         val currencySymbol = applySymbol( preferences)
-        val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
-        val decimals = currency.takeLast(2).padEnd(2, '0')
+
+        val bd = stringToBigDecimal(_currency)
+
+        val thousands = bd.toBigInteger().toString()
+        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
+            .toString().padEnd(2, '0')
+        println("CURRENCYFORMATTER INCOME. thousands: $thousands, decimals: $decimals")
+
+        val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
 
         return buildAnnotatedString {
             withStyle(SpanStyle(

@@ -11,7 +11,7 @@ fun fakeTransactions(
     accountId: String
 )= List(100) {
 
-    val amount = Random.nextDouble(-100.00, 1000.0)
+    val amount = Random.nextDouble(-10.00, 10.0)
     val category = Random.nextInt(0, 5)
     Transaction(
         amount = BigDecimal(amount.toString()),

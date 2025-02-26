@@ -1,21 +1,18 @@
 package nl.codingwithlinda.core_ui.util
 
 import java.math.BigDecimal
-import java.util.Locale.filter
 
 fun stringToBigDecimal(value: String): BigDecimal {
     val bd = try {
-
         println("ORIGINAL VALUE: $value")
 
-        val indexOfAnySep = value.indexOfAny(listOf(",", ".")).let {
+        val indexOfAnySep = value
+            .filterNot { it.toString() == "-" }
+            .indexOfAny(listOf(",", ".")).let {
             if(it == -1) value.length else it
         }
-        val lastindexOfAnySep = value.lastIndexOfAny(listOf(",", ".")).let {
-            if(it == -1) value.length else it
-        }
+
         println("indexOfAnySep: $indexOfAnySep")
-        println("lastindexOfAnySep: $lastindexOfAnySep")
 
         val thousands = value.filter { it.isDigit() }.foldIndexed("") { index, acc, c ->
             if (index < indexOfAnySep) {

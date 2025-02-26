@@ -49,4 +49,21 @@ class StringToBigDecimalKtTest{
         println("RESULT: $result")
         assertEquals(BigDecimal("1.23"), result)
     }
+
+    @Test
+    fun `test string to bigdecimal conversion empty string`() = runBlocking {
+        val input = ""
+        val result = stringToBigDecimal(input)
+
+        println("RESULT: $result")
+        assertEquals(BigDecimal("0.00"), result)
+    }
+    @Test
+    fun `test string to bigdecimal conversion zeroes`() = runBlocking {
+        val input = "00.00"
+        val result = stringToBigDecimal(input)
+
+        println("RESULT: $result")
+        assertEquals(BigDecimal("00.00"), result)
+    }
 }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import nl.codingwithlinda.core.domain.model.TransactionType
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionAction
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionUiState
@@ -32,11 +33,11 @@ class CreateTransactionViewModel(
     private val _uiState = MutableStateFlow(CreateTransactionUiState())
     val uiState = combine(_prefs, _amountEntered, _uiState) { prefs, amountEntered, uiState ->
         val currencyFormatter = currencyFormatterFactory.getFormatterSymbolOnly(uiState.transactionType)
-        val amountBigD = BigDecimal(amountEntered)
+        val amountBigD = stringToBigDecimal(amountEntered)
         uiState.copy(
             amountEntered = amountEntered,
             amount = currencyFormatter.formatCurrencyString(
-               amountEntered,
+               amountBigD,
                 prefs
             )
         )

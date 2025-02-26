@@ -7,6 +7,8 @@ import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.expenseColor
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import java.math.BigDecimal
 
 class CurrencyFormatterExpense(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -19,10 +21,17 @@ class CurrencyFormatterExpense(
 
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
 
-        val currency = cleanInput(_currency)
         val currencySymbol = applySymbol(preferences)
-        val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
+
+        val bd = stringToBigDecimal(_currency)
+
+        val thousands = bd.toBigInteger().toString()
+        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
+            .toString().padEnd(2, '0')
+        println("CURRENCYFORMATTER INCOME. thousands: $thousands, decimals: $decimals")
+
+        val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
 
         return when(
             preferences.expensesFormat
@@ -30,14 +39,14 @@ class CurrencyFormatterExpense(
             ExpensesFormat.MINUS -> {
                 buildAnnotatedString {
                     append(
-                        "-$currencySymbol$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}"
+                        "-$currencySymbol$appliedThousandsSeparator$decimalSeparator${decimals}"
                     )
                 }
             }
 
             ExpensesFormat.BRACKETS -> {
                 AnnotatedString(
-                "($currencySymbol$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)})"
+                "($currencySymbol$appliedThousandsSeparator$decimalSeparator${decimals})"
                 )
             }
         }
