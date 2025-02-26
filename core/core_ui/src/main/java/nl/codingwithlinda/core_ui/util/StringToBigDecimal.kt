@@ -5,6 +5,7 @@ import java.math.BigDecimal
 fun stringToBigDecimal(value: String): BigDecimal {
     val bd = try {
         println("ORIGINAL VALUE: $value")
+        if(value.isEmpty()) return BigDecimal.ZERO
 
         val indexOfAnySep = value
             .filterNot { it.toString() == "-" }

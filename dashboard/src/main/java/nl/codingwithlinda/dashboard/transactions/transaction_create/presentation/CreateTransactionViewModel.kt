@@ -33,11 +33,10 @@ class CreateTransactionViewModel(
     private val _uiState = MutableStateFlow(CreateTransactionUiState())
     val uiState = combine(_prefs, _amountEntered, _uiState) { prefs, amountEntered, uiState ->
         val currencyFormatter = currencyFormatterFactory.getFormatterSymbolOnly(uiState.transactionType)
-        val amountBigD = stringToBigDecimal(amountEntered)
         uiState.copy(
             amountEntered = amountEntered,
             amount = currencyFormatter.formatCurrencyString(
-               amountBigD,
+               amountEntered,
                 prefs
             )
         )

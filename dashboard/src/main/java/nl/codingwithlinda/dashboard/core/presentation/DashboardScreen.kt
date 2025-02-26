@@ -199,7 +199,7 @@ fun DashboardScreen(
                                             style = MaterialTheme.typography.titleLarge
                                         )
                                         Text(
-                                            it.amount,
+                                            it.amount.text,
                                             style = MaterialTheme.typography.titleLarge
                                         )
                                     }

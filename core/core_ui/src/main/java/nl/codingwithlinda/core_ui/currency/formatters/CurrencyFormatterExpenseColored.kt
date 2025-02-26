@@ -1,5 +1,6 @@
 package nl.codingwithlinda.core_ui.currency.formatters
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -8,7 +9,11 @@ import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.expenseColor
+import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import java.math.BigDecimal
+import java.math.BigInteger
 
 class CurrencyFormatterExpenseColored(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -21,11 +26,23 @@ class CurrencyFormatterExpenseColored(
 
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
 
-        val currency = cleanInput(_currency)
+        println("CURRENCY FORMATTER EXPENSE COLORED HAS ORIGINAL CURRENCY STRING: $_currency")
         val currencySymbol = applySymbol(preferences)
-        val appliedThousandsSeparator = applyThousandsSeparators(currency, preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
 
+        val bd = stringToBigDecimal(_currency)
+
+        val thousands = bd.toBigInteger().toString()
+        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
+            .toString().padEnd(2, '0')
+
+        val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
+
+        val grayedOut = bd.toBigInteger() == BigInteger.ZERO
+        val neutralColor = if(grayedOut) onSurface.copy(0.5f) else onSurface
+        val decimalColor = if (grayedOut) onSurface.copy(0.5f)
+        else
+            if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
 
         return when(
             preferences.expensesFormat
@@ -35,9 +52,9 @@ class CurrencyFormatterExpenseColored(
                 annotatedString(
                     toBeAnnotated = "-$currencySymbol",
                     neutral = "$appliedThousandsSeparator",
-                    neutralColor =if(_currency.isEmpty()) onSurface.copy(0.5f) else onSurface,
-                    decimals = "$decimalSeparator${currency.takeLast(2)}",
-                    decimalColor = if(currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
+                    neutralColor = neutralColor,
+                    decimals = "$decimalSeparator${decimals}",
+                    decimalColor = decimalColor
                 )
 
             }
@@ -51,7 +68,7 @@ class CurrencyFormatterExpenseColored(
                     ) {
                         append("($currencySymbol")
                     }
-                    append("$appliedThousandsSeparator$decimalSeparator${currency.takeLast(2)}")
+                    append("$appliedThousandsSeparator$decimalSeparator${decimals}")
                      withStyle(
                         style = SpanStyle(
                             color = expenseColor
@@ -62,6 +79,40 @@ class CurrencyFormatterExpenseColored(
 
                 }
 
+            }
+        }
+    }
+
+    override fun annotatedString(
+        toBeAnnotated: String,
+        neutral: String,
+        neutralColor: Color,
+        decimals: String,
+        decimalColor: Color
+    ): AnnotatedString{
+        return buildAnnotatedString {
+            withStyle(SpanStyle(
+                color = expenseColor
+            )) {
+                append(toBeAnnotated)
+            }
+            withStyle(
+                SpanStyle(
+                    color = neutralColor
+                )
+            ) {
+                append(
+                    neutral
+                )
+            }
+            withStyle(
+                SpanStyle(
+                    color = decimalColor
+                )
+            ) {
+                append(
+                    decimals
+                )
             }
         }
     }

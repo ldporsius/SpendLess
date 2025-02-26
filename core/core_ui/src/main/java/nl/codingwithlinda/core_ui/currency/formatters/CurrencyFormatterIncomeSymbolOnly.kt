@@ -11,6 +11,8 @@ import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
 import nl.codingwithlinda.core_ui.primary
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import java.math.BigDecimal
 
 class CurrencyFormatterIncomeSymbolOnly(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -23,29 +25,36 @@ class CurrencyFormatterIncomeSymbolOnly(
     }
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
         val currencySymbol = applySymbol(preferences)
-
-        val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: ""
         val decimalSeparator = getDecimalSeparator(preferences)
 
-        val currency = _currency
-            .replace(thousandsSeparator, "")
-            .replace(",", decimalSeparator)
-            .replace(".", decimalSeparator)
+        val bd = stringToBigDecimal(_currency)
 
-        println("CURRENCYFORMATTER INCOME SYMBOL ONLY. currency after replace: $currency")
-        val thousands = currency.substringBefore(decimalSeparator)
-
+        val thousands = bd.toBigInteger().toString()
+        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
+            .toString().padEnd(2, '0')
 
         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
-        val decimals = currency.substringAfter(decimalSeparator, "")
-            .padStart(2, '0')
+
+        /* val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: ""
+
+         val currency = _currency
+             .replace(thousandsSeparator, "")
+             .replace(",", decimalSeparator)
+             .replace(".", decimalSeparator)
+
+         println("CURRENCYFORMATTER INCOME SYMBOL ONLY. currency after replace: $currency")
+         val thousands = currency.substringBefore(decimalSeparator)
+
+         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
+         val decimals = currency.substringAfter(decimalSeparator, "")
+             .padStart(2, '0')*/
 
        return annotatedString(
            toBeAnnotated = currencySymbol,
            neutral = "$appliedThousandsSeparator",
            neutralColor = if(_currency.isEmpty()) onSurface.copy(0.5f) else onSurface,
            decimals = "$decimalSeparator$decimals",
-           decimalColor = if(currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
+           decimalColor = if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
        )
     }
 
