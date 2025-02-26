@@ -33,6 +33,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -139,22 +140,21 @@ fun CreateTransactionScreen(
                keyboardType = KeyboardType.Decimal,
                imeAction = ImeAction.Done
            ),
-           singleLine = true
+           singleLine = true,
+           cursorBrush = SolidColor(Color.Red)
 
        ){
            innerTextField ->
-            innerTextField.let {
-                    Text(uiState.amount,
-                        style = MaterialTheme.typography.headlineLarge,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-            }
+           Text(uiState.amount,
+               style = MaterialTheme.typography.headlineLarge,
+               textAlign = TextAlign.Center,
+               modifier = Modifier.fillMaxWidth()
+           )
        }
 
 
 
-        CompositionLocalProvider(
+       /* CompositionLocalProvider(
             LocalContentColor provides Color.White
         ) {
             val amountTextFieldState = rememberTextFieldState()
@@ -172,6 +172,6 @@ fun CreateTransactionScreen(
                     .padding(16.dp),
 
                 )
-        }
+        }*/
     }
 }

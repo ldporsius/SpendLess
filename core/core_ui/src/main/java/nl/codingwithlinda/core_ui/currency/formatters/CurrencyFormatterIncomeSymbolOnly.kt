@@ -13,6 +13,7 @@ import nl.codingwithlinda.core_ui.onSurface
 import nl.codingwithlinda.core_ui.primary
 import nl.codingwithlinda.core_ui.util.stringToBigDecimal
 import java.math.BigDecimal
+import java.math.BigInteger
 
 class CurrencyFormatterIncomeSymbolOnly(
     currencySymbolProvider: CurrencySymbolProvider,
@@ -34,27 +35,18 @@ class CurrencyFormatterIncomeSymbolOnly(
             .toString().padEnd(2, '0')
 
         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
-
-        /* val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: ""
-
-         val currency = _currency
-             .replace(thousandsSeparator, "")
-             .replace(",", decimalSeparator)
-             .replace(".", decimalSeparator)
-
-         println("CURRENCYFORMATTER INCOME SYMBOL ONLY. currency after replace: $currency")
-         val thousands = currency.substringBefore(decimalSeparator)
-
-         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
-         val decimals = currency.substringAfter(decimalSeparator, "")
-             .padStart(2, '0')*/
+        val grayedOut = bd.toBigInteger() == BigInteger.ZERO
+        val neutralColor = if(grayedOut) onSurface.copy(0.5f) else onSurface
+        val decimalColor = if (grayedOut) onSurface.copy(0.5f)
+        else
+            if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
 
        return annotatedString(
            toBeAnnotated = currencySymbol,
            neutral = "$appliedThousandsSeparator",
-           neutralColor = if(_currency.isEmpty()) onSurface.copy(0.5f) else onSurface,
+           neutralColor = neutralColor,
            decimals = "$decimalSeparator$decimals",
-           decimalColor = if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
+           decimalColor = decimalColor
        )
     }
 
@@ -92,7 +84,7 @@ class CurrencyFormatterIncomeSymbolOnly(
         }
     }
 
-    override fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
+   /* override fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
         val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: return currency
 
         val arrayWholeNumber = currency.map { it.toString() }.toMutableList()
@@ -105,6 +97,6 @@ class CurrencyFormatterIncomeSymbolOnly(
         return appliedThousandsSeparator
 
 
-    }
+    }*/
 
 }

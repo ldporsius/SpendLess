@@ -12,6 +12,7 @@ import nl.codingwithlinda.core.domain.model.TransactionType
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import nl.codingwithlinda.core_ui.util.stringToThousandsAndDecimals
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionAction
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionUiState
@@ -58,7 +59,7 @@ class CreateTransactionViewModel(
 
             is CreateTransactionAction.EnterAmount -> {
                _amountEntered.update {
-                   action.amount
+                  action.amount
                }
             }
             is CreateTransactionAction.EnterDescription -> {
