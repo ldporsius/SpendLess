@@ -1,4 +1,4 @@
-package nl.codingwithlinda.dashboard.categories.presentation.mapping
+package nl.codingwithlinda.dashboard.categories.common.presentation.mapping
 
 import android.content.Context
 import nl.codingwithlinda.core.domain.model.ExpenseCategory

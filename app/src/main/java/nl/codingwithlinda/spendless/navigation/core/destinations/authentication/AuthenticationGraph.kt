@@ -1,4 +1,4 @@
-package nl.codingwithlinda.spendless.navigation.authentication
+package nl.codingwithlinda.spendless.navigation.core.destinations.authentication
 
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -31,9 +31,11 @@ import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
 import nl.codingwithlinda.core.data.AccountCryptor
 import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
-import nl.codingwithlinda.spendless.navigation.util.CustomNavType
+import nl.codingwithlinda.spendless.navigation.util.AccountNavType
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
+import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.LoginRoute
 import nl.codingwithlinda.user_settings.onboarding.domain.GetExampleUserPrefsUseCase
 import kotlin.reflect.typeOf
 
@@ -65,7 +67,7 @@ fun NavGraphBuilder.authenticationNavGraph(
     }
     composable<AuthenticationNavRoute.CreatePinRoute>(
         typeMap = mapOf(
-            typeOf<Account>() to CustomNavType.AccountType
+            typeOf<Account>() to AccountNavType.AccountType
         )
     ) {
         val userName = it.toRoute<AuthenticationNavRoute.CreatePinRoute>().userName
@@ -135,7 +137,7 @@ fun NavGraphBuilder.authenticationNavGraph(
 
     composable<AuthenticationNavRoute.OnboardingPreferencesRoute>(
         typeMap = mapOf(
-            typeOf<Account>() to CustomNavType.AccountType
+            typeOf<Account>() to AccountNavType.AccountType
         )
     ){ backStackEntry ->
 

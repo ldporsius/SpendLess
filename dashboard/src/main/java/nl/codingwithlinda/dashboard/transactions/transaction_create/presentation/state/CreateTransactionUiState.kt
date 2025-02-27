@@ -10,6 +10,7 @@ data class CreateTransactionUiState(
     val amount: AnnotatedString = AnnotatedString(text = "-$00.00"),
     val amountPlaceholder: AnnotatedString = AnnotatedString(text = "-$00.00"),
     val description: String = ""
+
 ){
 
     fun recipientPlaceholder(): String{

@@ -1,8 +1,8 @@
-package nl.codingwithlinda.dashboard.categories.data
+package nl.codingwithlinda.dashboard.categories.common.data
 
 import android.content.Context
-import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
-import nl.codingwithlinda.dashboard.categories.presentation.model.ExpenseCategoryUi
+import nl.codingwithlinda.dashboard.categories.common.presentation.mapping.expenseCategoriesToUi
+import nl.codingwithlinda.dashboard.categories.common.presentation.model.ExpenseCategoryUi
 
 class CategoryFactory(
     private val context: Context

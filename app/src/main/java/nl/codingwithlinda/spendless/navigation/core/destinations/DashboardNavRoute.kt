@@ -1,8 +1,8 @@
-package nl.codingwithlinda.spendless.navigation.dashboard
+package nl.codingwithlinda.spendless.navigation.core.destinations
 
 import kotlinx.serialization.Serializable
-import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 
+@Serializable
 sealed interface DashboardNavRoute : NavRoute {
 
     @Serializable
@@ -10,5 +10,9 @@ sealed interface DashboardNavRoute : NavRoute {
 
     @Serializable
     data object AllTransactionsNavRoute : DashboardNavRoute
+
+    @Serializable
+    data object CreateTransactionNavRoute : DashboardNavRoute
+
 
 }

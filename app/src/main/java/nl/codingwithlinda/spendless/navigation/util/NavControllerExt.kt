@@ -1,10 +1,10 @@
 package nl.codingwithlinda.spendless.navigation.util
 
 import androidx.navigation.NavHostController
-import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
-import nl.codingwithlinda.spendless.navigation.authentication.LoginRoute
-import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
-import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.LoginRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.PINPromptRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.DashboardNavRoute
 
 fun NavHostController.navigateToEvent(event: NavigationEvent) {
     when (event) {
@@ -28,8 +28,12 @@ fun NavHostController.navigateToEvent(event: NavigationEvent) {
                 AuthenticationNavRoute.OnboardingPreferencesRoute(event.account)
             )
         }
-        NavigationEvent.NavToPINPrompt -> {
-            navigate(PINPromptRoute)
+       is NavigationEvent.NavToPINPrompt -> {
+            navigate(
+                PINPromptRoute(originalDestination =
+                event.originalDestination
+            )
+            )
         }
         is NavigationEvent.NavToRepeatPin -> {
             navigate(AuthenticationNavRoute.RepeatPinRoute(event.userName, event.pin))

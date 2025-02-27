@@ -1,6 +1,6 @@
 package nl.codingwithlinda.dashboard.core.presentation.state
 
-import nl.codingwithlinda.dashboard.categories.presentation.model.ExpenseCategoryUi
+import nl.codingwithlinda.dashboard.categories.common.presentation.model.ExpenseCategoryUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 
 data class AccountUiState(
@@ -10,4 +10,4 @@ data class AccountUiState(
     val largestTransaction: TransactionUi? = null,
     val sumPreviousWeek: String = "-$762.20",
 
-)
+    )

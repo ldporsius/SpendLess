@@ -8,19 +8,22 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.domain.model.TransactionType
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
-import nl.codingwithlinda.core_ui.util.stringToBigDecimal
 import nl.codingwithlinda.core_ui.util.stringToThousandsAndDecimals
+import nl.codingwithlinda.dashboard.categories.category_picker.state.CategoryAction
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
+import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.CreateTransactionUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionAction
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state.CreateTransactionUiState
-import java.math.BigDecimal
 
 class CreateTransactionViewModel(
     private val currencyFormatterFactory: CurrencyFormatterFactory,
     private val preferencesForAccountUseCase: PreferencesForAccountUseCase,
+    private val createTransactionUseCase: CreateTransactionUseCase,
+    private val onNavAction: () -> Unit
 ): ViewModel() {
 
     private val _amountEntered = MutableStateFlow("")
@@ -47,7 +50,18 @@ class CreateTransactionViewModel(
     fun handleAction(action: CreateTransactionAction){
         when(action) {
             CreateTransactionAction.SaveTransaction -> {
-
+                viewModelScope.launch {
+                    createTransactionUseCase.createTransaction().let {res ->
+                        when(res){
+                            is SpendResult.Failure -> {
+                                onNavAction()
+                            }
+                            is SpendResult.Success -> {
+                                //proceed with saving
+                            }
+                        }
+                    }
+                }
             }
             CreateTransactionAction.ToggleExpenseIncome -> {
                 _uiState.update {
@@ -78,6 +92,14 @@ class CreateTransactionViewModel(
                         recipient = action.recipient
                     )
                 }
+            }
+        }
+    }
+
+    fun onCategoryAction(action: CategoryAction){
+        when(action) {
+            is CategoryAction.SelectCategory -> {
+
             }
         }
     }

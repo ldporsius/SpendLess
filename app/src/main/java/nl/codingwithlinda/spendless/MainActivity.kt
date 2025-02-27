@@ -5,11 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,15 +14,12 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.domain.session_manager.ESessionState
-import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
-import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
-import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
-import nl.codingwithlinda.spendless.application.SpendLessApplication
 import nl.codingwithlinda.core_ui.SpendLessTheme
+import nl.codingwithlinda.spendless.application.SpendLessApplication
 import nl.codingwithlinda.spendless.navigation.SpendLessApp
-import nl.codingwithlinda.spendless.navigation.authentication.LoginRoute
-import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.Destination
+import nl.codingwithlinda.spendless.navigation.core.destinations.LoginRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.PINPromptRoute
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +70,9 @@ class MainActivity : ComponentActivity() {
                             }
 
                             ESessionState.SESSION_EXPRIRED -> {
-                                navHostController.navigate(PINPromptRoute){
+                                navHostController.navigate(
+                                    PINPromptRoute ( Destination.HomeGraph )
+                                ){
                                     popUpTo(Destination.HomeGraph){
                                         inclusive = true
                                     }
@@ -116,7 +111,12 @@ class MainActivity : ComponentActivity() {
                                     }
 
                                     ESessionState.SESSION_EXPRIRED -> {
-                                        navHostController.navigate(PINPromptRoute){
+                                        navHostController.navigate(
+                                            PINPromptRoute(
+                                            navRoute
+                                        )
+
+                                        ){
                                             popUpTo(Destination.HomeGraph){
                                                 inclusive = true
                                             }

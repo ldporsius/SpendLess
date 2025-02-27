@@ -1,3 +1,6 @@
 package nl.codingwithlinda.spendless.navigation.core.destinations
 
-interface NavRoute
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed interface NavRoute

@@ -1,9 +1,9 @@
-package nl.codingwithlinda.dashboard.categories.presentation.mapping
+package nl.codingwithlinda.dashboard.categories.common.presentation.mapping
 
 import android.content.Context
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core_ui.util.UiText
-import nl.codingwithlinda.dashboard.categories.presentation.model.ExpenseCategoryUi
+import nl.codingwithlinda.dashboard.categories.common.presentation.model.ExpenseCategoryUi
 
 fun expenseCategoriesToUi(context: Context): List<ExpenseCategoryUi>{
     return ExpenseCategory.entries.map {

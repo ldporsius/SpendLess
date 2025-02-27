@@ -18,7 +18,7 @@ import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseC
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
-import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase

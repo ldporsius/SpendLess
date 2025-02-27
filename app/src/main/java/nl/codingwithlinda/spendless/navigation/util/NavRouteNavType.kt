@@ -7,25 +7,26 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 import nl.codingwithlinda.core.domain.model.Account
+import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 
-object CustomNavType {
+object NavRouteNavType {
 
-    val AccountType = object : NavType<Account>(
+    val NavRouteType = object : NavType<NavRoute>(
         isNullableAllowed = false
     ) {
-        override fun get(bundle: Bundle, key: String): Account? {
+        override fun get(bundle: Bundle, key: String): NavRoute? {
             return Json.decodeFromString(bundle.getString(key) ?: return null)
         }
 
-        override fun parseValue(value: String): Account{
+        override fun parseValue(value: String): NavRoute{
             return Json.decodeFromString(Uri.decode(value))
         }
 
-        override fun serializeAsValue(value: Account): String {
+        override fun serializeAsValue(value: NavRoute): String {
             return Uri.encode(Json.encodeToString(value))
         }
 
-        override fun put(bundle: Bundle, key: String, value: Account) {
+        override fun put(bundle: Bundle, key: String, value: NavRoute) {
             bundle.putString(key, Json.encodeToString(value))
         }
     }

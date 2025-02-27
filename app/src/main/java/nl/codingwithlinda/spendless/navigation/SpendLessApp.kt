@@ -1,5 +1,6 @@
 package nl.codingwithlinda.spendless.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -11,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.di.AppModule
@@ -18,16 +20,17 @@ import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
-import nl.codingwithlinda.spendless.navigation.authentication.AuthenticationNavRoute
-import nl.codingwithlinda.spendless.navigation.authentication.PINPromptRoute
-import nl.codingwithlinda.spendless.navigation.authentication.authenticationNavGraph
+import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.Destination
 import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
-import nl.codingwithlinda.spendless.navigation.dashboard.DashboardNavRoute
-import nl.codingwithlinda.spendless.navigation.user_settings.UserSettingsGraph
-import nl.codingwithlinda.spendless.navigation.user_settings.UserSettingsPreferencesNav
-import nl.codingwithlinda.spendless.navigation.user_settings.UserSettingsRootNav
-import nl.codingwithlinda.spendless.navigation.user_settings.UserSettingsSecurityNav
+import nl.codingwithlinda.spendless.navigation.core.destinations.PINPromptRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.authentication.authenticationNavGraph
+import nl.codingwithlinda.spendless.navigation.core.destinations.DashboardNavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsGraph
+import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsPreferencesNav
+import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsRootNav
+import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsSecurityNav
+import nl.codingwithlinda.spendless.navigation.util.NavRouteNavType
 import nl.codingwithlinda.spendless.navigation.util.navigateToEvent
 import nl.codingwithlinda.user_settings.main.presentation.UserSettingsRoot
 import nl.codingwithlinda.user_settings.main.presentation.state.SettingsAction
@@ -39,6 +42,7 @@ import nl.codingwithlinda.user_settings.security.domain.usecase.GetSecuritySetti
 import nl.codingwithlinda.user_settings.security.domain.usecase.SaveSecuritySettingsUseCase
 import nl.codingwithlinda.user_settings.security.presentation.SecuritySettingsViewModel
 import nl.codingwithlinda.user_settings.security.presentation.UserSettingsSecurityScreen
+import kotlin.reflect.typeOf
 
 @Composable
 fun SpendLessApp(
@@ -56,15 +60,23 @@ fun SpendLessApp(
                 }
             )
 
-            composable<PINPromptRoute> {
+            composable<PINPromptRoute>(
+                        typeMap = mapOf(
+                        typeOf<NavRoute>() to NavRouteNavType.NavRouteType
+                        )
+            ) {
+
+                val args = it.toRoute<PINPromptRoute>().originalDestination
+                println("PIN PROMPT ROUTE ORIGINAL DESTINATION: $args")
                 PINPromptRoot(
                     appModule = appModule,
                     onNavAction = {
-                        navHostController.navigate(DashboardNavRoute.DashboardRoot){
+                        onNavAction(args)
+                        /*navHostController.navigate(args){
                             popUpTo(PINPromptRoute){
                                 inclusive = true
                             }
-                        }
+                        }*/
                     }
                 )
             }
@@ -82,6 +94,9 @@ fun SpendLessApp(
                     },
                     onNavToSettings = {
                         onNavAction(UserSettingsGraph)
+                    },
+                    onNavAction = {
+                       onNavAction(DashboardNavRoute.CreateTransactionNavRoute)
                     }
                 )
             }
@@ -93,6 +108,10 @@ fun SpendLessApp(
                         navHostController.navigateUp()
                     }
                 )
+            }
+
+            composable<DashboardNavRoute.CreateTransactionNavRoute> {
+                Text("CREATE TRANSACTION SCREEN dummy")
             }
         }
 

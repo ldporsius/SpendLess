@@ -1,10 +1,9 @@
-package nl.codingwithlinda.spendless.navigation.authentication
+package nl.codingwithlinda.spendless.navigation.core.destinations
 
 import kotlinx.serialization.Serializable
 import nl.codingwithlinda.core.domain.model.Account
-import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 
-
+@Serializable
 sealed interface AuthenticationNavRoute : NavRoute {
     @Serializable
     data object AuthenticationRoot: AuthenticationNavRoute
@@ -28,11 +27,9 @@ sealed interface AuthenticationNavRoute : NavRoute {
         val account: Account
     ): AuthenticationNavRoute
 
-
-
 }
 
 @Serializable
-data object PINPromptRoute: NavRoute
+data class PINPromptRoute(val originalDestination: NavRoute):NavRoute
 @Serializable
 data object LoginRoute : NavRoute

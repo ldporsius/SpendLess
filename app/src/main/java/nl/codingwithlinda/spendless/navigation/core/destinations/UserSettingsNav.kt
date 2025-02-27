@@ -1,7 +1,6 @@
-package nl.codingwithlinda.spendless.navigation.user_settings
+package nl.codingwithlinda.spendless.navigation.core.destinations
 
 import kotlinx.serialization.Serializable
-import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 
 @Serializable
 data object UserSettingsGraph : NavRoute

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core_ui.util.UiText
-import nl.codingwithlinda.dashboard.categories.presentation.mapping.expenseCategoriesToUi
+import nl.codingwithlinda.dashboard.categories.common.presentation.mapping.expenseCategoriesToUi
 import java.util.UUID
 
 data class TransactionUi(

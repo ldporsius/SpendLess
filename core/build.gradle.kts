@@ -42,6 +42,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
+    implementation(libs.kotlinx.serialization.json)
 
     api(libs.kotlinx.serialization.json)
     api(libs.androidx.navigation.compose)

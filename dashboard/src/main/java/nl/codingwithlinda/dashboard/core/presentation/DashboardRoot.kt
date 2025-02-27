@@ -11,11 +11,13 @@ import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseC
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
-import nl.codingwithlinda.dashboard.categories.data.CategoryFactory
+import nl.codingwithlinda.dashboard.categories.category_picker.CategoryPickerRoot
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase
 import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
+import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.CreateTransactionUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionScreen
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionViewModel
 
@@ -23,7 +25,8 @@ import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation
 fun DashboardRoot(
     appModule: AppModule,
     onShowAll: () -> Unit,
-    onNavToSettings: ()->Unit
+    onNavToSettings: ()->Unit,
+    onNavAction: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -57,11 +60,19 @@ fun DashboardRoot(
     val viewModel = viewModel<DashboardViewModel>(
         factory = factory
     )
+
+    val createTransactionUseCase = CreateTransactionUseCase(
+        transactionsAccess = appModule.transactionsAccess,
+        sessionManager = sessionManager,
+        authenticationManager = appModule.authenticationManager
+    )
     val createTransactionViewModelFactory = viewModelFactory {
         initializer {
             CreateTransactionViewModel(
                 currencyFormatterFactory = currencyFormatterFactory,
-                preferencesForAccountUseCase = preferencesForAccountUseCase
+                preferencesForAccountUseCase = preferencesForAccountUseCase,
+                createTransactionUseCase = createTransactionUseCase,
+                onNavAction = onNavAction
             )
         }
     }
@@ -86,7 +97,13 @@ fun DashboardRoot(
             CreateTransactionScreen(
                 modifier = Modifier,
                 uiState = createTransactionViewModel.uiState.collectAsStateWithLifecycle().value,
-                onAction = createTransactionViewModel::handleAction
+                onAction = createTransactionViewModel::handleAction,
+                categoryPicker = {
+                    CategoryPickerRoot(
+                        appModule = appModule,
+                        onAction = createTransactionViewModel::onCategoryAction
+                       )
+                }
             )
         }
     )

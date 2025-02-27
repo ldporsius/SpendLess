@@ -5,7 +5,7 @@ import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.timestampToString
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
-import nl.codingwithlinda.dashboard.categories.presentation.mapping.mapExpenseCategoryIdentifierToDomain
+import nl.codingwithlinda.dashboard.categories.common.presentation.mapping.mapExpenseCategoryIdentifierToDomain
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 
 fun Transaction.toUi(
