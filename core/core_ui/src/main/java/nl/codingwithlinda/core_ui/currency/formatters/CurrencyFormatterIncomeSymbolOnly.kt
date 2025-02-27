@@ -22,24 +22,23 @@ class CurrencyFormatterIncomeSymbolOnly(
 ) {
 
     override fun cleanInput(input: String): String {
-       return input
+        return input.replace(",", ".")
     }
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
         val currencySymbol = applySymbol(preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
 
-        val bd = stringToBigDecimal(_currency)
-
-        val thousands = bd.toBigInteger().toString()
-        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
-            .toString().padEnd(2, '0')
+        val currency = cleanInput(_currency)
+        val (thousands, decimals) = convertAmountToThousandsAndDecimals(currency, preferences)
 
         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
-        val grayedOut = bd.toBigInteger() == BigInteger.ZERO
+
+        val grayedOut = currency.isEmpty()
+        val hasDecimalSep = currency.contains(decimalSeparator)
         val neutralColor = if(grayedOut) onSurface.copy(0.5f) else onSurface
         val decimalColor = if (grayedOut) onSurface.copy(0.5f)
         else
-            if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
+            if(hasDecimalSep) onSurface else onSurface.copy(0.5f)
 
        return annotatedString(
            toBeAnnotated = currencySymbol,
@@ -84,19 +83,5 @@ class CurrencyFormatterIncomeSymbolOnly(
         }
     }
 
-   /* override fun applyThousandsSeparators(currency: String, preferences: Preferences): String {
-        val thousandsSeparator = thousandsSeparatorMap[preferences.thousandsSeparator] ?: return currency
-
-        val arrayWholeNumber = currency.map { it.toString() }.toMutableList()
-        for (i in arrayWholeNumber.size  downTo 1 step 3){
-            arrayWholeNumber.add(i, thousandsSeparator)
-        }
-
-        val appliedThousandsSeparator = arrayWholeNumber.joinToString("").dropLast(1).padStart(2,'0')
-
-        return appliedThousandsSeparator
-
-
-    }*/
 
 }

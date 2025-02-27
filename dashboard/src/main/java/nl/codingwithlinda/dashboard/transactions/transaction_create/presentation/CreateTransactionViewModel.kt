@@ -58,8 +58,12 @@ class CreateTransactionViewModel(
             }
 
             is CreateTransactionAction.EnterAmount -> {
+                println("ENTER AMOUNT: ${action.amount}")
                _amountEntered.update {
-                  action.amount
+                   stringToThousandsAndDecimals(action.amount).let {
+                       it.first + it.second
+                   }
+                   //action.amount
                }
             }
             is CreateTransactionAction.EnterDescription -> {

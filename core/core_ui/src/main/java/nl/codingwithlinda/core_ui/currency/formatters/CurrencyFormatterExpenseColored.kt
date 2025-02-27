@@ -21,7 +21,7 @@ class CurrencyFormatterExpenseColored(
     currencySymbolProvider
 ) {
     override fun cleanInput(input: String): String {
-        return input
+        return input.replace(",", ".")
     }
 
     override fun formatCurrencyString(_currency:String, preferences: Preferences): AnnotatedString {
@@ -30,19 +30,18 @@ class CurrencyFormatterExpenseColored(
         val currencySymbol = applySymbol(preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
 
-        val bd = stringToBigDecimal(_currency)
+        val currency = cleanInput(_currency)
 
-        val thousands = bd.toBigInteger().toString()
-        val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
-            .toString().padEnd(2, '0')
+        val (thousands, decimals) = convertAmountToThousandsAndDecimals(currency, preferences)
 
         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
 
-        val grayedOut = bd.toBigInteger() == BigInteger.ZERO
+        val grayedOut = currency.isEmpty()
+        val hasDecimalSep = currency.contains(decimalSeparator)
         val neutralColor = if(grayedOut) onSurface.copy(0.5f) else onSurface
         val decimalColor = if (grayedOut) onSurface.copy(0.5f)
         else
-            if(_currency.contains(decimalSeparator)) onSurface else onSurface.copy(0.5f)
+            if(hasDecimalSep) onSurface else onSurface.copy(0.5f)
 
         return when(
             preferences.expensesFormat

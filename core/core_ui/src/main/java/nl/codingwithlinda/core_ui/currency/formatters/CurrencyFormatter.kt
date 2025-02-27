@@ -7,11 +7,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
+import nl.codingwithlinda.core.domain.model.Separator
 import nl.codingwithlinda.core_ui.currency.decimalSeparatorMap
 import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
+import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import java.io.File.separator
 import java.math.BigDecimal
 
 abstract class CurrencyFormatter(
@@ -24,6 +27,18 @@ abstract class CurrencyFormatter(
             }
     }
     abstract fun formatCurrencyString(currency:String, preferences: Preferences): AnnotatedString
+
+    fun convertAmountToThousandsAndDecimals(amount:String,preferences: Preferences): Pair<String, String>{
+        val bd = stringToBigDecimal(amount)
+
+        val thousands = bd.toBigInteger().toString()
+        val decimals = bd.remainder(BigDecimal.ONE)
+            .movePointRight(2)
+            .toString()
+            .padStart(2, '0')
+
+        return thousands to decimals
+    }
 
     fun applySymbol(preferences: Preferences): String {
 

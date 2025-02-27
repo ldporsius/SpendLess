@@ -1,14 +1,17 @@
 package nl.codingwithlinda.core_ui.util
 
-import java.math.BigDecimal
-
 fun stringToThousandsAndDecimals(value: String): Pair<String, String>{
-    val bd = stringToBigDecimal(value)
+    if(value.isEmpty()) return Pair("", "")
+    val bd = value.split(",", ".")
 
-    val thousands = bd.toBigInteger().toString()
-    val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
-        .toString().padEnd(2, '0')
+    val thousands = bd.first()
+    if(bd.size == 1) return Pair(thousands, "")
+    val decimals = bd.subList(1, bd.size)
+        .joinToString("")
+        .take(2)
+
+    val decimalsString = "." + decimals
 
     println("STRINGTOTHOUSANDDECIMALS. THOUSANDS: $thousands DECIMALS: $decimals")
-    return Pair(thousands, decimals)
+    return Pair(thousands, decimalsString)
 }
