@@ -63,13 +63,12 @@ class CreateTransactionViewModel(
                    stringToThousandsAndDecimals(action.amount).let {
                        it.first + it.second
                    }
-                   //action.amount
                }
             }
             is CreateTransactionAction.EnterDescription -> {
                 _uiState.update {
                     it.copy(
-                        description = action.description
+                        description = action.description.take(100)
                     )
                 }
             }

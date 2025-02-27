@@ -19,4 +19,10 @@ data class CreateTransactionUiState(
         }
     }
 
+    fun descriptionText(): String{
+        return if (description.isEmpty()){
+            " + Add Note"
+        }else description
+    }
+
 }
