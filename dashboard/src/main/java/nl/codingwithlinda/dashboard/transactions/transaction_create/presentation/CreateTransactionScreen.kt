@@ -113,7 +113,7 @@ fun CreateTransactionScreen(
                 onAction(CreateTransactionAction.EnterRecipient(it))
             },
             placeholder = {
-                Text(text = "Receiver",
+                Text(text = uiState.recipientPlaceholder(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )

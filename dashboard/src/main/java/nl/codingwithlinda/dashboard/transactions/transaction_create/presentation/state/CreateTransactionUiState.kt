@@ -1,10 +1,5 @@
 package nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.state
 
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import nl.codingwithlinda.core.domain.model.TransactionType
 
@@ -17,5 +12,11 @@ data class CreateTransactionUiState(
     val description: String = ""
 ){
 
+    fun recipientPlaceholder(): String{
+        return when(transactionType){
+            TransactionType.EXPENSE -> "Receiver"
+            TransactionType.INCOME -> "Sender"
+        }
+    }
 
 }
