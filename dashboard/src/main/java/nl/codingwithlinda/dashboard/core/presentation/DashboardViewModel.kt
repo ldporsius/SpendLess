@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
+import nl.codingwithlinda.core.domain.model.ExpenseCategory
 import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
@@ -62,6 +63,8 @@ class DashboardViewModel(
     private fun mostPopularCategory() = _transactions.mapNotNull { transactions ->
         val categories = transactions.map {
             it.category
+        }.filterNot {
+            it == ExpenseCategory.INCOME.identifier
         }
 
         val mostPopularCategory = categories.groupingBy {
