@@ -1,17 +1,10 @@
 package nl.codingwithlinda.spendless.navigation
 
 import android.widget.Toast
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
@@ -21,18 +14,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.data.dto.TransactionDto
 import nl.codingwithlinda.core.data.dto.toDomain
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.domain.session_manager.ESessionState
-import nl.codingwithlinda.core.presentation.util.ObserveAsEvents
+import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
+import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
+import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase
+import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionRoot
+import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionScreen
+import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionViewModel
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.Destination
@@ -132,10 +128,13 @@ fun SpendLessApp(
                     onNavToSettings = {
                         onNavAction(UserSettingsGraph)
                     },
-                    onNavAction = {transaction->
+                    onOpenCreateTransaction = {
+                        onNavAction(DashboardNavRoute.CreateTransactionNavRoute)
+                    },
+                    onCreateTransaction = { transaction->
                         println("DASHBOARD ROOT NAV ACTION CALLED with transaction: $transaction")
                         transaction?.let {
-                            onNavAction(DashboardNavRoute.CreateTransactionNavRoute(it)
+                            onNavAction(DashboardNavRoute.SaveTransactionNavRoute(it)
                             )
                         }
                         if (transaction == null) {
@@ -151,19 +150,35 @@ fun SpendLessApp(
             composable<DashboardNavRoute.AllTransactionsNavRoute> {
                 AllTransactionsRoot(
                     appModule = appModule,
+                    onCreateTransaction = {
+                        onNavAction(DashboardNavRoute.CreateTransactionNavRoute)
+                    },
                     onNavBack = {
                         navHostController.navigateUp()
                     }
                 )
             }
 
-            composable<DashboardNavRoute.CreateTransactionNavRoute>(
+            composable<DashboardNavRoute.CreateTransactionNavRoute>() { backStackEntry ->
+
+                CreateTransactionRoot(
+                    appModule = appModule,
+                    onCreateTransaction = {
+                        onNavAction(DashboardNavRoute.SaveTransactionNavRoute(it))
+                    },
+                    onNavBack = {
+                        navHostController.navigateUp()
+                    }
+                )
+            }
+
+            composable<DashboardNavRoute.SaveTransactionNavRoute>(
                 typeMap = mapOf(
                     typeOf<TransactionDto>() to TransactionDtoNavType.TransactionDtoType
                 )
-            ) { backStackEntry ->
-                val transactionDto = backStackEntry.toRoute<DashboardNavRoute.CreateTransactionNavRoute>().transaction
-                val saveTransactionUseCase = nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase(
+            ){backStackEntry ->
+                val transactionDto = backStackEntry.toRoute<DashboardNavRoute.SaveTransactionNavRoute>().transaction
+                val saveTransactionUseCase = SaveTransactionUseCase(
                     appModule.transactionsAccess
                 )
                 //val scope = rememberCoroutineScope()
@@ -173,27 +188,13 @@ fun SpendLessApp(
                     launch {
                         saveTransactionUseCase.save(transactionDto.toDomain())
                         Toast.makeText(context, "TRANSACTION SAVED SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                        onNavAction(DashboardNavRoute.DashboardRoot)
                     }
                 }
-
-                DashboardRoot(
-                    appModule = appModule,
-                    onShowAll = {
-                        onNavAction(DashboardNavRoute.AllTransactionsNavRoute)
-                    },
-                    onNavToSettings = {
-                        onNavAction(UserSettingsGraph)
-                    },
-                    onNavAction = {transaction->
-                        transaction?.let {
-                            onNavAction(DashboardNavRoute.CreateTransactionNavRoute(it)
-                            )
-                        }
-                    }
-                )
             }
         }
 
+        ///user settings
         navigation<UserSettingsGraph>(startDestination = UserSettingsRootNav) {
             composable<UserSettingsRootNav> {
 

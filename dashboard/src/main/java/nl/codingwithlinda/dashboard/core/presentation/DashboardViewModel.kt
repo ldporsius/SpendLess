@@ -149,6 +149,7 @@ class DashboardViewModel(
     val dashboardCreateTransactionUiState = _dashboardCreateTransactionUiState.asStateFlow()
 
     fun onCreateTransaction() {
+
         _dashboardCreateTransactionUiState.update {
             it.copy(
                 showCreateTransaction = !it.showCreateTransaction

@@ -29,7 +29,8 @@ class CreateTransactionViewModel(
     private val preferencesForAccountUseCase: PreferencesForAccountUseCase,
     private val createTransactionUseCase: CreateTransactionUseCase,
     private val saveTransactionUseCase: SaveTransactionUseCase,
-    private val onNavAction: (transactionDto: TransactionDto?) -> Unit
+    private val onNavAction: (transactionDto: TransactionDto) -> Unit,
+    private val onNavBack: () -> Unit
 ): ViewModel() {
 
     private val _amountEntered = MutableStateFlow("")
@@ -69,14 +70,12 @@ class CreateTransactionViewModel(
                         when(res){
                             is SpendResult.Failure -> {
                                 println("FAILED TO CREATE TRANSACTION: $res")
-
-                                onNavAction(res.data)
+                                onNavBack()
                             }
                             is SpendResult.Success -> {
-                                //proceed with saving
+                                //proceed to saving
                                 val transaction = res.data
-                                //saveTransactionUseCase.save(transaction.toDomain())
-                                println("SAVED TRANSACTION: $transaction")
+                                println("CREATED TRANSACTION: $transaction")
                                 onNavAction(transaction)
                             }
                         }

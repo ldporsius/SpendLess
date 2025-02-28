@@ -1,5 +1,13 @@
-package nl.codingwithlinda.dashboard.core.presentation
+package nl.codingwithlinda.dashboard.transactions.transaction_create.presentation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -12,26 +20,20 @@ import nl.codingwithlinda.core.data.dto.TransactionDto
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
-import nl.codingwithlinda.dashboard.categories.category_picker.CategoryPickerRoot
 import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.domain.usecase.PreferencesForAccountUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase
-import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
 import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.CreateTransactionUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase
-import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionScreen
-import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardRoot(
+fun CreateTransactionRoot(
     appModule: AppModule,
-    onShowAll: () -> Unit,
-    onNavToSettings: ()->Unit,
-    onOpenCreateTransaction: () -> Unit,
-    onCreateTransaction: (transactionDto: TransactionDto?) -> Unit
+    onCreateTransaction: (TransactionDto) -> Unit,
+    onNavBack: () -> Unit
 ) {
-
     val context = LocalContext.current
     val categoryFactory = CategoryFactory(context)
 
@@ -48,23 +50,6 @@ fun DashboardRoot(
     val transactionForAccountUseCase = TransactionForAccountUseCase(appModule.transactionsAccess, sessionManager)
     val preferencesForAccountUseCase = PreferencesForAccountUseCase(appModule.preferencesAccessForAccount, sessionManager)
     val testTransactionsUseCase = TestTransactionsUseCase(appModule.transactionsAccess, sessionManager)
-
-    val factory = viewModelFactory {
-        initializer {
-            DashboardViewModel(
-                categoryFactory = categoryFactory,
-                currencyFormatterFactory = currencyFormatterFactory,
-                loggedInAccountUseCase = loggedInAccountUseCase,
-                transactionForAccountUseCase = transactionForAccountUseCase,
-                preferencesForAccountUseCase = preferencesForAccountUseCase,
-                testTransactionsUseCase = testTransactionsUseCase,
-            )
-        }
-    }
-    val viewModel = viewModel<DashboardViewModel>(
-        factory = factory
-    )
-
     val createTransactionUseCase = CreateTransactionUseCase(
         sessionManager = sessionManager,
         authenticationManager = appModule.authenticationManager
@@ -80,11 +65,10 @@ fun DashboardRoot(
                 createTransactionUseCase = createTransactionUseCase,
                 saveTransactionUseCase = saveTransactionUseCase,
                 onNavAction = {
-                    viewModel.onCreateTransaction()
                     onCreateTransaction(it)
                 },
                 onNavBack = {
-                    viewModel.onCreateTransaction()//this will close the modal bottom sheet
+                    onNavBack()
                 }
             )
         }
@@ -93,35 +77,35 @@ fun DashboardRoot(
         factory = createTransactionViewModelFactory
     )
 
-    DashboardScreen(
-        accountUiState = viewModel.accountUiState.collectAsStateWithLifecycle().value,
-        onNavToSettings = {
-            onNavToSettings()
-        },
-        transactionsComponent = {
-            TransactionsComponent(
-                transactions = viewModel.transactions.collectAsStateWithLifecycle().value,
-                onShowAll = onShowAll
-            )
-        },
-        transactionUiState = viewModel.dashboardCreateTransactionUiState.collectAsStateWithLifecycle().value,
-        onCreateTransaction = {
-            onOpenCreateTransaction()
-            //viewModel::onCreateTransaction
-        },
 
-        createTransactionComponent = {
-            CreateTransactionScreen(
-                modifier = Modifier,
-                uiState = createTransactionViewModel.uiState.collectAsStateWithLifecycle().value,
-                onAction = createTransactionViewModel::handleAction,
-                categoryPicker = {
-                    CategoryPickerRoot(
-                        appModule = appModule,
-                        onAction = createTransactionViewModel::onCategoryAction
-                       )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            onNavBack()
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.Close, contentDescription = "close")
+                    }
                 }
             )
         }
-    )
+    ) { paddingValues ->
+
+        CreateTransactionScreen(
+            modifier = Modifier.padding(paddingValues),
+            uiState = createTransactionViewModel.uiState.collectAsStateWithLifecycle().value,
+            onAction = {
+                createTransactionViewModel.handleAction(it)
+            },
+            categoryPicker = {
+                //todo
+            },
+        )
+    }
 }

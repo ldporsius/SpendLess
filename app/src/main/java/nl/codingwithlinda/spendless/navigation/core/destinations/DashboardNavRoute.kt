@@ -13,9 +13,12 @@ sealed interface DashboardNavRoute : NavRoute {
     data object AllTransactionsNavRoute : DashboardNavRoute
 
     @Serializable
-    data class CreateTransactionNavRoute(
+    data class SaveTransactionNavRoute(
         val transaction: TransactionDto
     ) : DashboardNavRoute
+
+    @Serializable
+    data object CreateTransactionNavRoute : DashboardNavRoute
 
 
 }

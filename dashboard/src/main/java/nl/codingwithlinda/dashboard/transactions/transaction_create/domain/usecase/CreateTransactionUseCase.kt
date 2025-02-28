@@ -37,25 +37,8 @@ class CreateTransactionUseCase(
             category = category.identifier,
             accountId = loggedInAccountId,
         )
-        authenticationManager.handleEvent().let {
-            return when(it){
-                ESessionState.OK -> {
-                    SpendResult.Success(transaction)
-                    //testing, to be removed
-                    //SpendResult.Failure(SessionError.SessionExpiredError)
-                }
-                ESessionState.LOGGED_OUT -> {
-                    SpendResult.Failure(
-                        SessionError.NotLoggedInError)
-                }
-                ESessionState.SESSION_EXPRIRED -> {
-                    SpendResult.Failure(
 
-                        SessionError.SessionExpiredError, transaction,
-                    )
-                }
-            }
-        }
+        return SpendResult.Success(transaction)
 
     }
 }

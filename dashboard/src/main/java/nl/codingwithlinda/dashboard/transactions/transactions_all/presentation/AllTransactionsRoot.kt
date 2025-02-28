@@ -1,7 +1,6 @@
 package nl.codingwithlinda.dashboard.transactions.transactions_all.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,6 +12,7 @@ import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 @Composable
 fun AllTransactionsRoot(
     appModule: AppModule,
+    onCreateTransaction: () -> Unit,
     onNavBack: () -> Unit
 ) {
     val currencyFormatterFactory = CurrencyFormatterFactory(LocalContext.current)
@@ -30,6 +30,9 @@ fun AllTransactionsRoot(
 
     AllTransactionsScreen(
         transactions = viewModel.transactions.collectAsStateWithLifecycle().value,
+        onCreatedTransaction = {
+            onCreateTransaction()
+        },
         onNavBack = {
             onNavBack()
         }

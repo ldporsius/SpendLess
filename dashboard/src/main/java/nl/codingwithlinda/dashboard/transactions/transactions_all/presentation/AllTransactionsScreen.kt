@@ -19,6 +19,7 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGrou
 @Composable
 fun AllTransactionsScreen(
     transactions: List<TransactionGroupUi>,
+    onCreatedTransaction: () -> Unit,
     onNavBack: () -> Unit
 ) {
 
@@ -43,7 +44,7 @@ fun AllTransactionsScreen(
         floatingActionButton = {
             androidx.compose.material3.FloatingActionButton(
                 onClick = {
-                    //new transaction
+                   onCreatedTransaction()
                 },
                 containerColor = secondaryFixed
             ){
