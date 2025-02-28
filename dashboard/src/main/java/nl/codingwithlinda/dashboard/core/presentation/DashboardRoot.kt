@@ -79,6 +79,7 @@ fun DashboardRoot(
                 createTransactionUseCase = createTransactionUseCase,
                 saveTransactionUseCase = saveTransactionUseCase,
                 onNavAction = {
+                    viewModel.onCreateTransaction()
                     onNavAction(it)
                 }
             )

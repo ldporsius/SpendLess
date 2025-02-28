@@ -3,6 +3,7 @@ package nl.codingwithlinda.spendless.navigation
 import android.widget.Toast
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,7 +66,7 @@ fun SpendLessApp(
     onNavAction: (NavRoute) -> Unit
 ) {
 
-    var showPINPrompt by remember { mutableStateOf(false) }
+  /*  var showPINPrompt by remember { mutableStateOf(false) }
     val sessionEventFlow = Channel<ESessionState>()
     ObserveAsEvents(sessionEventFlow.receiveAsFlow()) {sessionState ->
         when(sessionState){
@@ -88,7 +89,7 @@ fun SpendLessApp(
                 showPINPrompt = false
             }
         }
-    }
+    }*/
     NavHost(navController = navHostController, startDestination = Destination.HomeGraph) {
         navigation<Destination.AuthenticationGraph>(startDestination = AuthenticationNavRoute.RegisterUserNameRoute){
             authenticationNavGraph(
@@ -165,11 +166,14 @@ fun SpendLessApp(
                 val saveTransactionUseCase = nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase(
                     appModule.transactionsAccess
                 )
-                val scope = rememberCoroutineScope()
+                //val scope = rememberCoroutineScope()
                 val context = LocalContext.current
-                scope.launch {
-                    saveTransactionUseCase.save(transactionDto.toDomain())
-                    Toast.makeText(context, "TRANSACTION SAVED SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+
+                LaunchedEffect(transactionDto) {
+                    launch {
+                        saveTransactionUseCase.save(transactionDto.toDomain())
+                        Toast.makeText(context, "TRANSACTION SAVED SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 DashboardRoot(
