@@ -7,8 +7,8 @@ data class CreateTransactionUiState(
     val transactionType: TransactionType = TransactionType.EXPENSE,
     val recipient: String = "",
     val amountEntered: String = "",
-    val amount: AnnotatedString = AnnotatedString(text = "-$00.00"),
-    val amountPlaceholder: AnnotatedString = AnnotatedString(text = "-$00.00"),
+    val amount: AnnotatedString = AnnotatedString(text = ""),
+    val amountPlaceholder: AnnotatedString = AnnotatedString(text = ""),
     val description: String = ""
 
 ){

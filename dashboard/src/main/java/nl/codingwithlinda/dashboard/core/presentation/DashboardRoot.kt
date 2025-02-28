@@ -79,7 +79,7 @@ fun DashboardRoot(
                 createTransactionUseCase = createTransactionUseCase,
                 saveTransactionUseCase = saveTransactionUseCase,
                 onNavAction = {
-
+                    onNavAction(it)
                 }
             )
         }

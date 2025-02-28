@@ -68,15 +68,23 @@ class CreateTransactionViewModel(
                     ).let {res ->
                         when(res){
                             is SpendResult.Failure -> {
+                                println("FAILED TO CREATE TRANSACTION: $res")
+
                                 onNavAction(res.data)
                             }
                             is SpendResult.Success -> {
                                 //proceed with saving
                                 val transaction = res.data
-                                saveTransactionUseCase.save(transaction.toDomain())
+                                //saveTransactionUseCase.save(transaction.toDomain())
                                 println("SAVED TRANSACTION: $transaction")
                                 onNavAction(transaction)
                             }
+                        }
+                        _amountEntered.update {
+                            ""
+                        }
+                        _uiState.update {
+                            CreateTransactionUiState()
                         }
                     }
                 }

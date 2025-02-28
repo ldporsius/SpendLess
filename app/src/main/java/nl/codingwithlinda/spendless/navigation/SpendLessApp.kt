@@ -132,6 +132,7 @@ fun SpendLessApp(
                         onNavAction(UserSettingsGraph)
                     },
                     onNavAction = {transaction->
+                        println("DASHBOARD ROOT NAV ACTION CALLED with transaction: $transaction")
                         transaction?.let {
                             onNavAction(DashboardNavRoute.CreateTransactionNavRoute(it)
                             )

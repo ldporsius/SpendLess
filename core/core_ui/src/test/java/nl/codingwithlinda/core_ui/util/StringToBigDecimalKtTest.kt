@@ -76,4 +76,13 @@ class StringToBigDecimalKtTest{
         println("RESULT: $result")
         assertEquals(BigDecimal("-1.00"), result)
     }
+
+    @Test
+    fun `test string to bigdecimal conversion negative number with decimals`() = runBlocking {
+        val input = "-12.99"
+        val result = stringToBigDecimal(input)
+
+        println("RESULT: $result")
+        assertEquals(BigDecimal("-12.99"), result)
+    }
 }

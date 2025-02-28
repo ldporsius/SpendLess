@@ -27,7 +27,7 @@ class CurrencyFormatterExpense(
 
         val thousands = bd.toBigInteger().toString().replace("-","")
         val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
-            .toString().padEnd(2, '0')
+            .toString().padEnd(2, '0').replace("-","")
         println("CURRENCYFORMATTER INCOME. thousands: $thousands, decimals: $decimals")
 
         val appliedThousandsSeparator = applyThousandsSeparators(thousands, preferences)
