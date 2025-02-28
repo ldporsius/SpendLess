@@ -1,4 +1,4 @@
-package nl.codingwithlinda.spendless.navigation.util
+package nl.codingwithlinda.spendless.navigation.util.custom_navtypes
 
 import android.net.Uri
 import android.os.Bundle

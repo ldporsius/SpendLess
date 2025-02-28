@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.data
+package nl.codingwithlinda.core.data.encryption
 
 import android.os.Build
 import nl.codingwithlinda.core.domain.encryption.Crypto

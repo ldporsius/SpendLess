@@ -8,7 +8,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import nl.codingwithlinda.authentication.core.domain.usecase.LoggedInAccountUseCase
+import nl.codingwithlinda.core.data.dto.TransactionDto
 import nl.codingwithlinda.core.di.AppModule
+import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.dashboard.categories.category_picker.CategoryPickerRoot
@@ -18,6 +20,7 @@ import nl.codingwithlinda.dashboard.core.domain.usecase.TestTransactionsUseCase
 import nl.codingwithlinda.dashboard.core.domain.usecase.TransactionForAccountUseCase
 import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
 import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.CreateTransactionUseCase
+import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionScreen
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionViewModel
 
@@ -26,7 +29,7 @@ fun DashboardRoot(
     appModule: AppModule,
     onShowAll: () -> Unit,
     onNavToSettings: ()->Unit,
-    onNavAction: () -> Unit
+    onNavAction: (transactionDto: TransactionDto?) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -62,9 +65,11 @@ fun DashboardRoot(
     )
 
     val createTransactionUseCase = CreateTransactionUseCase(
-        transactionsAccess = appModule.transactionsAccess,
         sessionManager = sessionManager,
         authenticationManager = appModule.authenticationManager
+    )
+    val saveTransactionUseCase = SaveTransactionUseCase(
+        transactionsAccess = appModule.transactionsAccess
     )
     val createTransactionViewModelFactory = viewModelFactory {
         initializer {
@@ -72,7 +77,10 @@ fun DashboardRoot(
                 currencyFormatterFactory = currencyFormatterFactory,
                 preferencesForAccountUseCase = preferencesForAccountUseCase,
                 createTransactionUseCase = createTransactionUseCase,
-                onNavAction = onNavAction
+                saveTransactionUseCase = saveTransactionUseCase,
+                onNavAction = {
+
+                }
             )
         }
     }

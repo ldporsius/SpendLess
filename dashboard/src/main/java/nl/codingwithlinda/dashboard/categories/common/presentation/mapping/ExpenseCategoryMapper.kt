@@ -17,6 +17,8 @@ fun expenseCategoriesToUi(context: Context): List<ExpenseCategoryUi>{
 
 
 fun mapExpenseCategoryToUiText() = mapOf(
+        ExpenseCategory.OTHER to UiText.DynamicText("Other"),
+        ExpenseCategory.HOME to UiText.DynamicText("Home"),
         ExpenseCategory.CLOTHING_ACCESSORIES to UiText.DynamicText("Clothing & Accessories"),
         ExpenseCategory.EDUCATION to UiText.DynamicText("Education"),
         ExpenseCategory.ENTERTAINMENT to UiText.DynamicText("Entertainment"),

@@ -158,9 +158,9 @@ class DashboardViewModel(
     init {
         viewModelScope.launch {
             //TESTING DELETE LATER
-            runBlocking {
+           /* runBlocking {
                 testTransactionsUseCase.insertFakeTransactions()
-            }
+            }*/
             //END TESTING DELETE LATER
 
             mostPopularCategory().collect{mostPopularCategory ->

@@ -10,9 +10,10 @@
     <string name="money_bag" translatable="false">💰</string>
     <string name="pizza" translatable="false">🍕</string>
     <string name="necktie" translatable="false">👔</string>
-
     <string name="graduation_cap" translatable="false">🎓</string>
     <string name="laptop" translatable="false">💻</string>
     <string name="red_heart" translatable="false">❤️</string>
+    <string name="gear" translatable="false">⚙️</string>
+
 
 </resources>

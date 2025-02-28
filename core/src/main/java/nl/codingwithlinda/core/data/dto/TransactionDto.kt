@@ -1,11 +1,10 @@
-package nl.codingwithlinda.core.domain.model
+package nl.codingwithlinda.core.data.dto
 
 import kotlinx.serialization.Serializable
-import java.math.BigDecimal
 
-
-data class Transaction(
-    val amount: BigDecimal,
+@Serializable
+data class TransactionDto(
+    val amount: String,
     val timestamp: Long,
     val title: String,
     val description: String,

@@ -1,6 +1,6 @@
 package nl.codingwithlinda.user_settings.onboarding.domain
 
-import nl.codingwithlinda.core.data.AccountCryptor
+import nl.codingwithlinda.core.data.encryption.AccountCryptor
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.core.domain.model.Preferences

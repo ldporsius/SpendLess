@@ -29,9 +29,9 @@ import nl.codingwithlinda.authentication.core.data.AccountFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.authentication.validation.UserNameValidator
-import nl.codingwithlinda.core.data.AccountCryptor
+import nl.codingwithlinda.core.data.encryption.AccountCryptor
 import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
-import nl.codingwithlinda.spendless.navigation.util.AccountNavType
+import nl.codingwithlinda.spendless.navigation.util.custom_navtypes.AccountNavType
 import nl.codingwithlinda.spendless.navigation.util.NavigationEvent
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
 import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute

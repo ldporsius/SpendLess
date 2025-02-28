@@ -9,11 +9,7 @@ import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core_ui.expenseColor
-import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
-import nl.codingwithlinda.core_ui.util.stringToBigDecimal
-import java.math.BigDecimal
-import java.math.BigInteger
 
 class CurrencyFormatterExpenseColored(
     currencySymbolProvider: CurrencySymbolProvider,

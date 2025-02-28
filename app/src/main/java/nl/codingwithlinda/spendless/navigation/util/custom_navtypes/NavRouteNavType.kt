@@ -1,4 +1,4 @@
-package nl.codingwithlinda.spendless.navigation.util
+package nl.codingwithlinda.spendless.navigation.util.custom_navtypes
 
 import android.net.Uri
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-import nl.codingwithlinda.core.domain.model.Account
 import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 
 object NavRouteNavType {

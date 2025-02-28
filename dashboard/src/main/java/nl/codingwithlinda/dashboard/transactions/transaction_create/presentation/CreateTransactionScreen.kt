@@ -211,7 +211,7 @@ fun CreateTransactionScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                onAction(CreateTransactionAction.SaveTransaction)
+                onAction(CreateTransactionAction.CreateTransaction)
             },
             modifier = Modifier.fillMaxWidth()
         ) {

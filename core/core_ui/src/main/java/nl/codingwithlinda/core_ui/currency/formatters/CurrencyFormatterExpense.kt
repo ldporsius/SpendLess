@@ -1,13 +1,11 @@
 package nl.codingwithlinda.core_ui.currency.formatters
 
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import nl.codingwithlinda.core.domain.model.ExpensesFormat
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
-import nl.codingwithlinda.core_ui.expenseColor
-import nl.codingwithlinda.core_ui.util.stringToBigDecimal
+import nl.codingwithlinda.core.data.util.stringToBigDecimal
 import java.math.BigDecimal
 
 class CurrencyFormatterExpense(

@@ -1,6 +1,6 @@
 package nl.codingwithlinda.authentication.login.data
 
-import nl.codingwithlinda.core.data.AccountCryptor
+import nl.codingwithlinda.core.data.encryption.AccountCryptor
 import nl.codingwithlinda.core.domain.error.authentication_error.LoginError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account

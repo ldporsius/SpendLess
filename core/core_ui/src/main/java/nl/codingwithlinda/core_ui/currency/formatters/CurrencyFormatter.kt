@@ -7,14 +7,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.model.Preferences
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
-import nl.codingwithlinda.core.domain.model.Separator
 import nl.codingwithlinda.core_ui.currency.decimalSeparatorMap
 import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
 import nl.codingwithlinda.core_ui.util.scaleToTwoDecimalPlaces
-import nl.codingwithlinda.core_ui.util.stringToBigDecimal
-import java.io.File.separator
+import nl.codingwithlinda.core.data.util.stringToBigDecimal
 import java.math.BigDecimal
 
 abstract class CurrencyFormatter(

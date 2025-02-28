@@ -1,6 +1,7 @@
 package nl.codingwithlinda.authentication.core.data
 
 import kotlinx.coroutines.runBlocking
+import nl.codingwithlinda.core.data.encryption.AccountCryptor
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -8,7 +9,7 @@ class AccountFactoryTest{
 
     val factory = nl.codingwithlinda.authentication.core.data.AccountFactory()
     val account = factory.create("linda", "12345")
-    val cryptor = nl.codingwithlinda.core.data.AccountCryptor()
+    val cryptor = AccountCryptor()
 
     @Test
     fun testAccountFactory_encryptedIsDecrypted() = runBlocking {

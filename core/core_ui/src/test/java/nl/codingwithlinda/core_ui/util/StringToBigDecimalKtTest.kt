@@ -1,6 +1,7 @@
 package nl.codingwithlinda.core_ui.util
 
 import kotlinx.coroutines.runBlocking
+import nl.codingwithlinda.core.data.util.stringToBigDecimal
 import org.junit.Assert.*
 import org.junit.Test
 import java.math.BigDecimal
@@ -65,5 +66,14 @@ class StringToBigDecimalKtTest{
 
         println("RESULT: $result")
         assertEquals(BigDecimal("0.00"), result)
+    }
+
+    @Test
+    fun `test string to bigdecimal conversion negative number`() = runBlocking {
+        val input = "-1.00"
+        val result = stringToBigDecimal(input)
+
+        println("RESULT: $result")
+        assertEquals(BigDecimal("-1.00"), result)
     }
 }

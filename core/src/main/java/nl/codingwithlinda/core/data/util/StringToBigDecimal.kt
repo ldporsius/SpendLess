@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core_ui.util
+package nl.codingwithlinda.core.data.util
 
 import java.math.BigDecimal
 
@@ -8,14 +8,16 @@ fun stringToBigDecimal(value: String): BigDecimal {
         if(value.isEmpty()) return BigDecimal.ZERO
 
         val indexOfAnySep = value
-            .filterNot { it.toString() == "-" }
+            //.filterNot { it.toString() == "-" }
             .indexOfAny(listOf(",", "."))
 
         println("indexOfAnySep: $indexOfAnySep")
 
         if(indexOfAnySep == -1) return BigDecimal(value)
 
-        val thousands = value.filter { it.isDigit() }.foldIndexed("") { index, acc, c ->
+        val thousands = value
+            //.filter { it.isDigit() }
+            .foldIndexed("") { index, acc, c ->
             if (index < indexOfAnySep) {
                 "$acc$c"
             } else {

@@ -7,13 +7,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import nl.codingwithlinda.core.domain.currency.CurrencySymbolProvider
 import nl.codingwithlinda.core.domain.model.Preferences
-import nl.codingwithlinda.core_ui.currency.thousandsSeparatorMap
 import nl.codingwithlinda.core_ui.incomeColor
 import nl.codingwithlinda.core_ui.onSurface
-import nl.codingwithlinda.core_ui.primary
-import nl.codingwithlinda.core_ui.util.stringToBigDecimal
-import java.math.BigDecimal
-import java.math.BigInteger
 
 class CurrencyFormatterIncomeSymbolOnly(
     currencySymbolProvider: CurrencySymbolProvider,
