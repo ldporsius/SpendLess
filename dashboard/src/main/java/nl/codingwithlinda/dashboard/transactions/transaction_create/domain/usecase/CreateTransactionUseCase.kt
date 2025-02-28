@@ -9,6 +9,7 @@ import nl.codingwithlinda.core.domain.result.SpendResult
 import nl.codingwithlinda.core.domain.session_manager.AuthenticationManager
 import nl.codingwithlinda.core.domain.session_manager.ESessionState
 import nl.codingwithlinda.core.domain.session_manager.SessionManager
+import java.util.UUID
 
 class CreateTransactionUseCase(
     private val sessionManager: SessionManager,
@@ -29,12 +30,18 @@ class CreateTransactionUseCase(
         val amountSigned = if (transactionType == TransactionType.EXPENSE) {
             "-" + amountString
         }else amountString
+
+        val overrideCategory = if (transactionType == TransactionType.INCOME) {
+            ExpenseCategory.INCOME
+        } else category
+
         val transaction = TransactionDto(
+            id = 0, //is this right?
             amount = amountSigned,
             timestamp = System.currentTimeMillis(),
             title = recipient,
             description = description,
-            category = category.identifier,
+            category = overrideCategory.identifier,
             accountId = loggedInAccountId,
         )
 

@@ -6,6 +6,7 @@ import nl.codingwithlinda.core_ui.R.string.*
 
 
     fun categoryImages(context: Context) = mapOf(
+        ExpenseCategory.INCOME to context.getString(money_bag),
         ExpenseCategory.OTHER to context.getString(gear)
                 ,
         ExpenseCategory.CLOTHING_ACCESSORIES to

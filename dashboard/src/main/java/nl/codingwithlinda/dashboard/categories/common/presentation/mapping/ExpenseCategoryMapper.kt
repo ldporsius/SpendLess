@@ -17,6 +17,7 @@ fun expenseCategoriesToUi(context: Context): List<ExpenseCategoryUi>{
 
 
 fun mapExpenseCategoryToUiText() = mapOf(
+        ExpenseCategory.INCOME to UiText.DynamicText("Income"),
         ExpenseCategory.OTHER to UiText.DynamicText("Other"),
         ExpenseCategory.HOME to UiText.DynamicText("Home"),
         ExpenseCategory.CLOTHING_ACCESSORIES to UiText.DynamicText("Clothing & Accessories"),
@@ -26,8 +27,9 @@ fun mapExpenseCategoryToUiText() = mapOf(
         ExpenseCategory.HEALTH_WELLNESS to UiText.DynamicText("Health & Wellness")
 )
 
+/*
 fun mapExpenseCategoryIdentifierToDomain(identifier: Int): ExpenseCategory {
     return ExpenseCategory.entries.find {
         it.identifier == identifier
     } ?: throw IllegalArgumentException("Invalid identifier")
-}
+}*/

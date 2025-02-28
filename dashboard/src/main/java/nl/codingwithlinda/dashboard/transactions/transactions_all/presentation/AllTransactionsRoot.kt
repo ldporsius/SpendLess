@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 
 @Composable
 fun AllTransactionsRoot(
@@ -17,10 +18,12 @@ fun AllTransactionsRoot(
 ) {
     val currencyFormatterFactory = CurrencyFormatterFactory(LocalContext.current)
 
+    val categoryFactory = CategoryFactory(LocalContext.current)
     val factory = viewModelFactory {
         initializer {
             TransactionsAllViewModel(
                 appModule = appModule,
+                categoryFactory = categoryFactory,
                 currencyFormatterFactory = currencyFormatterFactory,
             )
         }

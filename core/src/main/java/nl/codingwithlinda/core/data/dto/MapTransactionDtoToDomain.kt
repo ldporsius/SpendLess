@@ -6,6 +6,7 @@ import nl.codingwithlinda.core.domain.model.Transaction
 fun TransactionDto.toDomain(): Transaction{
     val amountBD = stringToBigDecimal(amount)
     return Transaction(
+        id = id,
         amount = amountBD,
         timestamp = timestamp,
         title = title,

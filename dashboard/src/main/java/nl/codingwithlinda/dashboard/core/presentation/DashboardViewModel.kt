@@ -113,7 +113,11 @@ class DashboardViewModel(
 
         val largestTransaction =  transactions.maxByOrNull {
             it.amount.abs()
-        }?.toUi(currencyFormatterFactory, prefs.preferences )
+        }?.toUi(
+            categoryFactory,
+            currencyFormatterFactory,
+            prefs.preferences
+        )
 
         accountUiState.copy(
             userName = account.userName ,
@@ -124,7 +128,7 @@ class DashboardViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _accountUiState.value)
 
 
-    @SuppressLint("NewApi")
+
     val transactions = _transactions
         .combine(prefs){ transactions, prefs ->
 
@@ -133,12 +137,13 @@ class DashboardViewModel(
             }
             transactions.groupByDateGroup()
                 .filterNot {
-                    it.date.isOlder()
+                    it.date.isOlder()//optional, is overridden in practise
                 }
                 .toUi(
                     currencyFormatterFactory = currencyFormatterFactory,
                     preferences = prefs.preferences,
-                    formatter = DateTimeConverter.MEDIUM_DATE
+                    formatter = DateTimeConverter.MEDIUM_DATE,
+                    categoryFactory = categoryFactory
                 )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -148,6 +153,7 @@ class DashboardViewModel(
     )
     val dashboardCreateTransactionUiState = _dashboardCreateTransactionUiState.asStateFlow()
 
+    //if modal bottom sheet is used
     fun onCreateTransaction() {
 
         _dashboardCreateTransactionUiState.update {

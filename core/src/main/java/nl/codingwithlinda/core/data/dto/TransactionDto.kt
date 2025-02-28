@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TransactionDto(
+    val id: Long,
     val amount: String,
     val timestamp: Long,
     val title: String,

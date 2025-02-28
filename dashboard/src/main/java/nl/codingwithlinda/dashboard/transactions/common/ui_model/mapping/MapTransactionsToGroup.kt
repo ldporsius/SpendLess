@@ -6,13 +6,12 @@ import nl.codingwithlinda.core.domain.model.Transaction
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.core_ui.util.UiText
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 sealed interface TransactionKey{
     data class Simple(val dayDiff: DayDiff): TransactionKey {
@@ -157,6 +156,7 @@ fun List<Transaction>.groupByDate(): List<TransactionGroup>{
 }
 
 fun List<TransactionGroup>.toUi(
+    categoryFactory: CategoryFactory,
     currencyFormatterFactory: CurrencyFormatterFactory,
     preferences: Preferences,
     formatter: DateTimeConverter
@@ -170,7 +170,9 @@ fun List<TransactionGroup>.toUi(
                 formatter
             ),
             transactions = transactionGroup.transactions.map { transaction ->
-                transaction.toUi(currencyFormatterFactory, preferences)
+                transaction.toUi(
+                    categoryFactory,
+                    currencyFormatterFactory, preferences)
             }
         )
     }

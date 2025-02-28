@@ -14,6 +14,7 @@ fun fakeTransactions(
     val amount = Random.nextDouble(-10.00, 10.0)
     val category = Random.nextInt(0, 5)
     Transaction(
+        id = it.toLong(),
         amount = BigDecimal(amount.toString()),
         timestamp = ZonedDateTime.now().minusHours(it.toLong()).toEpochSecond() * 1000,
         title = "Adobe yearly",

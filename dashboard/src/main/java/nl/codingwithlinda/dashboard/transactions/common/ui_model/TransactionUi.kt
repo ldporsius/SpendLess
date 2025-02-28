@@ -8,7 +8,7 @@ import nl.codingwithlinda.dashboard.categories.common.presentation.mapping.expen
 import java.util.UUID
 
 data class TransactionUi(
-    val id: String = UUID.randomUUID().toString(),
+    //val id: String,
     val amount: AnnotatedString = AnnotatedString("-$59.99"),
     val timestamp: String = "Jan 7, 2025",
     val title: String = "Adobe Yearly",

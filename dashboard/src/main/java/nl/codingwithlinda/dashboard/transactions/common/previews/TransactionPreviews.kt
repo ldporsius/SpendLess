@@ -11,6 +11,8 @@ import nl.codingwithlinda.core.test_data.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
+import nl.codingwithlinda.dashboard.categories.common.presentation.CategoryItem
 import nl.codingwithlinda.dashboard.core.presentation.DashboardScreen
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.core.presentation.state.DashboardCreateTransactionUiState
@@ -26,9 +28,11 @@ import java.time.format.FormatStyle
 @Preview
 @Composable
 private fun TransactionsComponentPreview() {
+    val context = LocalContext.current
     val currencyFormatter = CurrencyFormatterFactory(
-        context = LocalContext.current
+        context = context
     )
+    val categoryFactory = CategoryFactory(context)
     val preferences = fakePreferences()
     SpendLessTheme {
         TransactionsComponent(
@@ -36,7 +40,8 @@ private fun TransactionsComponentPreview() {
             transactions = fakeTransactions("1").groupByDate().toUi(
                 currencyFormatterFactory = currencyFormatter,
                 preferences = preferences,
-               formatter = DateTimeConverter.MEDIUM_DATE
+                formatter = DateTimeConverter.MEDIUM_DATE,
+                categoryFactory = TODO()
             ),
             onShowAll = {}
         )
@@ -49,7 +54,9 @@ private fun TransactionItemExpandedPreview() {
     SpendLessTheme {
         TransactionItemExpanded(
             context = LocalContext.current,
-            transaction = TransactionUi()
+            transaction = TransactionUi(
+                //id = "1",
+            )
         )
 
     }
@@ -72,6 +79,7 @@ private fun DashboardScreenPreview() {
                     transactions = fakeTransactions(
                         "1"
                     ).groupByDate().toUi(
+                        categoryFactory = CategoryFactory(LocalContext.current),
                         currencyFormatter,
                         preferences,
                         formatter = DateTimeConverter.SHORT_DATE

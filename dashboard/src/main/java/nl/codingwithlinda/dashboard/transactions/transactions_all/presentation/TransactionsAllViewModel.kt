@@ -15,13 +15,13 @@ import kotlinx.coroutines.launch
 import nl.codingwithlinda.core.di.AppModule
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
+import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionGroupUi
-import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDateGroup
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
-import java.time.format.FormatStyle
 
 class TransactionsAllViewModel(
+    private val categoryFactory: CategoryFactory,
     private val currencyFormatterFactory: CurrencyFormatterFactory,
     private val appModule: AppModule
 ): ViewModel() {
@@ -51,6 +51,7 @@ class TransactionsAllViewModel(
                 return@map emptyList<TransactionGroupUi>()
             }
             it.groupByDateGroup().toUi(
+                categoryFactory = categoryFactory,
                 currencyFormatterFactory,
                 prefs.preferences,
                 formatter = DateTimeConverter.SHORT_DATE
