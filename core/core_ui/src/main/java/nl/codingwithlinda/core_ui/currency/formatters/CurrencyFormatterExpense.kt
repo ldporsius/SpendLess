@@ -22,9 +22,10 @@ class CurrencyFormatterExpense(
         val currencySymbol = applySymbol(preferences)
         val decimalSeparator = getDecimalSeparator(preferences)
 
+        convertAmountToThousandsAndDecimals(_currency, preferences)
         val bd = stringToBigDecimal(_currency)
 
-        val thousands = bd.toBigInteger().toString()
+        val thousands = bd.toBigInteger().toString().replace("-","")
         val decimals = bd.remainder(BigDecimal.ONE).movePointRight(2)
             .toString().padEnd(2, '0')
         println("CURRENCYFORMATTER INCOME. thousands: $thousands, decimals: $decimals")
