@@ -6,13 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import nl.codingwithlinda.core.test_data.fakePreferences
-import nl.codingwithlinda.core.test_data.fakeTransactions
+import nl.codingwithlinda.core.test_data.test_data_generators.fakePreferences
+import nl.codingwithlinda.core.test_data.test_data_generators.fakeTransactions
 import nl.codingwithlinda.core_ui.SpendLessTheme
 import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.date_time.DateTimeConverter
 import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
-import nl.codingwithlinda.dashboard.categories.common.presentation.CategoryItem
 import nl.codingwithlinda.dashboard.core.presentation.DashboardScreen
 import nl.codingwithlinda.dashboard.core.presentation.state.AccountUiState
 import nl.codingwithlinda.dashboard.core.presentation.state.DashboardCreateTransactionUiState
@@ -21,7 +20,6 @@ import nl.codingwithlinda.dashboard.transactions.common.ui_model.TransactionUi
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.groupByDate
 import nl.codingwithlinda.dashboard.transactions.common.ui_model.mapping.toUi
 import nl.codingwithlinda.dashboard.transactions.recent.presentation.TransactionsComponent
-import java.time.format.FormatStyle
 
 
 @SuppressLint("NewApi")

@@ -1,26 +1,24 @@
-package nl.codingwithlinda.core.test_data
+package nl.codingwithlinda.core.test_data.local_cache
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
 
-class FakeAccountAccess: DataSourceAccess<Account, Pair<String, String>> {
+class FakeAccountAccess(
+    private val accounts: MutableList<Account>
+): DataSourceAccess<Account, Pair<String, String>> {
 
-    val accounts = MutableList<Account>(1){
-        Account(
-            id = it.toString(),
-            userName = "lin",
-            pin = "12345"
-        )
-    }
     override suspend fun create(item: Account): Account {
         accounts.add(item)
         return item
     }
 
     override suspend fun read(id: Pair<String, String>): Account? {
-       return accounts.find {
+       return if (id.second.isEmpty()) return accounts.find {
+            it.userName == id.first
+        }
+       else accounts.find {
            it.userName == id.first && it.pin == id.second
        }
     }

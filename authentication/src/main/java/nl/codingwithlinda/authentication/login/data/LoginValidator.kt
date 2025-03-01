@@ -1,6 +1,6 @@
 package nl.codingwithlinda.authentication.login.data
 
-import nl.codingwithlinda.core.data.encryption.AccountCryptor
+import nl.codingwithlinda.core.domain.encryption.Cryptor
 import nl.codingwithlinda.core.domain.error.authentication_error.LoginError
 import nl.codingwithlinda.core.domain.local_cache.DataSourceAccess
 import nl.codingwithlinda.core.domain.model.Account
@@ -8,7 +8,7 @@ import nl.codingwithlinda.core.domain.result.SpendResult
 
 class LoginValidator(
     private val accountAccess: DataSourceAccess<Account, Pair<String, String>>,
-    private val accountCryptor: AccountCryptor
+    private val accountCryptor: Cryptor<Account>
 ) {
 
     companion object{

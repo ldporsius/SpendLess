@@ -12,7 +12,7 @@ import nl.codingwithlinda.core.domain.session_manager.SessionManager
 
 typealias AccountAccess = DataSourceAccess<Account, Pair<String, String>>
 typealias AccountAccessReadOnly = DataSourceAccessReadOnly<Account, String>
-typealias PreferencesAccess = DataSourceAccess<PreferencesAccount, Long>
+typealias PreferencesAccess = DataSourceAccess<PreferencesAccount, String>
 typealias PreferencesAccessForAccount = DataSourceAccessReadOnly<PreferencesAccount, String>
 typealias TransactionsAccess = DataSourceAccessFK<Transaction, Long, String>
 
@@ -23,7 +23,7 @@ interface AppModule {
 
     val accountAccess: DataSourceAccess<Account, Pair<String, String>>
     val accountAccessReadOnly: DataSourceAccessReadOnly<Account, String>
-    val preferencesAccess: DataSourceAccess<PreferencesAccount, Long>
+    val preferencesAccess: DataSourceAccess<PreferencesAccount, String>
     val preferencesAccessForAccount: DataSourceAccessReadOnly<PreferencesAccount, String>
     val transactionsAccess: DataSourceAccessFK<Transaction, Long, String>
 }

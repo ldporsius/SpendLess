@@ -3,7 +3,7 @@ package nl.codingwithlinda.core_ui.currency.formatters
 import kotlinx.coroutines.runBlocking
 import nl.codingwithlinda.core.domain.model.Separator
 import nl.codingwithlinda.core.test_data.FakeCurrencySymbolProvider
-import nl.codingwithlinda.core.test_data.fakePreferences
+import nl.codingwithlinda.core.test_data.test_data_generators.fakePreferences
 import org.junit.Assert.*
 import org.junit.Test
 

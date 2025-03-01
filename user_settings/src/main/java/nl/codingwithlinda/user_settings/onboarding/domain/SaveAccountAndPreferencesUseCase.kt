@@ -10,7 +10,7 @@ import nl.codingwithlinda.core.domain.session_manager.SessionManager
 class SaveAccountAndPreferencesUseCase(
     private val accountCryptor: AccountCryptor,
     private val accountAccess: DataSourceAccess<Account, Pair<String, String>>,
-    private val preferencesAccess: DataSourceAccess<PreferencesAccount, Long>,
+    private val preferencesAccess: DataSourceAccess<PreferencesAccount, String>,
     private val sessionManager: SessionManager
 ) {
 

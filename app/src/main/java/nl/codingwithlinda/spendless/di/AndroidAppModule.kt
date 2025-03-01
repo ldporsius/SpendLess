@@ -30,7 +30,7 @@ class AndroidAppModule(
     override val accountAccessReadOnly: DataSourceAccessReadOnly<Account, String>
         = AccountAccessReadOnly(application)
 
-    override val preferencesAccess: DataSourceAccess<PreferencesAccount, Long>
+    override val preferencesAccess: DataSourceAccess<PreferencesAccount,String>
         get() = PreferencesRepo(application).getPreferencesAccess()
 
     override val preferencesAccessForAccount: DataSourceAccessReadOnly<PreferencesAccount, String>

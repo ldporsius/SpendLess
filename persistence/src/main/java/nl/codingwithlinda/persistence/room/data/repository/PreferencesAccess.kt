@@ -13,7 +13,7 @@ import nl.codingwithlinda.persistence.room.dao.PreferencesDao
 
 class PreferencesAccess(
     private val preferencesDao: PreferencesDao
-): DataSourceAccess<PreferencesAccount, Long> {
+): DataSourceAccess<PreferencesAccount, String> {
     override suspend fun create(item: PreferencesAccount): PreferencesAccount {
         preferencesDao.createPreferences(item.toEntity())
         return item
@@ -25,18 +25,18 @@ class PreferencesAccess(
     }
 
     override fun readAll(): Flow<List<PreferencesAccount>> {
-        return preferencesDao.readPreferences().map {
-            it.map {
+        return preferencesDao.readPreferences().map { entities ->
+            entities.map {
                 it.toDomain()
             }
         }
     }
 
-    override suspend fun delete(id: Long): Boolean {
+    override suspend fun delete(id: String): Boolean {
         return false
     }
 
-    override suspend fun read(id: Long): PreferencesAccount? {
-        return preferencesDao.readPreferences().first().firstOrNull()?.toDomain()
+    override suspend fun read(id: String): PreferencesAccount? {
+        return preferencesDao.getPreferencesForAccount(id)?.toDomain()
     }
 }

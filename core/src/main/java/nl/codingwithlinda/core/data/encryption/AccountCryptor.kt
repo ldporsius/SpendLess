@@ -2,12 +2,13 @@ package nl.codingwithlinda.core.data.encryption
 
 import android.os.Build
 import nl.codingwithlinda.core.domain.encryption.Crypto
+import nl.codingwithlinda.core.domain.encryption.Cryptor
 import nl.codingwithlinda.core.domain.model.Account
 import java.util.Base64
 
-class AccountCryptor {
+class AccountCryptor: Cryptor<Account> {
 
-    fun encrypt(account: Account): Account {
+    override fun encrypt(account: Account): Account {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
             return account
 
@@ -17,7 +18,9 @@ class AccountCryptor {
             userName = account.userName,
             pin = encryptedPinBase64
         )
-    } fun decrypt(account: Account): Account{
+    }
+
+    override fun decrypt(account: Account): Account{
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
             return account
 

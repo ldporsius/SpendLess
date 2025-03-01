@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.test_data
+package nl.codingwithlinda.core.test_data.test_data_generators
 
 import nl.codingwithlinda.core.domain.model.Currency
 import nl.codingwithlinda.core.domain.model.ExpensesFormat

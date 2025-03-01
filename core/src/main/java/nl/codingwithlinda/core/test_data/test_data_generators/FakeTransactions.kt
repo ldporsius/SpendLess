@@ -1,4 +1,4 @@
-package nl.codingwithlinda.core.test_data
+package nl.codingwithlinda.core.test_data.test_data_generators
 
 import android.annotation.SuppressLint
 import nl.codingwithlinda.core.domain.model.Transaction

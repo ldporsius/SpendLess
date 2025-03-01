@@ -19,27 +19,22 @@ import nl.codingwithlinda.authentication.pin_prompt.presentation.PINPromptRoot
 import nl.codingwithlinda.core.data.dto.TransactionDto
 import nl.codingwithlinda.core.data.dto.toDomain
 import nl.codingwithlinda.core.di.AppModule
-import nl.codingwithlinda.core.domain.session_manager.SessionManager
 import nl.codingwithlinda.core_ui.currency.AppCurrencySymbolProvider
-import nl.codingwithlinda.core_ui.currency.CurrencyFormatterFactory
 import nl.codingwithlinda.core_ui.currency.formatters.CurrencyFormatterExpense
-import nl.codingwithlinda.dashboard.categories.common.data.CategoryFactory
 import nl.codingwithlinda.dashboard.core.presentation.DashboardRoot
 import nl.codingwithlinda.dashboard.transactions.transaction_create.domain.usecase.SaveTransactionUseCase
 import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionRoot
-import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionScreen
-import nl.codingwithlinda.dashboard.transactions.transaction_create.presentation.CreateTransactionViewModel
 import nl.codingwithlinda.dashboard.transactions.transactions_all.presentation.AllTransactionsRoot
 import nl.codingwithlinda.spendless.navigation.core.destinations.AuthenticationNavRoute
+import nl.codingwithlinda.spendless.navigation.core.destinations.DashboardNavRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.Destination
 import nl.codingwithlinda.spendless.navigation.core.destinations.NavRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.PINPromptRoute
-import nl.codingwithlinda.spendless.navigation.core.destinations.authentication.authenticationNavGraph
-import nl.codingwithlinda.spendless.navigation.core.destinations.DashboardNavRoute
 import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsGraph
 import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsPreferencesNav
 import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsRootNav
 import nl.codingwithlinda.spendless.navigation.core.destinations.UserSettingsSecurityNav
+import nl.codingwithlinda.spendless.navigation.core.destinations.authentication.authenticationNavGraph
 import nl.codingwithlinda.spendless.navigation.util.custom_navtypes.NavRouteNavType
 import nl.codingwithlinda.spendless.navigation.util.custom_navtypes.TransactionDtoNavType
 import nl.codingwithlinda.spendless.navigation.util.navigateToEvent
@@ -107,7 +102,6 @@ fun SpendLessApp(
                     appModule = appModule,
                     onNavAction = {
                         onNavAction(args)
-
                     }
                 )
             }
